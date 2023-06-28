@@ -109,6 +109,7 @@ OPEN_SOURCE_C_REPOS=(
     https://github.com/chirlu/sox
     https://github.com/curl/curl
     https://github.com/git/git
+    https://github.com/hanslub42/rlwrap
     https://github.com/hugsy/proxenet
     https://github.com/irssi/irssi
     https://github.com/jarun/dslib
@@ -215,6 +216,7 @@ OPEN_SOURCE_CRYSTAL_REPOS=(
 )
 
 OPEN_SOURCE_CPP_REPOS=(
+    https://github.com/ClickHouse/ClickHouse
     https://github.com/alembic/alembic
     https://github.com/apache/arrow
     https://github.com/apple/swift
@@ -224,7 +226,9 @@ OPEN_SOURCE_CPP_REPOS=(
     https://github.com/brndnmtthws/conky
     https://github.com/defold/defold
     https://github.com/electron/electron
+    https://github.com/falcosecurity/falco
     https://github.com/fish-shell/fish-shell
+    https://github.com/ggerganov/imtui
     https://github.com/google/flatbuffers
     https://github.com/grpc/grpc
     https://github.com/jarulraj/sqlcheck
@@ -242,6 +246,7 @@ OPEN_SOURCE_CPP_REPOS=(
 )
 
 OPEN_SOURCE_C_SHARP_REPOS=(
+    https://github.com/Ombi-app/Ombi
     https://github.com/chocolatey/choco
     https://github.com/craftworkgames/MonoGame.Extended
     https://github.com/dotnet/csharplang
@@ -280,6 +285,7 @@ OPEN_SOURCE_DOCKERFILE_REPOS=(
     https://github.com/gliderlabs/docker-alpine
     https://github.com/jessfraz/dockerfiles
     https://github.com/neo4j/docker-neo4j
+    https://github.com/plexinc/pms-docker
     https://github.com/pyca/infra
     https://gitlab.archlinux.org/archlinux/archlinux-docker
 )
@@ -354,6 +360,7 @@ OPEN_SOURCE_DOCS_REPOS=(
     https://github.com/public-apis/public-apis
     https://github.com/pytorch/examples
     https://github.com/razum2um/awesome-clojure
+    https://github.com/rockerBOO/awesome-neovim
     https://github.com/satwikkansal/wtfpython
     https://github.com/sdmg15/Best-websites-a-programmer-should-visit
     https://github.com/serhii-londar/open-source-mac-os-apps
@@ -403,6 +410,7 @@ OPEN_SOURCE_GO_REPOS=(
     https://github.com/DarthSim/overmind
     https://github.com/HariSekhon/DevOps-Golang-tools
     https://github.com/Netflix/chaosmonkey
+    https://github.com/abiosoft/colima
     https://github.com/alecthomas/chroma
     https://github.com/apex/up
     https://github.com/argoproj/argo-cd
@@ -415,7 +423,13 @@ OPEN_SOURCE_GO_REPOS=(
     https://github.com/bazelbuild/rules_webtesting
     https://github.com/caddyserver/caddy
     https://github.com/candid82/joker
+    https://github.com/charmbracelet/bubbletea
+    https://github.com/charmbracelet/glow
+    https://github.com/charmbracelet/gum
+    https://github.com/charmbracelet/lipgloss
+    https://github.com/charmbracelet/vhs
     https://github.com/coder/coder
+    https://github.com/containerd/nerdctl
     https://github.com/containernetworking/cni
     https://github.com/coocood/freecache
     https://github.com/crossplane/crossplane
@@ -592,6 +606,7 @@ OPEN_SOURCE_JAVASCRIPT_REPOS=(
     https://github.com/axios/moxios
     https://github.com/babel/babel
     https://github.com/bookshelf/bookshelf
+    https://github.com/brunch/brunch
     https://github.com/chalk/chalk
     https://github.com/chartjs/Chart.js
     https://github.com/cypress-io/cypress
@@ -757,6 +772,7 @@ OPEN_SOURCE_NIM_REPOS=(
 )
 
 OPEN_SOURCE_PERL_REPOS=(
+    https://github.com/AlDanial/cloc
     https://github.com/HariSekhon/DevOps-Perl-tools
     https://github.com/HariSekhon/lib
     https://github.com/PerlDancer/Dancer
@@ -785,6 +801,7 @@ OPEN_SOURCE_PERL_REPOS=(
 OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/3b1b/manim
     https://github.com/AlexIoannides/pyspark-example-project
+    https://github.com/Arize-ai/phoenix
     https://github.com/Bogdanp/dramatiq
     https://github.com/HariSekhon/DevOps-Python-tools
     https://github.com/JoshData/python-email-validator
@@ -808,6 +825,7 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/Textualize/textual
     https://github.com/Zulko/moviepy
     https://github.com/ageitgey/face_recognition
+    https://github.com/andreafrancia/trash-cli
     https://github.com/andymccurdy/redis-py
     https://github.com/ansible/ansible
     https://github.com/apache/airflow
@@ -962,6 +980,7 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/rabitt/pysox
     https://github.com/ranger/ranger
     https://github.com/ray-project/ray
+    https://github.com/reactive-python/reactpy
     https://github.com/readthedocs/readthedocs.org
     https://github.com/realpython/codetiming
     https://github.com/rpm-software-management/dnf
@@ -1006,6 +1025,7 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/weaveworks/grafanalib
     https://github.com/weaveworks/kubediff
     https://github.com/whylabs/whylogs
+    https://github.com/wting/autojump
     https://github.com/ycm-core/YouCompleteMe
     # https://github.com/ytdl-org/youtube-dl
     https://github.com/yunjey/pytorch-tutorial
@@ -1079,7 +1099,9 @@ OPEN_SOURCE_RUST_REPOS=(
     https://github.com/XAMPPRocky/tokei
     https://github.com/actix/actix-web
     https://github.com/alacritty/alacritty
+    https://github.com/astral-sh/ruff
     https://github.com/bevyengine/bevy
+    https://github.com/clap-rs/clap
     https://github.com/erickt/rust-zmq
     https://github.com/firecracker-microvm/firecracker
     https://github.com/gyscos/cursive
@@ -1114,6 +1136,7 @@ OPEN_SOURCE_SHELL_REPOS=(
     https://github.com/acmesh-official/acme.sh
     https://github.com/alpinelinux/alpine-chroot-install
     https://github.com/asdf-vm/asdf
+    https://github.com/binpash/try
     https://github.com/boostchicken-dev/udm-utilities
     https://github.com/calogica/dbt-expectations
     https://github.com/conda-forge/miniforge
@@ -1202,6 +1225,8 @@ OPEN_SOURCE_TYPESCRIPT_REPOS=(
     https://github.com/apollographql/apollo-server
     https://github.com/apollographql/graphql-tools
     https://github.com/apollographql/react-apollo
+    https://github.com/bluesky-social/atproto
+    https://github.com/bluesky-social/social-app
     https://github.com/botpress/botpress
     https://github.com/coder/code-server
     https://github.com/conwnet/github1s
