@@ -1824,6 +1824,12 @@ if type pandoc &>/dev/null; then
     }
 fi
 
+#################### printenv ####################
+
+env-var-names() {
+   printenv | grep -o '^[^=]*' | sort
+}
+
 #################### ps ####################
 
 p() {
