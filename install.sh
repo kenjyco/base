@@ -189,7 +189,7 @@ do_install() {
     fi
 }
 
-do_install
+do_install || return 1
 parent_pid=$(ps -o ppid= $$)
 if ps | grep "^$parent_pid" | grep 'fish$'; then
     # Parent PID is fish shell
