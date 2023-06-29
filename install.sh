@@ -24,7 +24,11 @@ unset clean extras gui all
 [[ -d /var/lib/cloud/instance ]] && unset gui
 
 do_install() {
-    if [[ -f /usr/bin/apt-get && -n "$(groups | grep -E '(sudo|root)')" ]]; then
+    if [[ -f /usr/bin/apt-get ]]; then
+        if [[ -z "$(groups | grep -E '(sudo|root)')" ]]; then
+            echo -e "\nNot attempting to install/upgrade packages with apt-get..."
+            return 1
+        fi
         codename=$(lsb_release -cs)
         if [[ -s /etc/apt/sources.list.d/official-package-repositories.list ]]; then
             # This is a distro based on Ubuntu (like Linux Mint), so get codename of Ubuntu
@@ -76,7 +80,11 @@ do_install() {
             sudo apt-get install -y recordmydesktop guvcview audacity inkscape gimp gifsicle ripperx lame
             sudo apt-get install -y gparted emelfm2 evince okular retext libreoffice
         fi
-    elif [[ -f /usr/bin/yum && -n "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
+    elif [[ -f /usr/bin/yum ]]; then
+        if [[ -z "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
+            echo -e "\nNot attempting to install/upgrade packages with yum..."
+            return 1
+        fi
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
         sudo yum install -y make tar patch gcc git wget curl llvm xz zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel
 
@@ -182,10 +190,10 @@ do_install() {
         echo -e "\nConsider enabling Windows Subsystem for Linux (WSL 2)"
         echo "  - https://docs.microsoft.com/en-us/windows/wsl/install-win10"
         echo "  - https://docs.microsoft.com/en-us/windows/wsl/install-manual"
-        exit 1
+        return 1
     else
         echo -e "\nNot sure what to do with $(uname) yet"
-        exit 1
+        return 1
     fi
 }
 
