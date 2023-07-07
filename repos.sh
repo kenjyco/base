@@ -124,7 +124,7 @@ OPEN_SOURCE_C_REPOS=(
     https://github.com/mintty/mintty
     https://github.com/mintty/wsltty
     https://github.com/mirror/busybox
-    https://github.com/mirror/dd-wrt
+    # https://github.com/mirror/dd-wrt
     https://github.com/mirror/ncurses
     https://github.com/mirror/xmlrpc-c
     https://github.com/mit-pdos/xv6-public
