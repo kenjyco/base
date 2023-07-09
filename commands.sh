@@ -2006,6 +2006,7 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
         }
 
         nmap-local-machines192() {
+            sudo nmap -sS -p22,7777 192.168.0.0/24
             sudo nmap -sS -p22,7777 192.168.1.0/24
         }
     fi
