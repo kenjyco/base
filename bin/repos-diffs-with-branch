@@ -18,7 +18,12 @@ _doit() {
         branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [[ -n $(git branch -r | grep -v HEAD | grep "${otherbranch}\b") ]]; then
             echo -e "\n===============\n$repo ($branchname)"
-            git diff "$@" $(git merge-base $otherbranch $branchname)..$branchname
+            git status | grep "Your branch is behind" >/dev/null
+            if [[ $? -eq 0 && "origin/$branchname" == "$otherbranch" ]]; then
+                git diff "$@" $(git merge-base $otherbranch $branchname)..$otherbranch
+            else
+                git diff "$@" $(git merge-base $otherbranch $branchname)..$branchname
+            fi
         fi
     done
 }
