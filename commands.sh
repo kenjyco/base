@@ -2124,11 +2124,12 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
         APT_SECURITY_ONLY="/etc/apt/sources.security.only.list"
 
         make-security-only-list() {
-            sudo sh -c "grep ^deb /etc/apt/sources.list | grep security > $APT_SECURITY_ONLY"
+            sudo sh -c "cat /etc/apt/**/*.list | grep ^deb | grep security | sort | uniq > $APT_SECURITY_ONLY"
         }
 
         do-security-upgrades() {
-            [[ ! -f $APT_SECURITY_ONLY ]] && make-security-only-list
+            [[ ! -s $APT_SECURITY_ONLY ]] && make-security-only-list
+            [[ ! -s $APT_SECURITY_ONLY ]] && echo "$APT_SECURITY_ONLY is empty" && return 1
             sudo apt-get update
             apt-get -s dist-upgrade -o Dir::Etc::SourceList=$APT_SECURITY_ONLY -o Dir::Etc::SourceParts=/dev/null |
             grep '^Inst' |
