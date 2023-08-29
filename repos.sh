@@ -230,6 +230,7 @@ OPEN_SOURCE_CPP_REPOS=(
     https://github.com/fish-shell/fish-shell
     https://github.com/ggerganov/imtui
     https://github.com/google/flatbuffers
+    https://github.com/google/snappy
     https://github.com/grpc/grpc
     https://github.com/jarulraj/sqlcheck
     https://github.com/mixxxdj/mixxx
@@ -429,6 +430,7 @@ OPEN_SOURCE_GO_REPOS=(
     https://github.com/charmbracelet/lipgloss
     https://github.com/charmbracelet/vhs
     https://github.com/coder/coder
+    https://github.com/common-fate/granted
     https://github.com/containerd/nerdctl
     https://github.com/containernetworking/cni
     https://github.com/coocood/freecache
@@ -440,11 +442,12 @@ OPEN_SOURCE_GO_REPOS=(
     https://github.com/docker/machine
     https://github.com/elastic/beats
     https://github.com/etcd-io/etcd
-    https://github.com/fluxcd/flux
     https://github.com/fluxcd/flagger
-    https://github.com/fluxcd/flux2
+    https://github.com/fluxcd/flux
     https://github.com/fluxcd/flux-get-started
+    https://github.com/fluxcd/flux2
     https://github.com/flynn/flynn
+    https://github.com/getsops/sops
     https://github.com/gliderlabs/logspout
     https://github.com/gliderlabs/ssh
     https://github.com/go-pg/pg
@@ -533,6 +536,7 @@ OPEN_SOURCE_HASKELL_REPOS=(
 
 OPEN_SOURCE_HTML_REPOS=(
     https://github.com/leonardofaria/bento
+    https://github.com/tailwindlabs/tailwindcss
 )
 
 OPEN_SOURCE_JAVA_REPOS=(
@@ -675,6 +679,7 @@ OPEN_SOURCE_JAVASCRIPT_REPOS=(
     https://github.com/socketio/socket.io
     https://github.com/statsd/statsd
     https://github.com/strapi/strapi
+    https://github.com/sveltejs/kit
     https://github.com/sveltejs/rollup-plugin-svelte
     https://github.com/sveltejs/svelte-loader
     https://github.com/tanabe/markdown-live-preview
@@ -995,12 +1000,14 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/sloria/TextBlob
     https://github.com/soimort/you-get
     https://github.com/sovereign/sovereign
+    https://github.com/sparckles/robyn
     https://github.com/spotify/luigi
     https://github.com/sqlalchemy/alembic
     https://github.com/sqlalchemy/sqlalchemy
     https://github.com/sqlmapproject/sqlmap
     https://github.com/srounet/Pymem
     https://github.com/sshuttle/sshuttle
+    https://github.com/streamlit/streamlit
     https://github.com/stub42/pytz
     https://github.com/sympy/sympy
     https://github.com/tdda/tdda
@@ -1102,10 +1109,12 @@ OPEN_SOURCE_RUST_REPOS=(
     https://github.com/astral-sh/ruff
     https://github.com/bevyengine/bevy
     https://github.com/clap-rs/clap
+    https://github.com/ellie/atuin
     https://github.com/erickt/rust-zmq
     https://github.com/firecracker-microvm/firecracker
     https://github.com/gyscos/cursive
     https://github.com/hyperium/hyper
+    https://github.com/jdxcode/rtx
     https://github.com/mitsuhiko/redis-rs
     https://github.com/oxidecomputer/hubris
     https://github.com/rust-lang/cargo
