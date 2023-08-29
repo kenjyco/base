@@ -35,6 +35,7 @@ OPEN_SOURCE_SCALA_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/scala"
 OPEN_SOURCE_SHELL_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/shell"
 OPEN_SOURCE_SQL_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/sql"
 OPEN_SOURCE_STARLARK_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/starlark"
+OPEN_SOURCE_SVELTE_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/svelte"
 OPEN_SOURCE_SWIFT_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/swift"
 OPEN_SOURCE_TERRAFORM_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/terraform"
 OPEN_SOURCE_TYPESCRIPT_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/typescript"
@@ -1210,6 +1211,10 @@ OPEN_SOURCE_STARLARK_REPOS=(
     https://github.com/bazelbuild/starlark
 )
 
+OPEN_SOURCE_SVELTE_REPOS=(
+    https://github.com/skeletonlabs/skeleton
+)
+
 OPEN_SOURCE_SWIFT_REPOS=(
     https://github.com/p0deje/Maccy
     https://github.com/sindresorhus/Gifski
@@ -1480,6 +1485,11 @@ clone-opensource() {
     for repo in "${OPEN_SOURCE_STARLARK_REPOS[@]}"; do
         git clone --recursive $repo
     done
+    mkdir -p "$OPEN_SOURCE_SVELTE_REPOS_DIR"
+    cd "$OPEN_SOURCE_SVELTE_REPOS_DIR" || return 1
+    for repo in "${OPEN_SOURCE_SVELTE_REPOS[@]}"; do
+        git clone --recursive $repo
+    done
     mkdir -p "$OPEN_SOURCE_SWIFT_REPOS_DIR"
     cd "$OPEN_SOURCE_SWIFT_REPOS_DIR" || return 1
     for repo in "${OPEN_SOURCE_SWIFT_REPOS[@]}"; do
@@ -1547,6 +1557,7 @@ clone-opensource() {
 [[ -d "$OPEN_SOURCE_SHELL_REPOS_DIR" ]] && opensource-shell-repos() { cd "$OPEN_SOURCE_SHELL_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_SQL_REPOS_DIR" ]] && opensource-sql-repos() { cd "$OPEN_SOURCE_SQL_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_STARLARK_REPOS_DIR" ]] && opensource-starlark-repos() { cd "$OPEN_SOURCE_STARLARK_REPOS_DIR"; }
+[[ -d "$OPEN_SOURCE_SVELTE_REPOS_DIR" ]] && opensource-svelte-repos() { cd "$OPEN_SOURCE_SVELTE_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_SWIFT_REPOS_DIR" ]] && opensource-swift-repos() { cd "$OPEN_SOURCE_SWIFT_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_TERRAFORM_REPOS_DIR" ]] && opensource-terraform-repos() { cd "$OPEN_SOURCE_TERRAFORM_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_TYPESCRIPT_REPOS_DIR" ]] && opensource-typescript-repos() { cd "$OPEN_SOURCE_TYPESCRIPT_REPOS_DIR"; }
