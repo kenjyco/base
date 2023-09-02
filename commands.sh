@@ -545,6 +545,7 @@ _postgresql-install() {
 tools-py-install-all() {
     [[ "$1" == "clean" ]] && rm -rf "$HOME/tools-py"
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
+    yt-download-install
     package_names=(asciinema awscli flake8 twine httpie yt-helper jupyter grip rdbtools python-lzf)
     _postgresql-install && package_names+=(sql-helper)
     "$HOME/tools-py/venv/bin/pip3" install ${package_names[@]}
@@ -665,6 +666,8 @@ fi
 yt-download-install() {
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     "$HOME/tools-py/venv/bin/pip3" install yt-helper
+    [[ ! -d "$HOME/tools-py/youtube-dl" ]] && git clone https://github.com/ytdl-org/youtube-dl "$HOME/tools-py/youtube-dl"
+    "$HOME/tools-py/venv/bin/pip3" install -e "$HOME/tools-py/youtube-dl"
     source $HOME/commands.sh
 }
 
@@ -675,6 +678,10 @@ if [[ -s "$HOME/tools-py/venv/bin/yt-download" ]]; then
 
     yt-download-upgrade() {
         "$HOME/tools-py/venv/bin/pip3" install yt-helper --upgrade --upgrade-strategy eager
+        [[ ! -d "$HOME/tools-py/youtube-dl" ]] && git clone https://github.com/ytdl-org/youtube-dl "$HOME/tools-py/youtube-dl"
+        cd "$HOME/tools-py/youtube-dl"
+        git pull
+        cd -
     }
 fi
 
