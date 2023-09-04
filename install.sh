@@ -42,7 +42,9 @@ do_install() {
 
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
         sudo apt-get install -y make build-essential git wget curl llvm xz-utils libssl-dev zlib1g-dev libbz2-dev tk-dev
-        sudo apt-get install -y libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libffi-dev liblzma-dev python-openssl
+        sudo apt-get install -y libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libffi-dev liblzma-dev
+        sudo apt-get install -y python-openssl
+        [[ $? -ne 0 ]] &&  sudo apt-get install -y python3-openssl
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages..."
@@ -76,9 +78,12 @@ do_install() {
                 sudo apt-get install -y xserver-xorg-core xserver-xorg-video-intel xserver-xorg-input-kbd xserver-xorg-input-libinput xvfb
             fi
             echo -e "\nInstalling GUI packages..."
-            sudo apt-get install -y xinit xclip xbindkeys awesome rxvt-unicode-256color feh scrot fonts-inconsolata vlc
+            sudo apt-get install -y xinit xclip xbindkeys awesome feh scrot fonts-inconsolata vlc
+            sudo apt-get install -y rxvt-unicode-256color
+            [[ $? -ne 0 ]] && sudo apt-get install -y rxvt-unicode
             sudo apt-get install -y recordmydesktop guvcview audacity inkscape gimp gifsicle ripperx lame
-            sudo apt-get install -y gparted emelfm2 evince okular retext libreoffice
+            sudo apt-get install -y gparted evince okular retext libreoffice
+            sudo apt-get install -y emelfm2
         fi
     elif [[ -f /usr/bin/yum ]]; then
         if [[ -z "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
