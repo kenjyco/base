@@ -172,6 +172,12 @@ if [[ -n "$BASH_VERSION" ]]; then
     prompt-minimal() {
         PS1="\n\$ "
     }
+
+    # Add function to switch to a minimal prompt that includes dirname/git info
+    prompt-minimal-plus() {
+        PS1="\n\[\e[1;33m\]\[\e[1;33m\]\W\[\e[1;32m\]\$(parse_git_branch) \$\[\e[0m\] "
+    }
+
 elif [[ -n "$ZSH_VERSION" ]]; then
     # Set tab completion and matching options
     zstyle ':completion:*' completer _expand _complete _ignored _approximate
@@ -244,11 +250,17 @@ elif [[ -n "$ZSH_VERSION" ]]; then
          PROMPT="
 %# "
     }
+
+    # Add function to switch to a minimal prompt that includes dirname/git info
+    prompt-minimal-plus() {
+         PROMPT="
+%{$fg_bold[yellow]%}%c%{$fg[green]%}\$(parse_git_branch) %# %{$reset_color%}"
+    }
 fi
 
 prompt-select-mode() {
     echo "Select prompt mode"
-    choices=(verbose terse minimal)
+    choices=(verbose terse minimal minimal-plus)
     select choice in "${choices[@]}"; do
         echo "$choice" > $HOME/.selected_prompt_mode
         break
@@ -260,6 +272,8 @@ prompt-select-mode() {
         prompt-terse
     elif [[ "$choice" = "minimal" ]]; then
         prompt-minimal
+    elif [[ "$choice" = "minimal-plus" ]]; then
+        prompt-minimal-plus
     fi
 }
 
@@ -2449,6 +2463,8 @@ else
         prompt-terse
     elif [[ "$prompt_mode" = "minimal" ]]; then
         prompt-minimal
+    elif [[ "$prompt_mode" = "minimal-plus" ]]; then
+        prompt-minimal-plus
     else
         echo -e "\nDo not understand this prompt_mode: $prompt_mode"
         rm $HOME/.selected_prompt_mode
