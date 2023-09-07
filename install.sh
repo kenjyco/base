@@ -41,19 +41,21 @@ do_install() {
         sudo apt-get update || return 1
 
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
-        sudo apt-get install -y make build-essential git wget curl llvm xz-utils libssl-dev zlib1g-dev libbz2-dev tk-dev
-        sudo apt-get install -y libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libffi-dev liblzma-dev
+        sudo apt-get install -y make build-essential git wget curl llvm xz-utils libssl-dev zlib1g-dev libbz2-dev tk-dev || return 1
+        sudo apt-get install -y libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libffi-dev liblzma-dev || return 1
         sudo apt-get install -y python-openssl
-        [[ $? -ne 0 ]] &&  sudo apt-get install -y python3-openssl
+        if [[ $? -ne 0 ]]; then
+            sudo apt-get install -y python3-openssl || return 1
+        fi
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages..."
-            sudo apt-get install -y vim zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr sqlite3 imagemagick pandoc lynx exuberant-ctags
-            sudo apt-get install -y gtypist typespeed
+            sudo apt-get install -y vim zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr sqlite3 imagemagick pandoc lynx exuberant-ctags || return 1
+            sudo apt-get install -y gtypist typespeed || return 1
         fi
 
         echo -e "\nInstalling ntp..."
-        sudo apt-get install -y ntp
+        sudo apt-get install -y ntp || return 1
 
         echo -e "\nRefreshing Ubuntu keys..."
         sudo apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com
@@ -75,14 +77,16 @@ do_install() {
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
                 echo -e "\nInstalling Xorg..."
-                sudo apt-get install -y xserver-xorg-core xserver-xorg-video-intel xserver-xorg-input-kbd xserver-xorg-input-libinput xvfb
+                sudo apt-get install -y xserver-xorg-core xserver-xorg-video-intel xserver-xorg-input-kbd xserver-xorg-input-libinput xvfb || return 1
             fi
             echo -e "\nInstalling GUI packages..."
-            sudo apt-get install -y xinit xclip xbindkeys awesome feh scrot fonts-inconsolata vlc
+            sudo apt-get install -y xinit xclip xbindkeys awesome feh scrot fonts-inconsolata vlc || return 1
             sudo apt-get install -y rxvt-unicode-256color
-            [[ $? -ne 0 ]] && sudo apt-get install -y rxvt-unicode
-            sudo apt-get install -y recordmydesktop guvcview audacity inkscape gimp gifsicle ripperx lame
-            sudo apt-get install -y gparted evince okular retext libreoffice
+            if [[ $? -ne 0 ]]; then
+                sudo apt-get install -y rxvt-unicode || return 1
+            fi
+            sudo apt-get install -y recordmydesktop guvcview audacity inkscape gimp gifsicle ripperx lame || return 1
+            sudo apt-get install -y gparted evince okular retext libreoffice || return 1
             sudo apt-get install -y emelfm2
         fi
     elif [[ -f /usr/bin/yum ]]; then
@@ -91,29 +95,29 @@ do_install() {
             return 1
         fi
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
-        sudo yum install -y make tar patch gcc git wget curl llvm xz zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel
+        sudo yum install -y make tar patch gcc git wget curl llvm xz zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel || return 1
 
         echo -e "\nInstalling perl..."
-        sudo yum install -y perl
+        sudo yum install -y perl || return 1
 
         echo -e "\nInstalling/upgrading packages needed for modern bash..."
-        sudo yum install -y bash-completion
+        sudo yum install -y bash-completion || return 1
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages..."
-            sudo yum install -y vim-enhanced zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr ImageMagick pandoc lynx ctags
-            sudo yum install -y gtypist typespeed
-            sudo yum install -y lshw lsof banner rsync
+            sudo yum install -y vim-enhanced zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr ImageMagick pandoc lynx ctags || return 1
+            sudo yum install -y gtypist typespeed || return 1
+            sudo yum install -y lshw lsof banner rsync || return 1
         fi
 
         echo -e "\nInstalling ntp..."
-        sudo yum install -y ntp
+        sudo yum install -y ntp || return 1
 
         if [[ -z "$wsl" ]]; then
             echo -e "\nInstalling/upgrading docker and docker-compose..."
-            sudo yum install -y yum-utils
+            sudo yum install -y yum-utils || return 1
             sudo yum-config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-            sudo yum install -y docker-ce docker-compose
+            sudo yum install -y docker-ce docker-compose || return 1
             sudo usermod -aG docker ${USER}
             sudo systemctl enable docker.service
             sudo systemctl enable containerd.service
@@ -121,12 +125,12 @@ do_install() {
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
                 echo -e "\nInstalling Xorg..."
-                sudo yum install -y xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-drivers xorg-x11-drv-intel xorg-x11-font-utils xorg-x11-server-utils libinput xorg-x11-drv-libinput xorg-x11-server-Xdmx xorg-x11-server-Xvfb
+                sudo yum install -y xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-drivers xorg-x11-drv-intel xorg-x11-font-utils xorg-x11-server-utils libinput xorg-x11-drv-libinput xorg-x11-server-Xdmx xorg-x11-server-Xvfb || return 1
             fi
             echo -e "\nInstalling GUI packages..."
-                sudo yum install -y xorg-x11-xinit xclip xbindkeys awesome rxvt-unicode feh levien-inconsolata-fonts vlc
-                sudo yum install -y rr wodim guvcview audacity inkscape gimp gifsicle lame
-                sudo yum install -y gparted emelfm2 evince okular retext libreoffice
+                sudo yum install -y xorg-x11-xinit xclip xbindkeys awesome rxvt-unicode feh levien-inconsolata-fonts vlc || return 1
+                sudo yum install -y rr wodim guvcview audacity inkscape gimp gifsicle lame || return 1
+                sudo yum install -y gparted emelfm2 evince okular retext libreoffice || return 1
         fi
     elif [[ $(uname) == "Darwin" ]]; then
         if [[ ! -f /usr/local/bin/brew && ! -f /opt/homebrew/bin/brew ]]; then
