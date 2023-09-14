@@ -111,7 +111,7 @@ do_install() {
         fi
 
         echo -e "\nInstalling ntp..."
-        sudo yum install -y ntp || return 1
+        sudo yum install -y ntp-refclock || return 1
 
         if [[ -z "$wsl" ]]; then
             echo -e "\nInstalling/upgrading docker and docker-compose..."
