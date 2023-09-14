@@ -3,4 +3,10 @@
 path=
 [[ -d "$1" ]] && path="$1" && shift
 
-repos-list "$path" | tr '\n' '\0' | xargs -0 -I {} dirname {} | sort | uniq -c | sort -k1,1nr -k2
+repos_list_output=$(repos-list "$path")
+num_repos=$(echo -e "$repos_list_output" | wc -l)
+if [[ $num_repos -eq 1 ]]; then
+    echo "$repos_list_output" | uniq -c
+elif [[ $num_repos -gt 1 ]]; then
+    echo -e "$repos_list_output" | tr '\n' '\0' | xargs -0 -I {} dirname {} | sort | uniq -c | sort -k1,1nr -k2
+fi
