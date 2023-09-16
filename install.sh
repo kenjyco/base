@@ -37,6 +37,9 @@ do_install() {
             )
         fi
 
+        echo -e "\nRefreshing Ubuntu keys..."
+        sudo apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com || return 1
+
         echo -e "\nUpdating apt-get package listing"
         sudo apt-get update || return 1
 
@@ -56,9 +59,6 @@ do_install() {
 
         echo -e "\nInstalling ntp..."
         sudo apt-get install -y ntp || return 1
-
-        echo -e "\nRefreshing Ubuntu keys..."
-        sudo apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com
 
         if [[ -z "$wsl" ]]; then
             echo -e "\nInstalling/upgrading docker and docker-compose..."
