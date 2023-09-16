@@ -1,7 +1,6 @@
 # Source this file
 
-REPOS_DIR="$HOME/repos"
-OPEN_SOURCE_REPOS_DIR="$REPOS_DIR/opensource"
+OPEN_SOURCE_REPOS_DIR="$HOME/repos/opensource"
 OPEN_SOURCE_ALGORITHMS_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/algorithms"
 OPEN_SOURCE_BOOKS_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/books"
 OPEN_SOURCE_C_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/c"
@@ -1523,7 +1522,6 @@ clone-opensource() {
     cd "$oldpwd"
 }
 
-[[ -d "$REPOS_DIR" ]] && repos() { cd "$REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR" ]] && opensource-algorithms-repos() { cd "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_BOOKS_REPOS_DIR" ]] && opensource-books-repos() { cd "$OPEN_SOURCE_BOOKS_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_C_REPOS_DIR" ]] && opensource-c-repos() { cd "$OPEN_SOURCE_C_REPOS_DIR"; }
