@@ -125,10 +125,12 @@ do_install() {
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
                 echo -e "\nInstalling Xorg..."
-                sudo yum install -y xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-drivers xorg-x11-drv-intel xorg-x11-font-utils xorg-x11-server-utils libinput xorg-x11-drv-libinput xorg-x11-server-Xdmx xorg-x11-server-Xvfb || return 1
+                sudo yum install -y xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-drivers xorg-x11-drv-intel xorg-x11-font-utils libinput xorg-x11-drv-libinput xorg-x11-server-Xdmx xorg-x11-server-Xvfb || return 1
+                sudo yum install -y xorg-x11-server-utils
             fi
             echo -e "\nInstalling GUI packages..."
-                sudo yum install -y xorg-x11-xinit xclip xbindkeys awesome rxvt-unicode feh levien-inconsolata-fonts vlc || return 1
+                sudo yum install -y xorg-x11-xinit xclip xbindkeys awesome rxvt-unicode feh levien-inconsolata-fonts || return 1
+                sudo yum install -y vlc
                 sudo yum install -y rr wodim guvcview audacity inkscape gimp gifsicle lame || return 1
                 sudo yum install -y gparted emelfm2 evince okular retext libreoffice || return 1
         fi
