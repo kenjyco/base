@@ -96,6 +96,7 @@ do_install() {
         fi
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
         sudo yum install -y make tar patch gcc git wget curl llvm xz zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel || return 1
+        sudo yum install -y python3-devel
 
         echo -e "\nInstalling perl..."
         sudo yum install -y perl || return 1
