@@ -89,9 +89,10 @@ def backup(source='.', destination='', mirror=False, excludes=[],
 
     rsync_cmd += exclude_string + ' {} {}'.format(repr(source), repr(destination))
     print(rsync_cmd)
-    choice = input('Continue? (Y/N): ')
-    if not choice.lower().startswith('y'):
-        return
+    if confirm:
+        choice = input('Continue? (Y/N): ')
+        if not choice.lower().startswith('y'):
+            return
 
     return subprocess.call(rsync_cmd, shell=True)
 
