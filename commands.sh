@@ -1777,11 +1777,15 @@ la10() {
 
 if type lsblk &>/dev/null; then
     partitions() {
-        lsblk -o name,size,type,mountpoint | egrep '(part|lvm)'
+        lsblk -o name,size,type,fstype,mountpoint | egrep '(part|lvm|NAME)'
     }
 
     partitions-by-size() {
-        lsblk -o name,size,type,mountpoint | grep 'part' | sort -k2 -h
+        lsblk -o name,size,type,fstype,mountpoint | grep -E '(part|NAME)' | sort -k2 -h
+    }
+
+    drives-external() {
+        lsblk -o name,size,fstype,label,mountpoint | grep -E '(sd[a-k][0-9]|NAME)' | grep -vE '(iso9660)'
     }
 fi
 
