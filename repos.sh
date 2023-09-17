@@ -124,7 +124,7 @@ OPEN_SOURCE_C_REPOS=(
     https://github.com/mintty/mintty
     https://github.com/mintty/wsltty
     https://github.com/mirror/busybox
-    # https://github.com/mirror/dd-wrt
+    # https://github.com/mirror/dd-wrt              # 20 GB on disk
     https://github.com/mirror/ncurses
     https://github.com/mirror/xmlrpc-c
     https://github.com/mit-pdos/xv6-public
@@ -251,7 +251,7 @@ OPEN_SOURCE_C_SHARP_REPOS=(
     https://github.com/chocolatey/choco
     https://github.com/craftworkgames/MonoGame.Extended
     https://github.com/dotnet/csharplang
-    # https://github.com/monogame/monogame
+    https://github.com/monogame/monogame
     https://github.com/monogame/monogame.samples
 )
 
@@ -566,7 +566,7 @@ OPEN_SOURCE_JAVA_REPOS=(
     https://github.com/greenrobot/EventBus
     https://github.com/iluwatar/java-design-patterns
     https://github.com/jenkinsci/jenkins
-    # https://github.com/mockito/mockit
+    # https://github.com/mockito/mockit             # requires login
     https://github.com/neo4j/graph-data-science
     https://github.com/neo4j/neo4j
     https://github.com/nginx-clojure/nginx-clojure
@@ -1034,7 +1034,7 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/whylabs/whylogs
     https://github.com/wting/autojump
     https://github.com/ycm-core/YouCompleteMe
-    # https://github.com/ytdl-org/youtube-dl
+    https://github.com/ytdl-org/youtube-dl
     https://github.com/yunjey/pytorch-tutorial
     https://github.com/zulip/zulip
 )
@@ -1264,7 +1264,7 @@ OPEN_SOURCE_TYPESCRIPT_REPOS=(
     https://github.com/mrdoob/three.js
     https://github.com/nestjs/nest
     https://github.com/nodejs/llhttp
-    # https://github.com/onelang/OneLang
+    https://github.com/onelang/OneLang
     https://github.com/percona/grafana-dashboards
     https://github.com/prevwong/craft.js
     https://github.com/prisma-labs/graphql-playground
@@ -1282,7 +1282,7 @@ OPEN_SOURCE_TYPESCRIPT_REPOS=(
     https://github.com/vercel/async-sema
     https://github.com/vercel/commerce
     https://github.com/vercel/hyper
-    # https://github.com/vercel/integrations
+    # https://github.com/vercel/integrations        # requires login
     https://github.com/vercel/og-image
     https://github.com/vercel/react-keyframes
     https://github.com/vercel/static-fun
