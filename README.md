@@ -3,8 +3,6 @@ base
 
 - Jump to [Usage section](https://github.com/kenjyco/base/blob/master/README.md#usage)
   below for examples
-- Jump to [Greps section](https://github.com/kenjyco/base/blob/master/README.md#greps)
-  below for examples
 
 Use `base` as an **easy way** to install the minimum essential libs/programs
 for opensource exploration and development. Works for Linux (Debian-based
@@ -262,22 +260,30 @@ Examples:
 - **`grep-history-comments`**: use `grep-history` to find entries that start
   with `#`
 
-# Greps
+### The `example-usage` commands
 
-Some things that are interesting to pass to `grepit` while in the root of this
-`base` repo
+> If you called `install.sh` to do setup and the `~/.base_path` file exists,
+> several shell functions prefixed with `example-usage--` will be available.
+> They all go to wherever the base repo is cloned, use `grepit` to find actual
+> examples and usage patterns for certain things, then go back to wherever you
+> were.
 
-- `repos-list` to see examples of cycling through git repositories under the
-  current directory and performing some actions
-- `oldpwd` to see examples of shell funcs that do things in another directory
-  and return you to where you started before invocation
-- `"date +"` to see examples of some "format strings" passed to the `date`
-  command
+- **`example-usage--date-format-strings`**: show examples of some "format
+  strings" passed to the `date` command
     - <https://man7.org/linux/man-pages/man1/date.1.html> (jump to "FORMATS"
       section
     - <https://strftime.org>
-
-Some things to pass to grepit in general
-
-- `-i todo` to look for "todos"
-- `-iE '(todo|to-do)'` to look for even more todo/to-do items
+- **`example-usage--substitutions-perl`**: show examples of using `perl` and
+  "regular expressions" to modify output (that was piped to perl)
+- **`example-usage--substitutions-sed`**: show examples of using `sed` and
+  "regular expressions" to modify output (that was piped to sed)
+- **`example-usage--test-regex-match`**: show examples of using `=~` in a shell
+  conditional test to see if some text matches a "regular expression"
+- **`example-usage--grepit`**: show examples of using `grepit`
+- **`example-usage--findit`**: show examples of using `findit`
+- **`example-usage--iterate-repos`**: show examples of iterating over repos
+  (mostly using `repos-list` with `xargs`)
+- **`example-usage--user-input-bash`**: show examples of using `read -p` to get
+  user input when using bash (i.e. `[[ -n "$BASH_VERSION" ]]`)
+- **`example-usage--user-input-zsh`**: show examples of using `vared -p` to get
+  user input when using zsh (i.e. `[[ -n "$ZSH_VERSION" ]]`)

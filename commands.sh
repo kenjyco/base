@@ -35,6 +35,74 @@ if [[ -f "$HOME/.base_path" ]]; then
         fi
         cd "$oldpwd"
     }
+
+    example-usage--date-format-strings() {
+        oldpwd=$(pwd)
+        base
+        grepit "date +" | grep -o "\$(date +[^\)]*)" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--substitutions-perl() {
+        oldpwd=$(pwd)
+        base
+        grepit "\bperl -" | grep -o "perl .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--substitutions-sed() {
+        oldpwd=$(pwd)
+        base
+        grepit "\bsed\b -" | grep -o "sed .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--test-regex-match() {
+        oldpwd=$(pwd)
+        base
+        grepit "=~" | grep -o "\[\[.*\]\]" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--grepit() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "grepit " | grep -vE "(grepit #|# grepit|grepit to handle)" | grep -o "grepit .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--findit() {
+        oldpwd=$(pwd)
+        base
+        (grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit|\\\$.findit)" | grep -o "findit .*"
+        grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit)" | grep -o "\$(findit .*"
+        grepit --exclude=README.md "^ *echo .*findit " | grep -v "Usage: findit" | grep -o "findit .*") |
+           sort | uniq -c | sort -nr
+
+        cd "$oldpwd"
+    }
+
+    example-usage--iterate-repos() {
+        oldpwd=$(pwd)
+        base
+        grepit "for repo in \$(" | grep -o "for repo in .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--user-input-bash() {
+        oldpwd=$(pwd)
+        base
+        grepit "read -p" | grep -o "read -p .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--user-input-zsh() {
+        oldpwd=$(pwd)
+        base
+        grepit "vared -p" | grep -o "vared -p .*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
 fi
 if [[ -f "$HOME/.dotfiles_path" ]]; then
     dotfiles() {
