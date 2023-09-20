@@ -1529,7 +1529,19 @@ if type git &>/dev/null; then
     git-stash-parts() {
         git stash push -p -m "(Interactively selected parts to stash)"
     }
-fi
+
+    git-stash-all-with-comment() {
+        comment="$1"
+        if [[ -z "$comment" ]]; then
+            if [[ -n "$BASH_VERSION" ]]; then
+                read -p "Enter stash comment: " comment
+            elif [[ -n "$ZSH_VERSION" ]]; then
+                vared -p "Enter stash comment: " -c comment
+            fi
+        fi
+        [[ -z "$comment" ]] && return 1
+        git stash push -m "$comment"
+    }
 
     git-update-submodules() {
         git submodule foreach --recursive git pull origin master
@@ -1538,6 +1550,7 @@ fi
     alias glog="git log --find-renames --no-merges --pretty=format:'%C(yellow)%h %C(reset)%s %C(red)%ad %C(blue)%an%C(reset)'"
     alias glog2="glog --date local --name-status"
     alias glog3="git log --find-renames --stat --reverse -p"
+fi
 
 #################### grep ####################
 
