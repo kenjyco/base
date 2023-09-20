@@ -1457,6 +1457,10 @@ if type git &>/dev/null; then
             fi
         fi
     }
+
+    git-stash-parts() {
+        git stash push -p
+    }
 fi
 
     git-update-submodules() {
