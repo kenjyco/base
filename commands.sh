@@ -1949,7 +1949,7 @@ psome() {
     if [[ $(uname) == "Darwin" ]]; then
         p | grep -vE '(/Applications/.*\.app/|/Library/.*\.app/|/System/Library|/usr/libexec|/usr/sbin|com\.docker\.|ssh-agent|bash$|zsh$|fish$)' | less -FX
     else
-        p | grep -vE '(chromium|firefox| \/usr\/| \/lib\/| \/sbin\/|dbus-launch|nm-applet|cinnamon|blueberry|avahi-daemon|ssh-agent|sshd:|bash$|zsh$|fish$|urxvt$)' | less -FX
+        p | grep -vE '(chromium|firefox| \/usr\/| \/lib\/| \/sbin\/|dbus-launch|nm-applet|cinnamon|blueberry|avahi-daemon|sd-pam|gpg-agent|dbus-broker|dbus-daemon|ibus-daemon|scdaemon|fusermount3|systemd-userwork|ssh-agent|sshd:|bash$|zsh$|fish$|urxvt$)' | less -FX
     fi
 }
 
