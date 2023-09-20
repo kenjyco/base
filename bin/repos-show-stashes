@@ -10,7 +10,6 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     cd "$repo"
     lines=()
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    # for stashname in $(git stash list | awk -F: '{print $1}' 2>/dev/null); do
     for stashname in $(git stash list | awk -F: '{print $1}' 2>/dev/null); do
         lines+=("\n\n$stashname\n\n")
         stashoutput=$(git stash show -p $stashname)
