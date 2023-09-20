@@ -1527,7 +1527,7 @@ if type git &>/dev/null; then
     }
 
     git-stash-parts() {
-        git stash push -p
+        git stash push -p -m "(Interactively selected parts to stash)"
     }
 fi
 
