@@ -2368,7 +2368,7 @@ venv-quick() {
 #################### vim ####################
 
 if type vim &>/dev/null; then
-    [[ -z "$EDITOR" ]] && export EDITOR=$(which vim)
+    [[ -z "$EDITOR" || "$EDITOR" =~ .*nano$ ]] && export EDITOR=$(which vim)
 
     if [[ -d "$HOME/.plugin_install_dir/vundle/vim-dirdiff" ]]; then
         vimdiff-dirs() {
