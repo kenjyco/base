@@ -1877,6 +1877,8 @@ if type lsblk &>/dev/null; then
         lsblk -o name,size,type,fstype,label,mountpoint | grep -E '(part *iso9660|NAME)'
     }
 
+    lsblk-all-fields-json() {
+        lsblk -OJ | less -FX
     }
 fi
 
