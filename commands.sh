@@ -1990,6 +1990,17 @@ if type pstree &>/dev/null; then
     }
 fi
 
+#################### pumount ####################
+
+if type pumount &>/dev/null; then
+    pumount-these() {
+        for name in "$@"; do
+            echo -e "\n% pumount $name"
+            pumount "$name"
+        done
+    }
+fi
+
 #################### pwd ####################
 
 here() {
