@@ -1862,15 +1862,21 @@ la10() {
 
 if type lsblk &>/dev/null; then
     partitions() {
-        lsblk -o name,size,type,fstype,mountpoint | egrep '(part|lvm|NAME)'
+        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)'
+    }
+
+    partitions-uuid() {
+        lsblk -s -o name,size,type,fstype,uuid,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)'
     }
 
     partitions-by-size() {
-        lsblk -o name,size,type,fstype,mountpoint | grep -E '(part|NAME)' | sort -k2 -h
+        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)' | sort -k2 -hr
     }
 
-    drives-external() {
-        lsblk -o name,size,fstype,label,mountpoint | grep -E '(sd[a-k][0-9]|NAME)' | grep -vE '(iso9660)'
+    partitions-iso9960-only() {
+        lsblk -o name,size,type,fstype,label,mountpoint | grep -E '(part *iso9660|NAME)'
+    }
+
     }
 fi
 
@@ -2104,11 +2110,11 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
         }
     fi
 
-    if type blkid &>/dev/null; then
-        partition-labels-and-uuids() {
-            sudo blkid
-        }
-    fi
+    # if type blkid &>/dev/null; then
+    #     partitions-labels-and-uuids() {
+    #         sudo blkid
+    #     }
+    # fi
 
     if type nmap &>/dev/null; then
         nmap-local-machines10() {
@@ -2424,6 +2430,12 @@ watchit() {
 if type acpi &>/dev/null; then
     watch-battery() {
         watchit -d acpi
+    }
+fi
+
+if type lsblk &>/dev/null; then
+    watch-partitions() {
+        watchit "lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)'"
     }
 fi
 
