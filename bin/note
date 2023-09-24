@@ -46,7 +46,11 @@ if [[ -z "$content" ]]; then
 elif [[ "$content" == $(echo -e "$template") ]]; then
     rm "$fname"
 else
-    echo -e "$content" | tail -n 30
+    num_tail_lines=30
+    if tput lines &>/dev/null; then
+        num_tail_lines=$(($(tput lines) -5))
+    fi
+    echo -e "$content" | tail -n $num_tail_lines
     if [[ -n "$generated" ]]; then
         echo -en "\n--------------------\nsave as\n> "
         read newfile
