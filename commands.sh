@@ -585,6 +585,10 @@ if type apt-cache &>/dev/null; then
     upgradable() {
         apt list --upgradable
     }
+
+    apt-sources() {
+        cat /etc/apt/sources.list /etc/apt/sources.list.d/*
+    }
 fi
 
 if type yum &>/dev/null; then
