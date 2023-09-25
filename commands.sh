@@ -2311,6 +2311,11 @@ if type tmux &>/dev/null; then
         session_name="${1-0}"
         tmux -2 attach-session -t $session_name -d 2>/dev/null || tmux -2 new-session -s $session_name
     }
+
+    Tmux-join() {
+        session_name="${1-0}"
+        tmux -2 attach-session -t $session_name
+    }
 fi
 
 #################### tree ####################
