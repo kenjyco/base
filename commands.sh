@@ -2313,7 +2313,16 @@ if type tmux &>/dev/null; then
     }
 
     Tmux-join() {
-        session_name="${1-0}"
+        if [[ -z "$1" ]]; then
+            tmux_sessions_full=$(tmux ls)
+            choices=($(echo -e "$tmux_sessions_full" | perl -pe 's/^([^:]+):.*$/$1/'))
+            echo -e "$tmux_sessions_full\n\n"
+            select session_name in "${choices[@]}"; do
+                break
+            done
+        else
+            session_name="$1"
+        fi
         tmux -2 attach-session -t $session_name
     }
 fi
