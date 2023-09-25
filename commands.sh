@@ -2313,13 +2313,24 @@ if type tmux &>/dev/null; then
     }
 
     Tmux-join() {
+        tmux_sessions_full=$(tmux ls 2>/dev/null)
+        if [[ -z "$tmux_sessions_full" ]]; then
+            echo "No tmux sessions to join"
+            return 1
+        fi
+
+        num_sessions=$(echo -e "$tmux_sessions_full" | wc -l)
+        session_names=($(echo -e "$tmux_sessions_full" | perl -pe 's/^([^:]+):.*$/$1/'))
+
         if [[ -z "$1" ]]; then
-            tmux_sessions_full=$(tmux ls)
-            choices=($(echo -e "$tmux_sessions_full" | perl -pe 's/^([^:]+):.*$/$1/'))
-            echo -e "$tmux_sessions_full\n\n"
-            select session_name in "${choices[@]}"; do
-                break
-            done
+            if [[ $num_sessions -eq 1 ]]; then
+                session_name="${session_names[0]}"
+            else
+                echo -e "$tmux_sessions_full\n"
+                select selection in "${session_names[@]}"; do
+                    break
+                done
+            fi
         else
             session_name="$1"
         fi
