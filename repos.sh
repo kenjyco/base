@@ -1156,8 +1156,6 @@ OPEN_SOURCE_SHELL_REPOS=(
     https://github.com/kaitai-io/kaitai_struct
     https://github.com/kubernetes-sigs/kubespray
     https://github.com/kudobuilder/operators
-    https://github.com/learnbyexample/Command-line-text-processing
-    https://github.com/learnbyexample/scripting_course
     https://github.com/lowendbox/lowendscript
     https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion
     https://github.com/nginx-proxy/nginx-proxy
