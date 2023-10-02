@@ -223,7 +223,7 @@ Examples:
   findit --depth 4 --sizes "+1M, -10M" --exclude_dirs ".cache" --pipesort "du -sh"
   findit --type d --exclude_dirs ".git" --depth 2
   findit --exclude_dirs "node_modules, .git, venv, build, alembic, __pycache__, .pytest_cache" --exclude_exts "json, yml, xml, txt, md" --pipe "wc -l"
-  findit --exclude_dirs "venv, env" --exclude_exts "js, json, java, map, htm, html, pyc" --pattern "test*" --pipe "grep assert" | egrep "(==|!=)"
+  findit --exclude_dirs "venv, env" --exclude_exts "js, json, java, map, htm, html, pyc" --pattern "test*" --pipe "grep assert" | grep -E "(==|!=)"
   findit --pattern "__init__.py" --exclude_dirs "venv" --not_empty --pipesort "wc -l" | sort -n
   findit --depth 4 --type d --exclude_dirs ".git, *.egg-info, venv" --not_empty --pipesort "du -sh {}" | sort -h
   findit --exclude_dirs "venv" --pattern "settings.ini" --zero | xargs -0 -I {} sh -c "echo \"\n\n\n==================\n{}\"; cat {}"
@@ -235,7 +235,7 @@ Examples:
   --color -R` in use, as well as `--exclude` for many file extensions` and
   `--exclude-dir` for many directories); any options received get passed to `grep`
     - `-i pattern` to ignore case in search
-    - `-E '(pattern1|pattern2|..)'` to match multiple patterns (i.e. `egrep`)
+    - `-E '(pattern1|pattern2|..)'` to match multiple patterns
     - `-B 1 -A 2 pattern` to show context lines (1 before match and 2 after)
     - `\bpattern\b` to only match when pattern is surrounded by a "word
       boundary" character (i.e. don't match a sub-string in a longer word)

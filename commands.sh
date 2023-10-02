@@ -705,7 +705,7 @@ if [[ -s "$HOME/tools-py/venv/bin/flake8" ]]; then
 
     flakeit() {
         flake8 --exclude='venv/*' . |
-        egrep -v "(line too long|import not at top of file|imported but unused|do not assign a lambda|do not use bare 'except')"
+        grep -Ev "(line too long|import not at top of file|imported but unused|do not assign a lambda|do not use bare 'except')"
     }
 
     flakeit-full() {
@@ -987,9 +987,9 @@ if type circleci &>/dev/null; then
         JOB="$1"
         [[ -z "$JOB" ]] && JOB=test
 
-        AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ~/.aws/credentials 2>/dev/null | egrep -o '\S+$')
-        AWS_DEFAULT_REGION=$(grep region ~/.aws/config 2>/dev/null | egrep -o '\S+$')
-        AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ~/.aws/credentials 2>/dev/null | egrep -o '\S+$')
+        AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ~/.aws/credentials 2>/dev/null | grep -Eo '\S+$')
+        AWS_DEFAULT_REGION=$(grep region ~/.aws/config 2>/dev/null | grep -Eo '\S+$')
+        AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ~/.aws/credentials 2>/dev/null | grep -Eo '\S+$')
 
         circleci config validate || return 1
         time circleci local execute --job $JOB \
@@ -1190,7 +1190,7 @@ if type docker &>/dev/null; then
     }
 
     docker-show-untagged-images() {
-        docker images | egrep '(<none>|REPOSITORY)'
+        docker images | grep -E '(<none>|REPOSITORY)'
     }
 
     docker-show-all-images() {
@@ -1573,13 +1573,13 @@ system-info() {
     echo -e "$prompt_char hostname\n$(hostname)\n"
     if type ifconfig &>/dev/null; then
         echo -e "$prompt_char ifconfig | grep ... | awk '{print \$2}'"
-        ifconfig | grep "inet addr" | egrep -v ":(127|172)" | awk '{print $2}' | cut -c 6-
-        ifconfig | grep "inet [12]" | egrep -v "(127|172)" | awk '{print $2}'
+        ifconfig | grep "inet addr" | grep -Ev ":(127|172)" | awk '{print $2}' | cut -c 6-
+        ifconfig | grep "inet [12]" | grep -Ev "(127|172)" | awk '{print $2}'
         echo
     fi
     if type ip &>/dev/null; then
         echo -e "$prompt_char ip addr show | grep ... | awk '{print \$2}'"
-        ip addr show | grep "inet " | egrep -v " (127|172)" | awk '{print $2}'
+        ip addr show | grep "inet " | grep -Ev " (127|172)" | awk '{print $2}'
         echo
     fi
     if type wget &>/dev/null; then
@@ -1718,15 +1718,15 @@ grepit-exact() {
 grep-object-info() {
     object="$1"
     [[ -z "$object" ]] && return 1
-    grepit-no-docs "\b$object\b" | egrep -o "($object\(|$object(\.\w+)+\(?)" |
-    sort | uniq -c | sort -k1,1nr -k2 | egrep -v '.(js|py)$'
+    grepit-no-docs "\b$object\b" | grep -Eo "($object\(|$object(\.\w+)+\(?)" |
+    sort | uniq -c | sort -k1,1nr -k2 | grep -Ev '.(js|py)$'
 }
 
 grep-object-info-no-tests() {
     object="$1"
     [[ -z "$object" ]] && return 1
-    grepit-no-docs-no-tests "\b$object\b" | egrep -o "($object\(|$object(\.\w+)+\(?)" |
-    sort | uniq -c | sort -k1,1nr -k2 | egrep -v '.(js|py)$'
+    grepit-no-docs-no-tests "\b$object\b" | grep -Eo "($object\(|$object(\.\w+)+\(?)" |
+    sort | uniq -c | sort -k1,1nr -k2 | grep -Ev '.(js|py)$'
 }
 
 #################### helpme ####################

@@ -3,8 +3,8 @@
 if type networksetup &>/dev/null; then
     networksetup -listallhardwareports | grep Device | awk '{print $2}' | tr '\n' '\0' | xargs -0 -n1 ipconfig getifaddr
 elif type ifconfig &>/dev/null; then
-    ifconfig | grep "inet addr" | egrep -v ":(127|172)" | awk '{print $2}' | cut -c 6-
-    ifconfig | grep "inet [12]" | egrep -v " (127|172)" | awk '{print $2}'
+    ifconfig | grep "inet addr" | grep -Ev ":(127|172)" | awk '{print $2}' | cut -c 6-
+    ifconfig | grep "inet [12]" | grep -Ev " (127|172)" | awk '{print $2}'
 elif type ip &>/dev/null; then
-    ip addr show | grep "inet " | egrep -v " (127|172)" | awk '{print $2}'
+    ip addr show | grep "inet " | grep -Ev " (127|172)" | awk '{print $2}'
 fi
