@@ -2,6 +2,7 @@
 
 OPEN_SOURCE_REPOS_DIR="$HOME/repos/opensource"
 OPEN_SOURCE_ALGORITHMS_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/algorithms"
+OPEN_SOURCE_BALLERINA_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/ballerina"
 OPEN_SOURCE_BOOKS_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/books"
 OPEN_SOURCE_C_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/c"
 OPEN_SOURCE_CLOJURE_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/clojure"
@@ -40,6 +41,7 @@ OPEN_SOURCE_TERRAFORM_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/terraform"
 OPEN_SOURCE_TYPESCRIPT_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/typescript"
 OPEN_SOURCE_VIMSCRIPT_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/vimscript"
 OPEN_SOURCE_YAML_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/yaml"
+OPEN_SOURCE_ZIG_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/zig"
 OPEN_SOURCE_MIXED_REPOS_DIR="$OPEN_SOURCE_REPOS_DIR/mixed"
 
 OPEN_SOURCE_ALGORITHMS_REPOS=(
@@ -66,6 +68,11 @@ OPEN_SOURCE_ALGORITHMS_REPOS=(
     https://github.com/TheAlgorithms/Rust
     https://github.com/TheAlgorithms/Scala
     https://github.com/TheAlgorithms/Swift
+)
+
+OPEN_SOURCE_BALLERINA_REPOS=(
+   https://github.com/ballerina-platform/ballerina-lang
+   https://github.com/ballerina-platform/ballerina-standard-library
 )
 
 OPEN_SOURCE_BOOKS_REPOS=(
@@ -1314,6 +1321,18 @@ OPEN_SOURCE_YAML_REPOS=(
     https://github.com/fluxcd/helm-operator-get-started
 )
 
+OPEN_SOURCE_ZIG_REPOS=(
+    https://codeberg.org/dude_the_builder/ziglyph
+    https://github.com/Vexu/arocc
+    https://github.com/hexops/mach
+    https://github.com/mitchellh/libxev
+    https://github.com/mitchellh/libxev
+    https://github.com/oven-sh/bun
+    https://github.com/ratfactor/ziglings
+    https://github.com/tigerbeetle/tigerbeetle
+    https://github.com/ziglang/zig
+)
+
 OPEN_SOURCE_MIXED_REPOS=(
     https://github.com/PostHog/posthog
     https://github.com/datahub-project/datahub
@@ -1330,6 +1349,11 @@ clone-opensource() {
     mkdir -p "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR"
     cd "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR" || return 1
     for repo in "${OPEN_SOURCE_ALGORITHMS_REPOS[@]}"; do
+        git clone --recursive $repo
+    done
+    mkdir -p "$OPEN_SOURCE_BALLERINA_REPOS_DIR"
+    cd "$OPEN_SOURCE_BALLERINA_REPOS_DIR" || return 1
+    for repo in "${OPEN_SOURCE_BALLERINA_REPOS[@]}"; do
         git clone --recursive $repo
     done
     mkdir -p "$OPEN_SOURCE_BOOKS_REPOS_DIR"
@@ -1522,6 +1546,11 @@ clone-opensource() {
     for repo in "${OPEN_SOURCE_YAML_REPOS[@]}"; do
         git clone --recursive $repo
     done
+    mkdir -p "$OPEN_SOURCE_ZIG_REPOS_DIR"
+    cd "$OPEN_SOURCE_ZIG_REPOS_DIR" || return 1
+    for repo in "${OPEN_SOURCE_ZIG_REPOS[@]}"; do
+        git clone --recursive $repo
+    done
     mkdir -p "$OPEN_SOURCE_MIXED_REPOS_DIR"
     cd "$OPEN_SOURCE_MIXED_REPOS_DIR" || return 1
     for repo in "${OPEN_SOURCE_MIXED_REPOS[@]}"; do
@@ -1531,6 +1560,7 @@ clone-opensource() {
 }
 
 [[ -d "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR" ]] && opensource-algorithms-repos() { cd "$OPEN_SOURCE_ALGORITHMS_REPOS_DIR"; }
+[[ -d "$OPEN_SOURCE_BALLERINA_REPOS_DIR" ]] && opensource-ballerina-repos() { cd "$OPEN_SOURCE_BALLERINA_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_BOOKS_REPOS_DIR" ]] && opensource-books-repos() { cd "$OPEN_SOURCE_BOOKS_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_C_REPOS_DIR" ]] && opensource-c-repos() { cd "$OPEN_SOURCE_C_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_CLOJURE_REPOS_DIR" ]] && opensource-clojure-repos() { cd "$OPEN_SOURCE_CLOJURE_REPOS_DIR"; }
@@ -1569,6 +1599,7 @@ clone-opensource() {
 [[ -d "$OPEN_SOURCE_TYPESCRIPT_REPOS_DIR" ]] && opensource-typescript-repos() { cd "$OPEN_SOURCE_TYPESCRIPT_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_VIMSCRIPT_REPOS_DIR" ]] && opensource-vimscript-repos() { cd "$OPEN_SOURCE_VIMSCRIPT_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_YAML_REPOS_DIR" ]] && opensource-yaml-repos() { cd "$OPEN_SOURCE_YAML_REPOS_DIR"; }
+[[ -d "$OPEN_SOURCE_ZIG_REPOS_DIR" ]] && opensource-zig-repos() { cd "$OPEN_SOURCE_ZIG_REPOS_DIR"; }
 [[ -d "$OPEN_SOURCE_MIXED_REPOS_DIR" ]] && opensource-mixed-repos() { cd "$OPEN_SOURCE_MIXED_REPOS_DIR"; }
 
 if [[ -d "$OPEN_SOURCE_REPOS_DIR" ]]; then
