@@ -149,6 +149,7 @@ OPEN_SOURCE_C_REPOS=(
     https://github.com/tmux/tmux
     https://github.com/tony/NCURSES-Programming-HOWTO-examples
     https://github.com/torvalds/linux
+    https://github.com/tursodatabase/libsql
     https://github.com/twitter/pelikan
     https://github.com/twitter/twemproxy
     https://github.com/uber/h3
@@ -357,9 +358,11 @@ OPEN_SOURCE_DOCS_REPOS=(
     https://github.com/nefe/You-Dont-Need-jQuery
     https://github.com/onqtam/awesome-cmake
     https://github.com/ossu/computer-science
+    https://github.com/oven-sh/awesome-bun
     https://github.com/papers-we-love/papers-we-love
     https://github.com/public-apis/public-apis
     https://github.com/pytorch/examples
+    https://github.com/rajasegar/awesome-htmx
     https://github.com/razum2um/awesome-clojure
     https://github.com/rockerBOO/awesome-neovim
     https://github.com/satwikkansal/wtfpython
@@ -570,6 +573,7 @@ OPEN_SOURCE_JAVA_REPOS=(
     https://github.com/neo4j/graph-data-science
     https://github.com/neo4j/neo4j
     https://github.com/nginx-clojure/nginx-clojure
+    https://github.com/opensearch-project/OpenSearch
     https://github.com/portswigger/backslash-powered-scanner
     https://github.com/seata/seata
     https://github.com/signalapp/Signal-Android
@@ -609,6 +613,7 @@ OPEN_SOURCE_JAVASCRIPT_REPOS=(
     https://github.com/axios/axios
     https://github.com/axios/moxios
     https://github.com/babel/babel
+    https://github.com/bigskysoftware/htmx
     https://github.com/bookshelf/bookshelf
     https://github.com/brunch/brunch
     https://github.com/chalk/chalk
@@ -758,6 +763,8 @@ OPEN_SOURCE_KOTLIN_REPOS=(
 
 OPEN_SOURCE_LUA_REPOS=(
     https://github.com/Kong/kong
+    https://github.com/ThePrimeagen/harpoon
+    https://github.com/ThePrimeagen/vim-be-good
     https://github.com/twitter/torch-dataset
     https://github.com/twitter/torch-distlearn
 )
@@ -1149,6 +1156,7 @@ OPEN_SOURCE_SHELL_REPOS=(
     https://github.com/boostchicken-dev/udm-utilities
     https://github.com/calogica/dbt-expectations
     https://github.com/conda-forge/miniforge
+    https://github.com/docker/docker-bench-security
     https://github.com/gabrielelana/awesome-terminal-fonts
     https://github.com/graphql/graphql-spec
     https://github.com/iredmail/iRedMail
@@ -1243,10 +1251,12 @@ OPEN_SOURCE_TYPESCRIPT_REPOS=(
     https://github.com/conwnet/github1s
     https://github.com/devhubapp/devhub
     https://github.com/dotansimha/graphql-code-generator
+    https://github.com/drizzle-team/drizzle-orm
     https://github.com/eclipsesource/jsonforms
     https://github.com/elastic/kibana
     https://github.com/electron/fiddle
     https://github.com/electron/i18n
+    https://github.com/elysiajs/elysia
     https://github.com/facebook/docusaurus
     https://github.com/firebase/firebase-tools
     https://github.com/feathersjs/feathers
