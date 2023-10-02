@@ -46,6 +46,7 @@ do_install() {
         echo -e "\nInstalling/upgrading packages needed for pyenv..."
         sudo apt-get install -y make build-essential git wget curl llvm xz-utils libssl-dev zlib1g-dev libbz2-dev tk-dev || return 1
         sudo apt-get install -y libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev libffi-dev liblzma-dev || return 1
+        sudo apt-get install -y python3-venv python3-dev || return 1
         sudo apt-get install -y python-openssl
         if [[ $? -ne 0 ]]; then
             sudo apt-get install -y python3-openssl || return 1
