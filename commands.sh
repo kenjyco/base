@@ -1500,7 +1500,7 @@ show-mac-garbage() {
 }
 
 delete-mac-garbage() {
-    show-mac-garbage -print0 | xargs -0 rm -rfv
+    show-mac-garbage --pipe "rm -rfv"
 }
 
 #################### fontsize ####################
