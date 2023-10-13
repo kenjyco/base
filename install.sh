@@ -219,7 +219,7 @@ if ps | grep "^$parent_pid" | grep 'fish$'; then
 else
     # The install.sh was sourced by bash or zsh
     if [[ -s "$HOME/commands.sh" ]]; then
-        source "$HOME/commands.sh"
+        BASE_INSTALL_INTERACTIVE_MODE=yes source "$HOME/commands.sh"
     else
         return
     fi
