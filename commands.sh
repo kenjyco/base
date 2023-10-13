@@ -36,6 +36,12 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
+    dotfiles-install() {
+        base_parent=$(dirname $(cat "$HOME/.base_path"))
+        git clone https://github.com/kenjyco/dotfiles "$base_parent/dotfiles"
+        "$base_parent/dotfiles/setup.bash"
+    }
+
     example-usage--date-format-strings() {
         oldpwd=$(pwd)
         base

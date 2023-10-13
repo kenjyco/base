@@ -252,9 +252,13 @@ fi
 
 if type vim &>/dev/null || type tmux &>/dev/null; then
     if [[ ! -s "$HOME/.vimrc" && ! -s "$HOME/.tmux.conf" && -f "$HOME/.base_path" ]]; then
-        echo -e "\nCloning dotfiles repo since vim and/or tmux installed, but no local conf found"
-        base_parent=$(dirname $(cat "$HOME/.base_path"))
-        git clone https://github.com/kenjyco/dotfiles "$base_parent/dotfiles"
-        "$base_parent/dotfiles/setup.bash"
+        echo -e "\nNo local config found for vim or tmux."
+        unset yn
+        if [[ -n "$BASH_VERSION" ]]; then
+            read -p "Clone and setup dotfiles? [y/n] " yn
+        elif [[ -n "$ZSH_VERSION" ]]; then
+            vared -p "Clone and setup dotfiles? [y/n] " -c yn
+        fi
+        [[ "$yn" =~ [yY].* ]] && dotfiles-install
     fi
 fi
