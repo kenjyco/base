@@ -229,15 +229,20 @@ if [[ -n "$BASH_VERSION" ]]; then
     # Use '**' in pathname expansions like in ZSH
     shopt -s globstar
 
-    # Set prompt
-    PS1="[\h] \[\e[1;33m\]\[\e[1;33m\]\W\[\e[1;32m\]\$(parse_git_branch) \$\[\e[0m\] "
+    # Save original prompt
+    _PS1_ORIG="$PS1"
+
+    # Add function to switch to the default prompt
+    prompt-system-default() {
+        PS1="$_PS1_ORIG"
+    }
 
     # Add function to switch to a verbose prompt
     prompt-verbose() {
         PS1="\n\[\e[1;32m\]\u@\h:\[\e[0m\]\w\[\e[1;32m\]\$(parse_git_branch)\n\[\e[1;33m\]\$ \[\e[0m\]"
     }
 
-    # Add function to switch to a terse prompt (default)
+    # Add function to switch to a terse prompt
     prompt-terse() {
         PS1="[\h] \[\e[1;33m\]\[\e[1;33m\]\W\[\e[1;32m\]\$(parse_git_branch) \$\[\e[0m\] "
     }
@@ -304,8 +309,13 @@ elif [[ -n "$ZSH_VERSION" ]]; then
     autoload -U colors && colors
     setopt PROMPT_SUBST
 
-    # Set prompt
-    PROMPT="[%m] %{$fg_bold[yellow]%}%c%{$fg[green]%}\$(parse_git_branch) %# %{$reset_color%}"
+    # Save original prompt
+    _PROMPT_ORIG="$PROMPT"
+
+    # Add function to switch to the default prompt
+    prompt-system-default() {
+        PROMPT="$_PROMPT_ORIG"
+    }
 
     # Add function to switch to a verbose prompt
     prompt-verbose() {
@@ -314,7 +324,7 @@ elif [[ -n "$ZSH_VERSION" ]]; then
 %{$fg[yellow]%}%# %{$reset_color%}"
     }
 
-    # Add function to switch to a terse prompt (default)
+    # Add function to switch to a terse prompt
     prompt-terse() {
          PROMPT="[%m] %{$fg_bold[yellow]%}%c%{$fg[green]%}\$(parse_git_branch) %# %{$reset_color%}"
     }
@@ -334,13 +344,15 @@ fi
 
 prompt-select-mode() {
     echo "Select prompt mode"
-    choices=(verbose terse minimal minimal-plus)
+    choices=(system-default verbose terse minimal minimal-plus)
     select choice in "${choices[@]}"; do
         echo "$choice" > $HOME/.selected_prompt_mode
         break
     done
 
-    if [[ "$choice" = "verbose" ]]; then
+    if [[ "$choice" = "system-default" ]]; then
+        prompt-system-default
+    elif [[ "$choice" = "verbose" ]]; then
         prompt-verbose
     elif [[ "$choice" = "terse" ]]; then
         prompt-terse
@@ -2600,23 +2612,27 @@ if [[ -n "$_private_files" ]]; then
         source "$private"
     done
 fi
-if [[ $(whoami) == "root" ]]; then
-    prompt-verbose
-else
+
+if [[ -n "$BASE_INSTALL_INTERACTIVE_MODE" ]]; then
     [[ ! -f "$HOME/.selected_prompt_mode" ]] && prompt-select-mode
-    [[ ! -f "$HOME/.selected_prompt_mode" ]] && echo "terse" > "$HOME/.selected_prompt_mode"
-    prompt_mode=$(cat $HOME/.selected_prompt_mode)
-    if [[ "$prompt_mode" = "verbose" ]]; then
-        prompt-verbose
-    elif [[ "$prompt_mode" = "terse" ]]; then
-        prompt-terse
-    elif [[ "$prompt_mode" = "minimal" ]]; then
-        prompt-minimal
-    elif [[ "$prompt_mode" = "minimal-plus" ]]; then
-        prompt-minimal-plus
-    else
-        echo -e "\nDo not understand this prompt_mode: $prompt_mode"
-        rm $HOME/.selected_prompt_mode
-    fi
-    unset prompt_mode
+    [[ ! -f "$HOME/.selected_prompt_mode" ]] && echo "system-default" > "$HOME/.selected_prompt_mode"
+else
+    [[ ! -f "$HOME/.selected_prompt_mode" ]] && echo "system-default" > "$HOME/.selected_prompt_mode"
 fi
+
+prompt_mode=$(cat $HOME/.selected_prompt_mode)
+if [[ "$prompt_mode" = "system-default" ]]; then
+    prompt-system-default
+elif [[ "$prompt_mode" = "verbose" ]]; then
+    prompt-verbose
+elif [[ "$prompt_mode" = "terse" ]]; then
+    prompt-terse
+elif [[ "$prompt_mode" = "minimal" ]]; then
+    prompt-minimal
+elif [[ "$prompt_mode" = "minimal-plus" ]]; then
+    prompt-minimal-plus
+else
+    echo -e "\nDo not understand this prompt_mode: $prompt_mode"
+    rm $HOME/.selected_prompt_mode
+fi
+unset prompt_mode
