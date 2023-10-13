@@ -482,12 +482,20 @@ get-completions() {
     fi
 }
 
+# Prompt user to see if they want to update any completions they have setup for their shell
 custom_fpath="$(_get_zsh_custom_fpath)"
+unset yn
 if [[ -n "$BASH_VERSION" ]]; then
-    [[ ! -f $bash_completion_dir/git-completion.bash ]] && get-completions
+    if [[ ! -f $bash_completion_dir/git-completion.bash && -n "$BASE_INSTALL_INTERACTIVE_MODE" ]]; then
+        read -p "Update completions for bash? [y/n] " yn
+        [[ "$yn" =~ [yY].* ]] && get-completions
+    fi
     source "$bash_completion_file"
 elif [[ -n "$ZSH_VERSION" ]]; then
-    [[ ! -f "$custom_fpath/git-completion.zsh" ]] && get-completions
+    if [[ ! -f "$custom_fpath/git-completion.zsh" && -n "$BASE_INSTALL_INTERACTIVE_MODE" ]]; then
+        vared -p "Update completions for zsh? [y/n] " -c yn
+        [[ "$yn" =~ [yY].* ]] && get-completions
+    fi
     [[ -z "$(echo ${fpath[@]} | grep $custom_fpath)" ]] && fpath=($custom_fpath $fpath)
     compinit -i
 fi
