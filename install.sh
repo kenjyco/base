@@ -3,10 +3,8 @@
 
 # Create symbolic link to commands.sh and bin/
 [[ -L "$HOME/commands.sh" ]] && rm "$HOME/commands.sh"
-[[ -L "$HOME/commands.fish" ]] && rm "$HOME/commands.fish"
 [[ -L "$HOME/bin-base" ]] && rm "$HOME/bin-base"
 [[ -f ./commands.sh ]] && ln -s "$(pwd)/commands.sh" "$HOME/commands.sh"
-[[ -f ./commands.fish ]] && ln -s "$(pwd)/commands.fish" "$HOME/commands.fish"
 [[ -d ./bin ]] && ln -s "$(pwd)/bin" "$HOME/bin-base"
 [[ "$(basename $PWD)" == "base" ]] && echo "$PWD" > "$HOME/.base_path"
 
@@ -214,6 +212,9 @@ do_install || return 1
 parent_pid=$(ps -o ppid= $$)
 if ps | grep "^$parent_pid" | grep 'fish$'; then
     # Parent PID is fish shell
+    # Create symbolic link to commands.fish
+    [[ -L "$HOME/commands.fish" ]] && rm "$HOME/commands.fish"
+    [[ -f ./commands.fish ]] && ln -s "$(pwd)/commands.fish" "$HOME/commands.fish"
     [[ -s "$HOME/commands.fish" ]] && echo -e "Install complete! Be sure to run the following...\n\n    source $HOME/commands.fish"
 else
     # The install.sh was sourced by bash or zsh
