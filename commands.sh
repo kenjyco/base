@@ -2283,7 +2283,7 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
         APT_SECURITY_ONLY="/etc/apt/sources.security.only.list"
 
         make-security-only-list() {
-            sudo sh -c "cat /etc/apt/**/*.list | grep ^deb | grep security | sort | uniq > $APT_SECURITY_ONLY"
+            sudo bash -c "shopt -s globstar; cat /etc/apt/**/*.list | grep ^deb | grep security | sort | uniq > $APT_SECURITY_ONLY"
         }
 
         do-security-upgrades() {
