@@ -2629,7 +2629,9 @@ else
 fi
 
 prompt_mode=$(cat $HOME/.selected_prompt_mode)
-if [[ "$prompt_mode" = "system-default" ]]; then
+if [[ -n "$SSH_CONNECTION" ]]; then
+    prompt-terse
+elif [[ "$prompt_mode" = "system-default" ]]; then
     prompt-system-default
 elif [[ "$prompt_mode" = "verbose" ]]; then
     prompt-verbose
