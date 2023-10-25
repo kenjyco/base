@@ -2010,9 +2010,9 @@ pa() {
 
 psome() {
     if [[ $(uname) == "Darwin" ]]; then
-        p | grep -vE '(/Applications/.*\.app/|/Library/.*\.app/|/System/Library|/usr/libexec|/usr/sbin|com\.docker\.|docker serve|ssh-agent|sshd:|cloudphotod|SafeEjectGPUAgent|bash$|zsh$|fish$)' | less -FX
+        p | grep -vE '(/Applications/.*\.app/|/Library/.*\.app/|/System/Library|/usr/libexec|/usr/sbin|com\.docker\.|docker serve|ssh-agent|sshd:|cloudphotod|SafeEjectGPUAgent|bash$|zsh$|fish$)'
     else
-        p | grep -vE '(chromium|firefox| /usr/| /lib/| /sbin/| /bin/login|dbus-launch|nm-applet|cinnamon|blueberry|avahi-daemon|sd-pam|gpg-agent|dbus-broker|dbus-daemon|ibus-daemon|scdaemon|fusermount3|systemd-userwork|bpfilter_umh|wpa_supplicant|xinit /|ssh-agent|sshd:|/snap|update-notifier|nemo-desktop|lightdm|syndaemon|mintUpdate|mintreport-tray|csd-.*|bash$|zsh$|fish$|urxvt$)' | less -FX
+        p | grep -vE '(chromium|firefox| /usr/| /lib/| /sbin/| /bin/login|dbus-launch|nm-applet|cinnamon|blueberry|avahi-daemon|sd-pam|gpg-agent|dbus-broker|dbus-daemon|ibus-daemon|scdaemon|fusermount3|systemd-userwork|bpfilter_umh|wpa_supplicant|xinit /|ssh-agent|sshd:|/snap|update-notifier|nemo-desktop|lightdm|syndaemon|mintUpdate|mintreport-tray|csd-.*|bash$|zsh$|fish$|urxvt$)'
     fi
 }
 
