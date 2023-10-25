@@ -1045,6 +1045,18 @@ if type aws &>/dev/null; then
     beanstalk-total-versions() {
         aws elasticbeanstalk describe-application-versions | grep ApplicationVersionArn | wc -l
     }
+
+    aws-region-names() {
+        aws ec2 describe-regions | grep RegionName | perl -pe 's/^.*: "(.*)",/$1/' | sort
+    }
+
+    aws-region-cycle() {
+        [[ -z "$@" ]] && echo -e "\nNo aws command was specified" && return 1
+        for region_name in $(aws-region-names | tr '\n' '\0' | xargs -0); do
+            echo -e "\n\n%%%%%%%%%%%%%%%\n  $(echo $region_name | tr '[a-z]' '[A-Z]')\n%%%%%%%%%%%%%%%"
+            aws --region $region_name "$@"
+        done
+    }
 fi
 
 #################### cat ####################
