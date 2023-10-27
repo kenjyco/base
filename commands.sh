@@ -1961,6 +1961,11 @@ if type nmcli &>/dev/null; then
         sudo nmcli --ask dev wifi connect "$ssid"
     }
 
+    nmcli-reconnect-to() {
+        ssid="$1"
+        [[ -z "$ssid" ]] && echo "No SSID specified" && return 1
+        nmcli con up "$ssid"
+    }
 fi
 
 #################### pandoc ####################
