@@ -576,16 +576,16 @@ if type pyenv &>/dev/null; then
     fi
 
     pyenv-list-installable() {
-        pyenv install --list | grep '^  [2-4]' | less -FX
+        pyenv install --list | grep '^  [2-4]'
     }
 
     pyenv-list-grep() {
         arg=${1-'^  [2-4]'}
-        pyenv install --list | grep $arg | less -FX
+        pyenv install --list | grep $arg
     }
 
     pyenv-list-installable-all() {
-        pyenv install --list | less -FX
+        pyenv install --list
     }
 
     pyenv-list-envs() {
@@ -601,11 +601,11 @@ fi
 
 if type apt-cache &>/dev/null; then
     acs() {
-        apt-cache search $1 | grep -i "^$1" | less -FX
+        apt-cache search $1 | grep -i "^$1"
     }
 
     acs2() {
-        apt-cache search $1 | grep -i "\b$1\b" | less -FX
+        apt-cache search $1 | grep -i "\b$1\b"
     }
 
     upgradable() {
@@ -619,7 +619,7 @@ fi
 
 if type yum &>/dev/null; then
     yum-search() {
-        yum search $1 | grep -i "^$1" | less -FX
+        yum search $1 | grep -i "^$1"
     }
 fi
 
@@ -1065,22 +1065,22 @@ cat-with-titles() {
     for fname in $(ls -1 $@); do
         echo -e "\n===============\n$fname"
         cat "$fname"
-    done | less -FX
+    done
 }
 
 #################### compgen ####################
 
 if type compgen &>/dev/null; then
     funcs-list() {
-        compgen -A function | grep -v -E '(^_|nvm_)' | LL_COLLATE=c sort | less -FX
+        compgen -A function | grep -v -E '(^_|nvm_)' | LL_COLLATE=c sort
     }
 
     funcs-list-all() {
-        compgen -A function | LL_COLLATE=c sort | less -FX
+        compgen -A function | LL_COLLATE=c sort
     }
 
     funcs-list-hidden() {
-        compgen -A function | grep '^_' | LL_COLLATE=c sort | less -FX
+        compgen -A function | grep '^_' | LL_COLLATE=c sort
     }
 fi
 
@@ -1111,35 +1111,35 @@ if type curl &>/dev/null; then
     news-search() {
         query=$1
         [[ -z "$query" ]] && return 1
-        curl -s "us.getnews.tech/${query},n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/${query},n=50,reverse"
     }
 
     news-cat-business() {
-        curl -s "us.getnews.tech/category=business,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=business,n=50,reverse"
     }
 
     news-cat-entertainment() {
-        curl -s "us.getnews.tech/category=entertainment,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=entertainment,n=50,reverse"
     }
 
     news-cat-general() {
-        curl -s "us.getnews.tech/category=general,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=general,n=50,reverse"
     }
 
     news-cat-health() {
-        curl -s "us.getnews.tech/category=health,reverse,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=health,reverse,n=50,reverse"
     }
 
     news-cat-science() {
-        curl -s "us.getnews.tech/category=science,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=science,n=50,reverse"
     }
 
     news-cat-sports() {
-        curl -s "us.getnews.tech/category=sports,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=sports,n=50,reverse"
     }
 
     news-cat-health() {
-        curl -s "us.getnews.tech/category=health,n=50,reverse" | less -rFX
+        curl -s "us.getnews.tech/category=health,n=50,reverse"
     }
 fi
 
@@ -1310,7 +1310,7 @@ duh() {
             args=(.[!.]* *)
         fi
     fi
-    du -sch ${args[@]} | sort -h | less -FX
+    du -sch ${args[@]} | sort -h
 }
 
 #################### /etc ####################
@@ -1698,7 +1698,7 @@ grepit-tabs() {
 }
 
 grepit-count() {
-    grepit -c "$@" | grep -v '0$' | sort -k2,2nr -k1,1 -t ':' | less -FX
+    grepit -c "$@" | grep -v '0$' | sort -k2,2nr -k1,1 -t ':'
 }
 
 grepit-cut() {
@@ -1824,17 +1824,17 @@ helpme() {
 unalias f 2>/dev/null
 f() {
     if [[ -z "$@" ]]; then
-        ls -gothr "$@" | grep '^-' | less -FX
+        ls -gothr "$@" | grep '^-'
     else
-        ls -gothrd "$@" | grep '^-' | less -FX
+        ls -gothrd "$@" | grep '^-'
     fi
 }
 unalias fa 2>/dev/null
 fa() {
     if [[ -z "$@" ]]; then
-        ls -gothrA "$@" | grep '^-' | less -FX
+        ls -gothrA "$@" | grep '^-'
     else
-        ls -gothrdA "$@" | grep '^-' | less -FX
+        ls -gothrdA "$@" | grep '^-'
     fi
 }
 f5() {
@@ -1853,17 +1853,17 @@ fa10() {
 unalias d 2>/dev/null
 d() {
     if [[ -z "$@" || "$1" == "$HOME" ]]; then
-        ls -gothr "$@" | grep '^d' | less -FX
+        ls -gothr "$@" | grep '^d'
     else
-        ls -gothrd "$@" | grep '^d' | less -FX
+        ls -gothrd "$@" | grep '^d'
     fi
 }
 unalias da 2>/dev/null
 da() {
     if [[ -z "$@" || "$1" == "$HOME" ]]; then
-        ls -gothrA "$@" | grep '^d' | less -FX
+        ls -gothrA "$@" | grep '^d'
     else
-        ls -gothrAd "$@" | grep '^d' | less -FX
+        ls -gothrAd "$@" | grep '^d'
     fi
 }
 d5() {
@@ -1881,11 +1881,11 @@ da10() {
 
 unalias l 2>/dev/null
 l() {
-    ls -gothr "$@" | grep '^l' | less -FX
+    ls -gothr "$@" | grep '^l'
 }
 unalias la 2>/dev/null
 la() {
-    ls -gothrA "$@" | grep '^l' | less -FX
+    ls -gothrA "$@" | grep '^l'
 }
 l5() {
     l "$@" | tail -n 5
@@ -1920,7 +1920,7 @@ if type lsblk &>/dev/null; then
     }
 
     lsblk-all-fields-json() {
-        lsblk -OJ | less -FX
+        lsblk -OJ
     }
 fi
 
@@ -1931,7 +1931,7 @@ man-f() {
 }
 
 man-list() {
-    ls /usr/share/man/man[1-8]/* | less -FX
+    ls /usr/share/man/man[1-8]/*
 }
 
 man-grep() {
@@ -1999,17 +1999,17 @@ env-var-names() {
 
 p() {
     if [[ $(uname) == "Darwin" ]]; then
-        ps -eo user,pid,ppid,tty,%cpu,%mem,command | grep -vE '(^_|^root)' | less -FX
+        ps -eo user,pid,ppid,tty,%cpu,%mem,command | grep -vE '(^_|^root)'
     else
-        ps -eo user,pid,ppid,tty,cmd:200 | grep -v ' \[' | less -FX
+        ps -eo user,pid,ppid,tty,cmd:200 | grep -v ' \['
     fi
 }
 
 pa() {
     if [[ $(uname) == "Darwin" ]]; then
-        ps -eo user,pid,ppid,tty,%cpu,%mem,command | less -FX
+        ps -eo user,pid,ppid,tty,%cpu,%mem,command
     else
-        ps -eo user,pid,ppid,tty,cmd:200 | less -FX
+        ps -eo user,pid,ppid,tty,cmd:200
     fi
 }
 
@@ -2023,16 +2023,16 @@ psome() {
 
 if [[ $(uname) == "Darwin" && -n "$grep_perl" ]]; then
     papps() {
-        p | grep -oP '/(Applications|Library)/.*?\.app/' | sort | uniq -c | sort -k1,1nr -k2 | less -FX
+        p | grep -oP '/(Applications|Library)/.*?\.app/' | sort | uniq -c | sort -k1,1nr -k2
     }
 fi
 
 if type pstree &>/dev/null; then
     pst() {
         if [[ $(uname) == "Darwin" ]]; then
-            pstree -u $USER | less -FX
+            pstree -u $USER
         else
-            pstree -np | less -FX
+            pstree -np
         fi
     }
 fi
@@ -2385,11 +2385,11 @@ fi
 
 if type tree &>/dev/null; then
     t() {
-        tree -F $@ | less -FX
+        tree -F $@
     }
 
     td() {
-        tree -Fd $@ | less -FX
+        tree -Fd $@
     }
 fi
 
