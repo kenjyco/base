@@ -1971,13 +1971,17 @@ fi
 #################### pandoc ####################
 
 if type pandoc &>/dev/null; then
+    mdcat () {
+        pandoc -t plain $@
+    }
+
     mdless () {
         pandoc -t plain $@ | less -FX
     }
 
     if type lynx &>/dev/null; then
         mdview () {
-            pandoc $@ | lynx -stdin
+            pandoc $@ | lynx -vikeys -stdin
         }
     fi
 
