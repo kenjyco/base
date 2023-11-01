@@ -8,4 +8,4 @@ if [[ $(uname) =~ "MINGW" ]]; then
     PIP="$env_name/Scripts/pip"
 fi
 
-$PIP freeze | less -FX
+$PIP freeze

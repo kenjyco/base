@@ -30,4 +30,4 @@ _doit() {
     fi
 }
 
-_doit | less -FX
+_doit

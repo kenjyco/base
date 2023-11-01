@@ -22,4 +22,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
         echo -e "\n===============\n$repo ($branchname) $last_commit_date\n$status_branch"
     fi
     [[ -n "$_swps" ]] && echo -e "\n$_swps"
-done | less -rFX
+done

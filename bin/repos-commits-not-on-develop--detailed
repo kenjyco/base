@@ -19,4 +19,4 @@ _doit() {
     done
 }
 
-_doit | less -rFX
+_doit

@@ -10,4 +10,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
         echo -e "\n===============\n$repo"
         git tag -n99 $tag
     fi
-done | less -rFX
+done

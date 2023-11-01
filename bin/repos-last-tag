@@ -7,4 +7,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     cd "$repo"
     output=$(git describe --tags $(git rev-list --tags --max-count=1 2>/dev/null) 2>/dev/null)
     [[ -n "$output" ]] && echo -e "\n===============\n$repo\n$output"
-done | less -rFX
+done

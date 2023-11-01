@@ -21,4 +21,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
             echo -e "$output"
         done
     fi
-done | $_colordiff | less -rFX
+done | $_colordiff

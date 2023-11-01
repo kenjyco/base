@@ -28,4 +28,4 @@ _doit() {
     done
 }
 
-_doit $@ | $_colordiff | less -rFX
+_doit $@ | $_colordiff

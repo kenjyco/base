@@ -7,4 +7,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     cd "$repo"
     output=$(git log --tags --simplify-by-decoration --pretty="format:%ci %d" | grep "tag:" | perl -pe 's/^([^\(]+).*tag: ([^\),]+).*/$1$2/')
     [[ -n "$output" ]] && echo -e "\n===============\n$repo\n$output"
-done | less -rFX
+done

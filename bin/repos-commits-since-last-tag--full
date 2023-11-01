@@ -13,4 +13,4 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     else
         echo "No tag found"
     fi
-done | less -rFX
+done
