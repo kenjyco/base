@@ -18,6 +18,9 @@ else
     title="$note"
 fi
 
+found=$(find . -maxdepth 1 -name "${note}*" -printf '%p')
+[[ -n "$found" && "$generated" = "yes" ]] && note="${note}-$(uuidgen | head -c6)"
+
 if [[ "$note" =~ \.md$ ]]; then
     fname="${note}"
 else
