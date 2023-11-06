@@ -2336,9 +2336,9 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
             # Modify/append line of /etc/hosts to set `127.0.1.1 $newhostname`
             matched=$(grep 127.0.1.1 /etc/hosts)
             if [[ -z "$matched" ]]; then
-                sudo sh -c "echo 127.0.1.1    $newhostname >> /etc/hosts"
+                sudo sh -c "echo 127.0.1.1    $newhostname ${newhostname}.localdomain >> /etc/hosts"
             else
-                sudo sh -c "sed -i \"/127.0.1.1/c\127.0.1.1    $newhostname\" /etc/hosts" 2>/dev/null
+                sudo sh -c "sed -i \"/127.0.1.1/c\127.0.1.1    $newhostname ${newhostname}.localdomain\" /etc/hosts" 2>/dev/null
             fi
 
             echo -e "results of 'hostname' command:"
