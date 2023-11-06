@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 note=$1
-newdate="#### \`$(date +'%Y_%m%d %a %r')\`"
+newdate="## \`$(date +'%Y_%m%d %a %r')\`"
 generated=
 if [[ -z "$note" ]]; then
     note="$(date +'%Y_%m%d--%a_hour_%H')"
