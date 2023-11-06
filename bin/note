@@ -54,7 +54,7 @@ else
         num_tail_lines=$(($(tput lines) -5))
     fi
     echo -e "$content" | tail -n $num_tail_lines
-    if [[ -n "$generated" ]]; then
+    if [[ "$fname" =~ ^[0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9] ]]; then
         echo -en "\n--------------------\nsave as\n> "
         read newfile
         if [[ -n "$newfile" ]]; then
