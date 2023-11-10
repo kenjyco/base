@@ -1082,6 +1082,18 @@ if type compgen &>/dev/null; then
     funcs-list-hidden() {
         compgen -A function | grep '^_' | LL_COLLATE=c sort
     }
+elif type bash &>/dev/null; then
+    funcs-list() {
+        bash -c 'source ~/commands.sh && funcs-list'
+    }
+
+    funcs-list-all() {
+        bash -c 'source ~/commands.sh && funcs-list-all'
+    }
+
+    funcs-list-hidden() {
+        bash -c 'source ~/commands.sh && funcs-list-hidden'
+    }
 fi
 
 #################### crontab ####################
