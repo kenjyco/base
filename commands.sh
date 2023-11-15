@@ -1490,6 +1490,10 @@ findit-logs() {
     findit-default-excludes "$@" --type f --exts "log" --complex "! -size 0"
 }
 
+findit-json-slow() {
+    findit-default-excludes "$@" --type f --pipesort "file" | grep 'JSON data$' | perl -pe 's/^(.*):.*$/$1/'
+}
+
 grep-logs() {
     findit-logs . --pipesort "grep -Hn --color $@" 2>/dev/null
 }
