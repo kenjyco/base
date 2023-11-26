@@ -77,16 +77,16 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
-    example-usage--findit() {
-        oldpwd=$(pwd)
-        base
-        (grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit|\\\$.findit)" | grep -o "findit .*"
-        grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit)" | grep -o "\$(findit .*"
-        grepit --exclude=README.md "^ *echo .*findit " | grep -v "Usage: findit" | grep -o "findit .*") |
-           sort | uniq -c | sort -nr
+    # example-usage--findit() {
+    #     oldpwd=$(pwd)
+    #     base
+    #     (grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit|\\\$.findit)" | grep -o "findit .*"
+    #     grepit --exclude=README.md "findit " | grep -vE "(findit #|# findit|echo ['\"] *findit|findit --help|Usage: findit|eval \"findit)" | grep -o "\$(findit .*"
+    #     grepit --exclude=README.md "^ *echo .*findit " | grep -v "Usage: findit" | grep -o "findit .*") |
+    #        sort | uniq -c | sort -nr
 
-        cd "$oldpwd"
-    }
+    #     cd "$oldpwd"
+    # }
 
     example-usage--iterate-repos() {
         oldpwd=$(pwd)
