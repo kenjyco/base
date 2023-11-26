@@ -1920,19 +1920,23 @@ la10() {
 
 if type lsblk &>/dev/null; then
     partitions() {
-        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)'
+        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660|/snap)'
     }
 
     partitions-uuid() {
-        lsblk -s -o name,size,type,fstype,uuid,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)'
+        lsblk -s -o name,size,type,fstype,uuid,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660|/snap)'
     }
 
     partitions-by-size() {
-        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660)' | sort -k2 -hr
+        lsblk -s -o name,size,type,fstype,label,mountpoint | grep -vE '(^[^a-zA-Z]|iso9660|/snap)' | sort -k2 -hr
     }
 
     partitions-iso9960-only() {
         lsblk -o name,size,type,fstype,label,mountpoint | grep -E '(part *iso9660|NAME)'
+    }
+
+    partitions-snap-only() {
+        lsblk -o name,size,type,fstype,label,mountpoint | grep -E '(/snap|NAME)'
     }
 
     lsblk-all-fields-json() {
