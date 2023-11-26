@@ -751,6 +751,21 @@ if [[ -s "$HOME/tools-py/venv/bin/sql-ipython" ]]; then
     }
 fi
 
+if [[ ! -s "$HOME/tools-py/venv/bin/kenjyco-dev-setup" ]]; then
+    kenjyco-install-dev-setup() {
+        [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
+        "$HOME/tools-py/venv/bin/pip3" install kenjyco-libs
+        "$HOME/tools-py/venv/bin/kenjyco-dev-setup"
+        source $HOME/commands.sh
+    }
+fi
+
+if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
+    kenjyco-ipython() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-ipython "$@"
+    }
+fi
+
 twine-install() {
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     "$HOME/tools-py/venv/bin/pip3" install twine
