@@ -773,6 +773,16 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
     kenjyco-ipython() {
         PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-ipython "$@"
     }
+
+    kenjyco-dev-setup() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-dev-setup "$@"
+    }
+
+    kenjyco-full-update() {
+        "$HOME/tools-py/venv/bin/pip3" install "kenjyco-libs[full]" awscli
+        "$HOME/tools-py/venv/bin/kenjyco-dev-setup"
+        source $HOME/commands.sh
+    }
 fi
 
 twine-install() {
