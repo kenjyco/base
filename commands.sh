@@ -759,7 +759,11 @@ fi
 if [[ ! -s "$HOME/tools-py/venv/bin/kenjyco-dev-setup" ]]; then
     kenjyco-install-dev-setup() {
         [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
-        "$HOME/tools-py/venv/bin/pip3" install kenjyco-libs
+        if [[ "$1" == "full" ]]; then
+            "$HOME/tools-py/venv/bin/pip3" install "kenjyco-libs[full]" awscli
+        else
+            "$HOME/tools-py/venv/bin/pip3" install kenjyco-libs
+        fi
         "$HOME/tools-py/venv/bin/kenjyco-dev-setup"
         source $HOME/commands.sh
     }
