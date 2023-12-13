@@ -5,7 +5,12 @@ newdate="## \`$(date +'%Y_%m%d %a %r')\`"
 generated=
 if [[ -z "$note" ]]; then
     note="$(date +'%Y_%m%d--%a_hour_%H')"
-    title="$(echo $note | tr '_' '-')"
+    if [[ $(pwd) != $HOME ]]; then
+        extra_title=" ($(basename $(pwd)))"
+    else
+        extra_title=" (HOME)"
+    fi
+    title="$(echo $note | tr '_' '-')$extra_title"
     newdate="## $(date +'%r')"
     generated=yes
 elif [[ -n $(dirname $note) && -d $note ]]; then
