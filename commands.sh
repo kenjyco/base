@@ -1451,7 +1451,7 @@ swps() {
 }
 
 swps-no-stamp() {
-    findit-default-excludes --type f --exts "sw[pon]" | sort
+    findit-default-excludes --type f --exts "sw[pon]" 2>/dev/null | sort
 }
 
 swps-delete() {
