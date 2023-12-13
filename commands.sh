@@ -1447,7 +1447,11 @@ findit-default-excludes() {
 }
 
 swps() {
-    findit-default-excludes "$@" --type f --exts "sw[po]" --stamp 2>/dev/null | sort
+    findit-default-excludes "$@" --type f --exts "sw[pon]" --stamp 2>/dev/null | sort
+}
+
+swps-no-stamp() {
+    findit-default-excludes --type f --exts "sw[pon]" | sort
 }
 
 swps-delete() {
