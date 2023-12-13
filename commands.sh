@@ -654,6 +654,11 @@ _postgresql-install() {
     fi
 }
 
+tools-py-pip-install() {
+    [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
+    "$HOME/tools-py/venv/bin/pip3" install "$@"
+}
+
 tools-py-install-all() {
     [[ "$1" == "clean" ]] && rm -rf "$HOME/tools-py"
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
