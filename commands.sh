@@ -1116,6 +1116,10 @@ elif type bash &>/dev/null; then
     }
 fi
 
+funcs-that-do() {
+    funcs-list | grep '\bdo\b' | tr '\n' ' ' && echo
+}
+
 #################### crontab ####################
 
 crontab-active() {
