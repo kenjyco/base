@@ -111,6 +111,7 @@ OPEN_SOURCE_C_REPOS=(
     https://github.com/antirez/load81
     https://github.com/antirez/rax
     https://github.com/antirez/redis
+    https://github.com/antirez/smallchat
     https://github.com/awesomeWM/awesome
     https://github.com/bitly/dablooms
     https://github.com/chirlu/sox
@@ -941,6 +942,7 @@ OPEN_SOURCE_PYTHON_REPOS=(
     https://github.com/localstack/localstack
     https://github.com/locustio/locust
     https://github.com/lxml/lxml
+    https://github.com/madzak/python-json-logger
     https://github.com/mahmoud/glom
     https://github.com/mail-in-a-box/mailinabox
     https://github.com/marshmallow-code/marshmallow
@@ -1129,6 +1131,7 @@ OPEN_SOURCE_RUST_REPOS=(
     https://github.com/gyscos/cursive
     https://github.com/hyperium/hyper
     https://github.com/jdxcode/rtx
+    https://github.com/juspay/hyperswitch
     https://github.com/mitsuhiko/redis-rs
     https://github.com/oxidecomputer/hubris
     https://github.com/rust-lang/cargo
