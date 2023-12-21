@@ -227,7 +227,9 @@ if [[ -n "$BASH_VERSION" ]]; then
     shopt -s checkwinsize
 
     # Use '**' in pathname expansions like in ZSH
-    shopt -s globstar
+    #   - super old versions of bash like 3.2 say globstar is an "invalid shell
+    #     option name"
+    [[ $(echo $BASH_VERSION | cut -c 1-1) -ge 4 ]] && shopt -s globstar
 
     # Save original prompt
     _PS1_ORIG="$PS1"
