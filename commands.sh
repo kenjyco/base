@@ -1136,6 +1136,10 @@ funcs-that-do() {
     funcs-list | grep '\bdo\b' | tr '\n' ' ' && echo
 }
 
+funcs-that-install() {
+    funcs-list | grep '\binstall\b' | tr '\n' ' ' && echo
+}
+
 #################### crontab ####################
 
 crontab-active() {
