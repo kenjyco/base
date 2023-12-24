@@ -2566,6 +2566,10 @@ if type vim &>/dev/null; then
             vim -c "DirDiff $dir1 $dir2"
         }
     fi
+
+    vim-spell() {
+        vim -c 'set spell' "$@"
+    }
 fi
 
 #################### vlc ####################
