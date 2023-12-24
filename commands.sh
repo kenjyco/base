@@ -29,7 +29,9 @@ if [[ -f "$HOME/.base_path" ]]; then
                 if [[ -n "$conflicts" ]]; then
                     echo -e "Merge conflicts! Not running install\n$conflicts"
                 else
-                    source ./install.sh
+                    install_args=
+                    [[ -f "$HOME/.base_install_args" ]] && install_args=$(cat "$HOME/.base_install_args")
+                    source ./install.sh $install_args
                 fi
             fi
         fi

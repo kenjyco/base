@@ -15,6 +15,14 @@ unset clean extras gui all
 [[ "$1" == "gui" || "$2" == "gui" || "$3" == "gui" ]] && gui=yes
 [[ "$1" == "all" || "$2" == "all" || "$3" == "all" ]] && clean=clean && extras=yes && gui=yes && all=yes
 
+# Save the selections, but don't lazily use "$@"
+args_to_save=
+[[ -n "$extras" ]] && args_to_save="extras"
+if [[ -n "$gui" ]]; then
+    [[ -z "$args_to_save" ]] && args_to_save="gui" || args_to_save="$args_to_save gui"
+fi
+echo "$args_to_save" > "$HOME/.base_install_args"
+
 # Determine if using Windows Subsystem for Linux
 [[ -n "$(echo $PATH | grep -E '(WINDOWS|Program Files)')" ]] && wsl=yes
 
