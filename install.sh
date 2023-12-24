@@ -60,7 +60,7 @@ do_install() {
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages..."
-            sudo apt-get install -y vim zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr sqlite3 imagemagick pandoc lynx exuberant-ctags || return 1
+            sudo apt-get install -y vim zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger fzf nnn w3m w3m-img nmap mtr tldr sqlite3 imagemagick pandoc lynx exuberant-ctags || return 1
             sudo apt-get install -y gtypist typespeed || return 1
         fi
 
@@ -113,7 +113,7 @@ do_install() {
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages..."
-            sudo yum install -y vim-enhanced zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger nnn w3m w3m-img nmap mtr tldr ImageMagick pandoc lynx ctags || return 1
+            sudo yum install -y vim-enhanced zsh zsh-syntax-highlighting fish tmux htop glances jq pmount acpi dkms openssh-server colordiff tree ncdu ranger fzf nnn w3m w3m-img nmap mtr tldr ImageMagick pandoc lynx ctags || return 1
             sudo yum install -y gtypist typespeed || return 1
             sudo yum install -y lshw lsof banner rsync || return 1
         fi
@@ -183,7 +183,7 @@ do_install() {
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages ..."
-            _brew_install_or_upgrade coreutils findutils grep wget watch vim zsh-syntax-highlighting fish htop glances pstree jq openssh colordiff tree ncdu ranger nnn w3m nmap mtr tldr sqlite3 imagemagick pandoc lynx ctags
+            _brew_install_or_upgrade coreutils findutils grep wget watch vim zsh-syntax-highlighting fish htop glances pstree jq openssh colordiff tree ncdu ranger fzf nnn w3m nmap mtr tldr sqlite3 imagemagick pandoc lynx ctags
             _brew_install_or_upgrade gtypist typespeed
         fi
 
