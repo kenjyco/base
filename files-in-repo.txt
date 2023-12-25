@@ -61,7 +61,5 @@ commands.fish
 commands.sh
 files-in-repo.txt
 .gitignore
-HISTORY.md
 install.sh
 README.md
-repos.sh
