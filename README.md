@@ -4,11 +4,11 @@ base
 - Jump to [Usage section](https://github.com/kenjyco/base/blob/master/README.md#usage)
   below for examples
 
-Use `base` as an **easy way** to install the minimum essential libs/programs
-for opensource exploration and development. Works for Linux (Debian-based
-for now with more distros coming), Mac (includes installing homebrew), and
-Windows (requires Windows Subsystem for Linux 2 to be setup already with a Linux
-distro installed).
+Use `base` as an **easy way** to install the minimum essential libs/programs for
+open-source exploration and development. Works for Linux (Debian and Fedora
+based distros for now with more distros coming), Mac (includes installing
+homebrew), and Windows (requires Windows Subsystem for Linux 2 to be setup
+already with a Linux distro installed).
 
 - [Setup Linux Mint and Tips](https://github.com/kenjyco/kenjyco/blob/master/setup-linux-mint-and-tips.md)
 - [Setup Mac and Tips](https://github.com/kenjyco/kenjyco/blob/master/setup-mac-and-tips.md)
