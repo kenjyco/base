@@ -3,6 +3,8 @@
 GIT_HOST="meerkat"
 REMOTE_USER="ken"
 REMOTE_REPO_DIR="/home/ken"
+COMMIT_NAME="Ken"
+COMMIT_EMAIL="kenjyco@gmail.com"
 
 repo=$1
 [[ -z "$repo" ]] && exit 1
@@ -26,12 +28,25 @@ if [[ $(basename $(pwd)) == $repo ]]; then
     echo -e "\ngit remote add origin ${REMOTE_USER}@${GIT_HOST}:${repo_path}"
     git remote add origin ${REMOTE_USER}@${GIT_HOST}:${repo_path}
 
+    # Set the user/email for commits, assuming it's different from ~/.gitconfig
+    echo -e "\ngit config user.name \"$COMMIT_NAME\""
+    git config user.name "$COMMIT_NAME"
+    echo -e "git config user.email \"$COMMIT_EMAIL\""
+    git config user.email "$COMMIT_EMAIL"
+
     echo -e "\nAfter first commit, don't forget to 'git push -u origin master'"
 
 else
     # We need to clone the repo
     echo -e "\ngit clone ${REMOTE_USER}@${GIT_HOST}:${repo_path}"
     git clone ${REMOTE_USER}@${GIT_HOST}:${repo_path}
+    cd "$repo_path"
+
+    # Set the user/email for commits, assuming it's different from ~/.gitconfig
+    echo -e "\ngit config user.name \"$COMMIT_NAME\""
+    git config user.name "$COMMIT_NAME"
+    echo -e "git config user.email \"$COMMIT_EMAIL\""
+    git config user.email "$COMMIT_EMAIL"
 
     echo -e "\nAfter first commit, don't forget to 'git push -u origin master'"
 fi
