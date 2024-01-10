@@ -7,6 +7,14 @@ alias ....="cd ../../.."
 
 cdd() { mkdir -p "$1" && cd "$1" && pwd; }
 
+draw-delimiter() {
+    width=$1
+    [[ -z "$width" ]] && width=$(($(tput cols) - 1))
+    echo
+    echo "&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%" | cut -c 1-$width
+}
+
+
 if [[ -f "$HOME/.base_path" ]]; then
     base() {
         cd $(cat "$HOME/.base_path")
@@ -1121,8 +1129,11 @@ fi
 #################### cat ####################
 
 cat-with-titles() {
+    num_cols=$(tput cols)
     for fname in $(ls -1 $@); do
-        echo -e "\n===============\n$fname"
+        echo -e "\n\n"
+        draw-delimiter $num_cols
+        echo -e "== [$fname] ==\n"
         cat "$fname"
     done
 }
