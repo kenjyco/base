@@ -816,6 +816,64 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
         "$HOME/tools-py/venv/bin/kenjyco-dev-setup"
         source $HOME/commands.sh
     }
+
+    [[ -z "$PACKAGE_REPOS_DIR" && -d "$HOME/repos/personal/packages" ]] && PACKAGE_REPOS_DIR="$HOME/repos/personal/packages"
+
+    if [[ -n "$PACKAGE_REPOS_DIR" && -d "$PACKAGE_REPOS_DIR" ]]; then
+        if ! type package-repos &>/dev/null; then
+            package-repos() {
+                cd "$PACKAGE_REPOS_DIR"
+            }
+
+            kenjyco-usage-across-packages() {
+                oldpwd=$(pwd)
+                echo -e "\n$ package-repos"
+                package-repos
+                echo -e "\n$ grep-object-info-no-tests bh"
+                grep-object-info-no-tests bh
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests fh"
+                grep-object-info-no-tests fh
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests ih"
+                grep-object-info-no-tests ih
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests sh"
+                grep-object-info-no-tests sh
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests ah"
+                grep-object-info-no-tests ah
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests dh"
+                grep-object-info-no-tests dh
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests rh"
+                grep-object-info-no-tests rh
+                draw-delimiter
+                echo -e "\n$ grep-object-info-no-tests wh"
+                grep-object-info-no-tests wh
+                draw-delimiter
+                cd "$oldpwd"
+            }
+
+            kenjyco-help() {
+                oldpwd=$(pwd)
+                echo -e "\n$ package-repos"
+                package-repos
+                if [[ -s "libs/kenjyco_libs/scripts/shell.py" ]]; then
+                    echo -e "\n$ cat libs/kenjyco_libs/scripts/shell.py"
+                    cat libs/kenjyco_libs/scripts/shell.py
+                    draw-delimiter
+                fi
+                if [[ -s "libs/README.md" ]]; then
+                    echo -e "\n$ cat libs/README.md"
+                    cat libs/README.md
+                    draw-delimiter
+                fi
+            }
+        fi
+    fi
+
 fi
 
 twine-install() {
