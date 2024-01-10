@@ -806,6 +806,7 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
     kenjyco-ipython() {
         PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-ipython "$@"
     }
+    alias ipy=kenjyco-ipython
 
     kenjyco-dev-setup() {
         PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-dev-setup "$@"
