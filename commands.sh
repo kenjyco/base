@@ -2316,7 +2316,7 @@ if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
     if [[ $(uname) != "Darwin" ]]; then
         alias shutdown="sudo shutdown -h +0"
         alias reboot="sudo reboot"
-        alias hibernate="systemctl hibernate"
+        alias hibernate="systemctl hibernate -i"
 
         newuser() {
             username=$1
