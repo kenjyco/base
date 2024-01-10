@@ -1917,6 +1917,14 @@ helpme() {
     less -FX $outfile
 }
 
+#################### jq ####################
+
+if type jq &>/dev/null; then
+    jq-pretty-less() {
+        jq --color-output --indent 4 '.' "$@" | less -r
+    }
+fi
+
 #################### ls ####################
 
 unalias f 2>/dev/null
