@@ -1,22 +1,23 @@
 #!/usr/bin/env bash
 
 note=$1
-newdate="## \`$(date +'%Y_%m%d %a %r')\`"
+newdate="## $(date +'%Y-%m%d %a %r')"
 generated=
+
+if [[ $(pwd) != $HOME ]]; then
+    extra_title=" ($(basename $(pwd)))"
+else
+    extra_title=" (HOME)"
+fi
 if [[ -z "$note" ]]; then
     note="$(date +'%Y_%m%d--%a_hour_%H')"
-    if [[ $(pwd) != $HOME ]]; then
-        extra_title=" ($(basename $(pwd)))"
-    else
-        extra_title=" (HOME)"
-    fi
     title="$(echo $note | tr '_' '-')$extra_title"
     newdate="## $(date +'%r')"
     generated=yes
 elif [[ -n $(dirname $note) && -d $note ]]; then
     cd $note
     note="$(date +'%Y_%m%d--%a_hour_%H')"
-    title="$1/$(echo $note | tr '_' '-')"
+    title="$1/$(echo $note | tr '_' '-')$extra_title"
     newdate="## $(date +'%r')"
     generated=yes
 else
