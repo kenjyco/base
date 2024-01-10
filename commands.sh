@@ -51,6 +51,27 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
+    example-usage--sort() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "\bsort\b" | grep -vE ":[ ]*\b(echo|eval)\b" | grep -vE "(sort \[|APT_SECURITY)" | grep -o "| sort [^)]*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--xargs() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "\bxargs\b" | grep -v "xargs_dash_i" | grep -o "| xargs.*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--IFS() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "\bIFS\b" | grep -o "IFS.*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
     example-usage--substitutions-perl() {
         oldpwd=$(pwd)
         base
