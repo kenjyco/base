@@ -7,14 +7,14 @@ alias ....="cd ../../.."
 
 cdd() { mkdir -p "$1" && cd "$1" && pwd; }
 
-draw-delimiter() {
+draw-delimiter-line() {
     width=$1
     [[ -z "$width" ]] && width=$(($(tput cols) - 1))
     echo
     echo "&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%" | cut -c 1-$width
 }
 
-draw-delimiter-pound() {
+draw-delimiter-line--pound() {
     width=$1
     [[ -z "$width" ]] && width=$(($(tput cols) - 1))
     echo
@@ -839,28 +839,28 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
                 package-repos
                 echo -e "\n$ grep-object-info-no-tests bh"
                 grep-object-info-no-tests bh
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests fh"
                 grep-object-info-no-tests fh
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests ih"
                 grep-object-info-no-tests ih
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests sh"
                 grep-object-info-no-tests sh
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests ah"
                 grep-object-info-no-tests ah
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests dh"
                 grep-object-info-no-tests dh
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests rh"
                 grep-object-info-no-tests rh
-                draw-delimiter
+                draw-delimiter-line
                 echo -e "\n$ grep-object-info-no-tests wh"
                 grep-object-info-no-tests wh
-                draw-delimiter
+                draw-delimiter-line
                 cd "$oldpwd"
             }
 
@@ -871,12 +871,12 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
                 if [[ -s "libs/kenjyco_libs/scripts/shell.py" ]]; then
                     echo -e "\n$ cat libs/kenjyco_libs/scripts/shell.py"
                     cat libs/kenjyco_libs/scripts/shell.py
-                    draw-delimiter
+                    draw-delimiter-line
                 fi
                 if [[ -s "libs/README.md" ]]; then
                     echo -e "\n$ cat libs/README.md"
                     cat libs/README.md
-                    draw-delimiter
+                    draw-delimiter-line
                 fi
             }
         fi
@@ -1198,7 +1198,7 @@ cat-with-titles() {
     num_cols=$(tput cols)
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
-        draw-delimiter $num_cols
+        draw-delimiter-line $num_cols
         echo -e "== [$fname] ==\n"
         cat "$fname"
     done
@@ -1208,7 +1208,7 @@ cat-with-titles-pound() {
     num_cols=$(tput cols)
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
-        draw-delimiter-pound $num_cols
+        draw-delimiter-line--pound $num_cols
         echo -e "== [$fname] ==\n"
         cat "$fname"
     done
