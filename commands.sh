@@ -9,16 +9,58 @@ cdd() { mkdir -p "$1" && cd "$1" && pwd; }
 
 draw-delimiter-line() {
     width=$1
-    [[ -z "$width" ]] && width=$(($(tput cols) - 1))
+    two_char_pattern=$2
+    rows=$3
+    [[ -z "$width" || "$width" == "." ]] && width=$(($(tput cols) - 1))
+    [[ -z "$two_char_pattern" ]] && two_char_pattern="&%"
+    [[ -z "$rows" ]] && rows=1
+    two_char_pattern=${two_char_pattern:0:2}
+    [[ ${#two_char_pattern} -eq 1 ]] && two_char_pattern="${two_char_pattern}${two_char_pattern}"
+
+    line=""
+    for ((i=1; i<=width; i++)); do
+        if ((i % 2 == 0)); then
+            line+="${two_char_pattern:1:1}"
+        else
+            line+="${two_char_pattern:0:1}"
+        fi
+    done
+
     echo
-    echo "&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%&%" | cut -c 1-$width
+    for ((r=1; r<=rows; r++)); do
+        echo "$line"
+    done
 }
 
 draw-delimiter-line--pound() {
     width=$1
-    [[ -z "$width" ]] && width=$(($(tput cols) - 1))
+    rows=$2
+    [[ -z "$width" || "$width" == "." ]] && width=$(($(tput cols) - 1))
+    [[ -z "$rows" ]] && rows=1
+    draw-delimiter-line $width "#" $rows
+}
+
+draw-delimiter-line--html() {
+    width=$1
+    fill_char=$2
+    rows=$3
+    [[ -z "$width" || "$width" == "." ]] && width=$(($(tput cols) - 1))
+    [[ -z "$fill_char" ]] && fill_char="@"
+    [[ -z "$rows" ]] && rows=1
+    fill_char=${fill_char:0:1}
+
+    # Trim width to account for comment start and end tags
+    width=$(($width - 7))
+    [[ $width -lt 0 ]] && width=0
+
+    # Set the middle content and replace spaces with another character
+    middle=$(printf "%*s" $width '')
+    middle=${middle// /$fill_char}
+
     echo
-    echo "################################################################################################################################################################################################################################################################" | cut -c 1-$width
+    for ((r=1; r<=rows; r++)); do
+        echo "<!--${middle}-->"
+    done
 }
 
 
