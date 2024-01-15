@@ -1237,7 +1237,7 @@ fi
 #################### cat ####################
 
 cat-with-titles() {
-    num_cols=$(tput cols)
+    num_cols=$(($(tput cols) - 1))
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
         draw-delimiter-line $num_cols
@@ -1247,11 +1247,21 @@ cat-with-titles() {
 }
 
 cat-with-titles-pound() {
-    num_cols=$(tput cols)
+    num_cols=$(($(tput cols) - 1))
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
-        draw-delimiter-line--pound $num_cols
-        echo -e "== [$fname] ==\n"
+        draw-delimiter-line--pound $num_cols 2
+        echo -e "## [$fname] ##\n"
+        cat "$fname"
+    done
+}
+
+cat-with-titles-html() {
+    num_cols=$(($(tput cols) - 1))
+    for fname in $(ls -1 $@); do
+        echo -e "\n\n"
+        draw-delimiter-line--html $num_cols "-" 2
+        echo -e "<!-- [$fname] -->\n"
         cat "$fname"
     done
 }
