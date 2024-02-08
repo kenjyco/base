@@ -94,7 +94,7 @@ do_install() {
             fi
             sudo apt-get install -y recordmydesktop guvcview audacity inkscape gimp gifsicle ripperx lame || return 1
             sudo apt-get install -y gparted evince okular retext libreoffice || return 1
-            sudo apt-get install -y emelfm2
+            sudo apt-get install -y emelfm2 || echo
         fi
     elif [[ -f /usr/bin/yum ]]; then
         if [[ -z "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
