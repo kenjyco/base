@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+for repo in $(repos-list | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
+    cd "$repo"
+    branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ "$branchname" != "HEAD" ]]; then
+        file_count=$(git ls-tree -r --name-only $branchname | wc -l)
+    else
+        file_count=0
+    fi
+    echo -e "$repo_display ($branchname): $file_count files"
+    cd - &>/dev/null
+done
