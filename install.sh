@@ -67,20 +67,6 @@ do_install() {
         echo -e "\nInstalling ntp..."
         sudo apt-get install -y ntp || return 1
 
-        if [[ -z "$wsl" ]]; then
-            echo -e "\nInstalling/upgrading docker and docker-compose..."
-            sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
-            if [[ -z "$(grep docker /etc/apt/sources.list)" ]]; then
-                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $codename stable"
-                sudo apt-get update
-            fi
-            sudo apt-get install -y docker-ce
-            sudo usermod -aG docker ${USER}
-            sudo su -c 'curl -L https://github.com/docker/compose/releases/download/1.29.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose'
-            sudo chmod +x /usr/local/bin/docker-compose
-        fi
-
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
                 echo -e "\nInstalling Xorg..."
@@ -121,15 +107,6 @@ do_install() {
         echo -e "\nInstalling ntp..."
         sudo yum install -y ntp-refclock || return 1
 
-        if [[ -z "$wsl" ]]; then
-            echo -e "\nInstalling/upgrading docker and docker-compose..."
-            sudo yum install -y yum-utils || return 1
-            sudo yum-config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-            sudo yum install -y docker-ce docker-compose || return 1
-            sudo usermod -aG docker ${USER}
-            sudo systemctl enable docker.service
-            sudo systemctl enable containerd.service
-        fi
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
                 echo -e "\nInstalling Xorg..."

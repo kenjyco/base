@@ -1408,6 +1408,37 @@ fi
 
 #################### docker ####################
 
+# Only provide the docker-install shell func for Linux (not using Windows Subsystem
+# for Linux), if user is part of an admin group (like sudo/root/wheel)
+if [[ -z "$(echo $PATH | grep -E '(WINDOWS|Program Files)')" ]]; then
+    if [[ -n "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
+        docker-install() {
+            if [[ -f /usr/bin/apt-get ]]; then
+                echo -e "\nInstalling/upgrading docker..."
+                sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
+                if [[ -z "$(grep docker /etc/apt/sources.list)" ]]; then
+                    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $codename stable"
+                    sudo apt-get update
+                fi
+                sudo apt-get install -y docker-ce
+
+            elif [[ -f /usr/bin/yum ]]; then
+                echo -e "\nInstalling/upgrading docker..."
+                sudo yum install -y yum-utils || return 1
+                sudo yum-config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+                sudo yum install -y docker-ce || return 1
+                sudo systemctl enable docker.service
+                sudo systemctl enable containerd.service
+            else
+                echo -e "\nNot sure what to do with $(uname) yet"
+                return 1
+            fi
+            sudo usermod -aG docker ${USER}
+        }
+    fi
+fi
+
 if type docker &>/dev/null; then
     docker-login() {
         if [[ -z "$DOCKER_USER" || -z "$DOCKER_PASSWORD" ]]; then
