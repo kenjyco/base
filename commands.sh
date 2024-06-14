@@ -115,6 +115,21 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
+    example-usage--git() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "\bgit " | grep -vE "(git log|clone|git &>/dev|git ###|git version|git wget|git repo|git --exclude-dir|git stash pop')" | grep -o "git [^\|]*" | sed 's/[ )]*$//' | perl -pe 's/\s*[2&]>\s*\/dev\/null$//' | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+    example-usage--git-log() {
+        oldpwd=$(pwd)
+        base
+        grepit --exclude=README.md "\bgit log\b" | grep -v 'git log|clone' | grep -o "git log [^\|]*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
+
     example-usage--xargs() {
         oldpwd=$(pwd)
         base
