@@ -36,8 +36,8 @@ When you source `~/commands.sh` or `~/commands.fish` (directly or indirectly):
 
 - GNU versions of `find`, `grep`, `sort`, and `xargs` will be used if they are
   installed on a Mac (over the default BSD versions)
-- shell completions will be enabled and completions for your installed versions
-  of `git`, `docker` and `docker-compose` will be loaded
+- shell completions will be enabled for your installed versions of `git` and
+  `docker`
 - vi keybindings will be used for navigating/editing the command line
     - *i.e. hit <Esc> to enter "command mode" (to issue vi commands) and
       `i`/`I`/`a`/`A` to get back to "insert mode"*
@@ -90,8 +90,8 @@ Select prompt mode
 The `install.sh` script behaves differently if any of the following strings are
 passed in:
 
-- **`clean`**: ensures the git/docker/docker-compose completion files match
-  installed versions (if packages were updated)
+- **`clean`**: ensures the git/docker completion files match installed versions
+  (if packages were updated)
 - **`extras`**: also installs non-essential, but light-weight CLI packages like
   `vim`, `tmux`, `tree`, `ncdu`, `glances`, `nnn` and more
 - **`gui`**: also installs some light-weight GUI packges for Linux (including
