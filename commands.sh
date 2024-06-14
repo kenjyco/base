@@ -480,7 +480,7 @@ _get_zsh_custom_fpath() {
     echo "$custom_fpath"
 }
 
-# Make sure bash/zsh (tab) completions are enabled for git, docker, & docker-compose
+# Make sure bash/zsh (tab) completions are enabled for docker and git
 get-completions() {
     custom_fpath="$(_get_zsh_custom_fpath)"
     [[ -z "$custom_fpath" ]] && custom_fpath="$HOME/.zsh/completion"
@@ -488,21 +488,20 @@ get-completions() {
     if [[ "$1" == "clean" ]]; then
         if [[ ! "$bash_completion_dir" =~ ${HOME}.* && ! "$bash_completion_dir" =~ \/root\/.* ]]; then
             if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
-                echo -e "\nDeleting from $bash_completion_dir: docker, docker-compose, git-completion.bash"
+                echo -e "\nDeleting any docker/git files from $bash_completion_dir"
                 sudo rm -f $bash_completion_dir/docker $bash_completion_dir/docker-compose $bash_completion_dir/git-completion.bash 2>/dev/null
             fi
         else
-            echo -e "\nDeleting from $bash_completion_dir: docker, docker-compose, git-completion.bash"
+            echo -e "\nDeleting any docker/git files from $bash_completion_dir"
             rm -f $bash_completion_dir/docker $bash_completion_dir/docker-compose $bash_completion_dir/git-completion.bash 2>/dev/null
         fi
 
-        echo -e "\nDeleting from $custom_fpath: _docker, _docker-compose, git-completion.zsh"
+        echo -e "\nDeleting any docker/git files from $custom_fpath"
         rm -f "$custom_fpath/_docker" "$custom_fpath/_docker-compose" "$custom_fpath/git-completion.zsh" 2>/dev/null
     fi
 
     git_version=$(git --version 2>/dev/null | perl -pe 's/^git version (\S+).*$/$1/')
     docker_version=$(docker --version 2>/dev/null | perl -pe 's/^Docker version (\S+),.*/$1/')
-    docker_compose_version=$(docker-compose --version 2>/dev/null | perl -pe 's/^docker-compose version (\S+),.*/$1/')
     zsh_urls=()
     bash_urls=()
     if [[ -n "$git_version" ]]; then
@@ -512,10 +511,18 @@ get-completions() {
     if [[ -n "$docker_version" ]]; then
         zsh_urls+=(https://raw.githubusercontent.com/docker/cli/v$docker_version/contrib/completion/zsh/_docker)
         bash_urls+=(https://raw.githubusercontent.com/docker/cli/v$docker_version/contrib/completion/bash/docker)
-    fi
-    if [[ -n "$docker_compose_version" ]]; then
-        zsh_urls+=(https://raw.githubusercontent.com/docker/compose/$docker_compose_version/contrib/completion/zsh/_docker-compose)
-        bash_urls+=(https://raw.githubusercontent.com/docker/compose/$docker_compose_version/contrib/completion/bash/docker-compose)
+
+        # Note: older versions of docker did not include a 'compose' command, so
+        # docker-compose was a separately installed script which also had it's own
+        # completion file
+        is_docker_old=$(docker compose version 2>&1 | grep 'not a docker command')
+        if [[ -n "$is_docker_old" ]]; then
+            docker_compose_version=$(docker-compose --version 2>/dev/null | perl -pe 's/^docker-compose version (\S+),.*/$1/')
+            if [[ -n "$docker_compose_version" ]]; then
+                zsh_urls+=(https://raw.githubusercontent.com/docker/compose/$docker_compose_version/contrib/completion/zsh/_docker-compose)
+                bash_urls+=(https://raw.githubusercontent.com/docker/compose/$docker_compose_version/contrib/completion/bash/docker-compose)
+            fi
+        fi
     fi
     if [[ -n "$ZSH_VERSION" ]]; then
         # Copy the completion files
