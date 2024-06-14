@@ -1977,7 +1977,7 @@ grepit-tabs() {
 }
 
 grepit-count() {
-    grepit -c "$@" | grep -v '0$' | sort -k2,2nr -k1,1 -t ':'
+    grepit -c "$@" | grep -v '0$' | sort -t: -k2,2nr -k1,1
 }
 
 grepit-cut() {
