@@ -269,7 +269,7 @@ fi
 
 # Function to get name of current git branch
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 if [[ -n "$BASH_VERSION" ]]; then
