@@ -4,7 +4,8 @@ path=
 [[ -d "$1" ]] && path="$1"
 
 for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
     cd "$repo"
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    echo "$repo ($branchname)"
+    echo "$repo_display ($branchname)"
 done

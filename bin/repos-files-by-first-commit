@@ -18,6 +18,7 @@ _doit() {
         [[ -n "$output" ]] && echo -e "\n===============\n$(pwd) ($branchname)\n$output"
     else
         for repo in $(echo -e "$the_list" | tr '\n' '\0' | xargs -0); do
+            repo_display=$(echo $repo | clean-path-outputs)
             cd "$repo"
             branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
             output=$(git ls-tree -r --name-only HEAD 2>/dev/null |
@@ -25,7 +26,7 @@ _doit() {
             while read filename; do
                 echo "$(git log --diff-filter=A --format="%ai %ar" -- "$filename") $filename"
             done | sort -n)
-            [[ -n "$output" ]] && echo -e "\n===============\n$repo ($branchname)\n$output"
+            [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
         done
     fi
 }

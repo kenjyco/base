@@ -5,8 +5,9 @@ which colordiff &>/dev/null
 [[ $? -eq 0 ]] && _colordiff=colordiff
 
 for repo in $(repos-list | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
     cd "$repo"
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     output=$(eval "$@" 2>/dev/null)
-    [[ -n "$output" ]] && echo -e "\n===============\n$repo ($branchname)\n$output"
+    [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
 done | $_colordiff

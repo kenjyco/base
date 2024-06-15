@@ -4,8 +4,9 @@ path=
 [[ -d "$1" ]] && path="$1" && shift
 
 for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
     cd "$repo"
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     short_status=$(git -c color.status=always status -s)
-    [[ -n "$short_status" ]] && echo -e "\n===============\n$repo ($branchname)\n$short_status"
+    [[ -n "$short_status" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$short_status"
 done

@@ -4,10 +4,11 @@ path=
 [[ -d "$1" ]] && path="$1" && shift
 
 for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
     cd "$repo"
     tag=$(git describe --tags $(git rev-list --tags --max-count=1 2>/dev/null) 2>/dev/null)
     if [[ -n "$tag" ]]; then
-        echo -e "\n===============\n$repo"
+        echo -e "\n===============\n$repo_display"
         git tag -n99 $tag
     fi
 done

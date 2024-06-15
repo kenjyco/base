@@ -14,10 +14,11 @@ which colordiff &>/dev/null
 _doit() {
     echo -e "\ncomparing to $otherbranch"
     for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+        repo_display=$(echo $repo | clean-path-outputs)
         cd "$repo"
         branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
         if [[ -n $(git branch -r | grep -v HEAD | grep "${otherbranch}\b") ]]; then
-            echo -e "\n===============\n$repo ($branchname)"
+            echo -e "\n===============\n$repo_display ($branchname)"
             git status | grep "Your branch is behind" >/dev/null
             if [[ $? -eq 0 && "origin/$branchname" == "$otherbranch" ]]; then
                 git diff "$@" $(git merge-base $otherbranch $branchname)..$otherbranch

@@ -4,7 +4,8 @@ path=
 [[ -d "$1" ]] && path="$1" && shift
 
 for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
     cd "$repo"
     output=$(grep "remote \"origin\"" -A 2 .git/config 2>/dev/null | grep url | perl -pe 's/^\s+url = (.*)$/$1/')
-    echo "$repo ($output)"
+    echo "$repo_display ($output)"
 done
