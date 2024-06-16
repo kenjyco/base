@@ -1,36 +1,54 @@
 #!/usr/bin/env bash
+#
+# Quickly create or update a markdown file with vim
+#   - generated filenames are based on timestamp for the current date and hour
+#   - filenames are generated if no arg is passed in or if the path to an
+#     existing directory is passed in
+#   - if a filename was generated, but not edited, it will be deleted
+#   - if a filename was generated based on timestamp, you will have the chance
+#     to rename it after you quit vim
+#   - if a previously generated filename (that was not renamed) is being
+#     updated, you will have the chance to rename it after you quit vim
+#   - the last part of a filesystem path (containing at least one /) is assumed
+#     to be the filename (with or without the .md extension)
+#       - any intermediate sub-directories in the path will be created if needed
 
-note=$1
 newdate="## $(date +'%Y-%m%d %a %r')"
 generated=
 
-if [[ $(pwd) != $HOME ]]; then
-    extra_title=" ($(basename $(pwd)))"
-else
-    extra_title=" (HOME)"
-fi
-if [[ -z "$note" ]]; then
-    note="$(date +'%Y_%m%d--%a_hour_%H')"
-    title="$(echo $note | tr '_' '-')$extra_title"
+if [[ -z "$1" ]]; then
+    fname_part="$(date +'%Y_%m%d--%a_hour_%H')"
     newdate="## $(date +'%r')"
     generated=yes
-elif [[ -n $(dirname $note) && -d $note ]]; then
-    cd $note
-    note="$(date +'%Y_%m%d--%a_hour_%H')"
-    title="$1/$(echo $note | tr '_' '-')$extra_title"
+elif [[ -d "$1" ]]; then
+    fname_part="$(date +'%Y_%m%d--%a_hour_%H')"
     newdate="## $(date +'%r')"
     generated=yes
+    cd "$1"
+elif [[ "$1" =~ .*\/.* ]]; then
+    dirpath=$(dirname "$1")
+    fname_part=$(basename "$1")
+    [[ ! -d "$dirpath" ]] && mkdir -p "$dirpath"
+    cd "$dirpath"
 else
-    title="$note"
+    fname_part="$1"
 fi
 
-found=$(find . -maxdepth 1 -name "${note}*" -print)
-[[ -n "$found" && "$generated" = "yes" ]] && note="${note}-$(uuidgen | head -c6)"
-
-if [[ "$note" =~ \.md$ ]]; then
-    fname="${note}"
+if [[ $PWD != $HOME ]]; then
+    extra_title=$(basename "$PWD")
 else
-    fname="${note}.md"
+    extra_title="HOME"
+fi
+title="$(echo $fname_part | tr '_' '-') ($extra_title)"
+
+found=$(find . -maxdepth 1 -name "${fname_part}*" -print)
+if [[ -n "$found" && "$generated" = "yes" ]]; then
+    fname_part="${fname_part}-$(uuidgen | head -c6)"
+fi
+if [[ "$fname_part" =~ \.md$ ]]; then
+    fname="${fname_part}"
+else
+    fname="${fname_part}.md"
 fi
 
 template=
