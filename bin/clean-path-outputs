@@ -3,7 +3,7 @@
 # Pipe output from other commands to clean-path-outputs to replace $PWD and $HOME
 
 while read -r line; do
-    [[ "$PWD" != "/" ]] && line=$(echo "$line" | sed "s|$PWD|.|g")
+    [[ "$PWD" != "/" && "$PWD" != "$line" ]] && line=$(echo "$line" | sed "s|$PWD|.|g")
     line=$(echo "$line" | sed "s|^$HOME|~|g")
     echo "$line"
 done
