@@ -1980,6 +1980,23 @@ grepit-count() {
     grepit -c "$@" | grep -v '0$' | sort -t: -k2,2nr -k1,1
 }
 
+grepit-count-dirs () {
+    grepit -c "$@" | grep -v '0$' | awk -F: '
+    {
+        split($1, a, "/")
+        dir = a[1]
+        for (i = 2; i <= length(a) - 1; i++) {
+            dir = dir "/" a[i]
+        }
+        count[dir] += $2
+    }
+    END {
+        for (dir in count) {
+            print dir ":" count[dir]
+        }
+    }' | sort -t: -k2,2nr -k1,1
+}
+
 grepit-cut() {
     [[ -z "$@" ]] && return 1
     grepit "$@" | cut -c 1-350 | grep --color "$@"
