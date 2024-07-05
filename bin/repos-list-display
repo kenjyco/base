@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+path=
+[[ -d "$1" ]] && path="$1"
+
+repos-list "$path" | clean-path-outputs
