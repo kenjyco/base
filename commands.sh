@@ -108,6 +108,13 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
+    example-usage--cut() {
+        oldpwd=$(pwd)
+        base
+        grepit "\bcut " | grep -o "\bcut -[^\|)]*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
     example-usage--sort() {
         oldpwd=$(pwd)
         base
