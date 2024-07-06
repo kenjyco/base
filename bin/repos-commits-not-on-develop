@@ -16,6 +16,7 @@ _doit() {
             output=$(git log ${git_log_args[@]} $(git merge-base origin/develop $branch)..$branch)
             [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
         fi
+        cd - &> /dev/null
     done
 }
 

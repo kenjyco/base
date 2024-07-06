@@ -9,4 +9,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     short_status=$(git -c color.status=always status -s)
     [[ -n "$short_status" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$short_status"
+    cd - &> /dev/null
 done

@@ -26,6 +26,7 @@ _doit() {
                 git diff "$@" $(git merge-base $otherbranch $branchname)..$branchname
             fi
         fi
+        cd - &> /dev/null
     done
 }
 

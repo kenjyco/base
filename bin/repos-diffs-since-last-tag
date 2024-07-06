@@ -15,4 +15,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
         echo -e "\n===============\n$repo_display ($branchname)"
         git diff "${lasttag}.."
     fi
+    cd - &> /dev/null
 done | $_colordiff

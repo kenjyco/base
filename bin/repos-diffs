@@ -14,4 +14,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     echo -e "\n===============\n$repo_display ($branchname)"
     git diff "$@"
+    cd - &> /dev/null
 done | $_colordiff

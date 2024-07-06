@@ -7,4 +7,5 @@ for repo in $(repos-list | tr '\n' '\0' | xargs -0); do
     echo -e "\n===============\n$repo_display ($branchname)"
     [[ "$branchname" == "HEAD" ]] && continue
     git ls-tree -r --name-only $branchname
+    cd - &> /dev/null
 done

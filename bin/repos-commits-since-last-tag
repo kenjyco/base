@@ -11,4 +11,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
         output=$(git log --color=always --find-renames --oneline --graph --no-merges ${lasttag}.. -15)
         [[ -n "$output" ]] && echo -e "\n===============\n$repo_display\n$output"
     fi
+    cd - &> /dev/null
 done

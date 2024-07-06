@@ -9,4 +9,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     last_commit_date=$(git log --format="%ai | %ar" -1 2>/dev/null)
     [[ -n "$last_commit_date" ]] && echo "[$last_commit_date] $repo_display ($branchname)"
+    cd - &> /dev/null
 done

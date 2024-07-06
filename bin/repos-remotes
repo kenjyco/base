@@ -8,4 +8,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     cd "$repo"
     output=$(grep "remote \"origin\"" -A 2 .git/config 2>/dev/null | grep url | perl -pe 's/^\s+url = (.*)$/$1/')
     echo "$repo_display ($output)"
+    cd - &> /dev/null
 done

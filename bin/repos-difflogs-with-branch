@@ -18,6 +18,7 @@ _doit() {
             output=$(git log --color=always "$@" $(git merge-base $otherbranch $branchname)..$branchname)
             [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
         fi
+        cd - &> /dev/null
     done
 }
 

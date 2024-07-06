@@ -17,6 +17,7 @@ _doit() {
                         grep -v -E "(file|files) changed,")
             [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
         fi
+        cd - &> /dev/null
     done
 }
 

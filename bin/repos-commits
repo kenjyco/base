@@ -9,4 +9,5 @@ for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
     branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     output=$(git log --color=always --date=relative --pretty=format:' - %C(yellow)%h %C(reset)%s %C(red)%ad %C(blue)%an%C(reset)' "$@" 2>/dev/null)
     [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
+    cd - &> /dev/null
 done

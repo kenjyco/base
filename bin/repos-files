@@ -27,6 +27,7 @@ _doit() {
                 echo "$(git log -1 --format="%ai %ar" -- "$filename") $filename"
             done | sort -n)
             [[ -n "$output" ]] && echo -e "\n===============\n$repo_display ($branchname)\n$output"
+            cd - &> /dev/null
         done
     fi
 }

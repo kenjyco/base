@@ -26,6 +26,7 @@ _doit() {
             fi
             [[ -n "$local_matches" ]] && echo "$local_matches"
         fi
+        cd - &> /dev/null
     done
 }
 

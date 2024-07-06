@@ -31,4 +31,5 @@ for repo in $(repos-list | tr '\n' '\0' | xargs -0); do
 		fi
         [[ "$yn" =~ [yY].* ]] && git branch -D $local_branchname
     done
+    cd - &> /dev/null
 done
