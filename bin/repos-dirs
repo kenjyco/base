@@ -3,7 +3,7 @@
 path=
 [[ -d "$1" ]] && path="$1" && shift
 
-repos_list_output=$(repos-list "$path")
+repos_list_output=$(repos-list "$path" | clean-path-outputs)
 num_repos=$(echo -e "$repos_list_output" | wc -l)
 if [[ $num_repos -eq 1 ]]; then
     echo "$repos_list_output" | uniq -c
