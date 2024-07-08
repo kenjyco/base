@@ -2004,6 +2004,10 @@ grepit-count-dirs () {
     }' | sort -t: -k2,2nr -k1,1
 }
 
+grepit-non-matching-files() {
+    grepit -c "$@" | grep '0$' | sort
+}
+
 grepit-cut() {
     [[ -z "$@" ]] && return 1
     grepit "$@" | cut -c 1-350 | grep --color "$@"
