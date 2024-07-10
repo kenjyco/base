@@ -2267,7 +2267,7 @@ man-grep() {
 
 if type nmcli &>/dev/null; then
     nmcli-list-networks() {
-        nmcli dev wifi list | cut -c 28-55 | grep -vE "^(\-\-|SSID)"
+        nmcli dev wifi list | cut -c 28-
     }
 
     nmcli-status() {
