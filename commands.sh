@@ -881,10 +881,12 @@ if [[ ! -s "$HOME/tools-py/venv/bin/kenjyco-dev-setup" ]]; then
 fi
 
 if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
-    kenjyco-ipython() {
-        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-ipython "$@"
-    }
-    alias ipy=kenjyco-ipython
+    if [[ -s "$HOME/tools-py/venv/bin/ipython" ]]; then
+        kenjyco-ipython() {
+            PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-ipython "$@"
+        }
+        alias ipy=kenjyco-ipython
+    fi
 
     kenjyco-dev-setup() {
         PYTHONPATH=$HOME $HOME/tools-py/venv/bin/kenjyco-dev-setup "$@"
