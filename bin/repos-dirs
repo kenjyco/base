@@ -5,8 +5,8 @@ path=
 
 repos_list_output=$(repos-list "$path" | clean-path-outputs)
 num_repos=$(echo -e "$repos_list_output" | wc -l)
-if [[ $num_repos -eq 1 ]]; then
-    echo "$repos_list_output" | uniq -c
+if [[ $num_repos -eq 1 && -n "$repos_list_output" ]]; then
+    dirname "$repos_list_output" | uniq -c
 elif [[ $num_repos -gt 1 ]]; then
     echo -e "$repos_list_output" | tr '\n' '\0' | xargs -0 -I {} dirname {} | sort | uniq -c | sort -k1,1nr -k2
 fi
