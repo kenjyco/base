@@ -66,7 +66,7 @@ do_install() {
         fi
 
         echo -e "\nInstalling ntp..."
-        sudo apt-get install -y ntp || return 1
+        sudo apt-get install -y ntp
 
         if [[ -n "$gui" ]]; then
             if [[ -z "$wsl" ]]; then
