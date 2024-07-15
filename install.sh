@@ -24,7 +24,7 @@ fi
 echo "$args_to_save" > "$HOME/.base_install_args"
 
 # Determine if using Windows Subsystem for Linux
-[[ -n "$(echo $PATH | grep -E '(WINDOWS|Program Files)')" ]] && wsl=yes
+[[ -n "$(echo $PATH | grep -E '(WINDOWS|Program Files|System32)')" ]] && wsl=yes
 
 # Determine if its a cloud instance
 [[ -d /var/lib/cloud/instance ]] && unset gui
