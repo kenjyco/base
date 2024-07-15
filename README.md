@@ -18,10 +18,10 @@ already with a Linux distro installed).
 
 When you source the `install.sh` script, your package manager will install
 or update some packages, three symbolic links will be created in your
-`$HOME` directory, and `~/commands.sh` will be auto-sourced at the end
+`$HOME` directory, and `~/commands.sh` will be "auto-sourced" at the end
 (i.e. if using bash/zsh, the "shell functions" defined in `~/commands.sh` will
 be "loaded" into your shell whenever you start a session, allowing you to call
-any of those funcitons by name while using the terminal)
+any of those funcitons by name while using the terminal).
 
 - `~/bin-base` -> /path/to/base/bin
     - directory containing some executable shell scripts
@@ -58,34 +58,26 @@ When you source `~/commands.sh` or `~/commands.fish` (directly or indirectly):
 
 ### If `git` is available
 
+#### Clone the base repo
+
 ```
-% git clone https://github.com/kenjyco/base ~/repos/base
+git clone https://github.com/kenjyco/base ~/repos/base
+```
 
-% cd ~/repos/base
+#### Move into the cloned repo
 
-% source ./install.sh extras
+```
+cd ~/repos/base
+```
+
+#### Source the install.sh file
+
+```
+source ./install.sh extras
 ```
 
 > Note: If you are in an interactive **fish shell**, do not source `install.sh`,
 > but invoke either `bash ./install.sh` OR `zsh ./install.sh`
-
-Near the end of process of running the `./install.sh` script, you will be
-prompted to select your prompt type
-
-```
-Select prompt mode
-1) verbose
-2) terse
-3) minimal
-#?
-```
-
-> The verbose prompt includes the username, hostname, full path to the current
-> working directory, and a newline for better visual separation. The terse
-> prompt has the hostname and the name of the current working directory. The
-> minimal prompt only has a single character and a newline. If you are unsure,
-> select option 1 (verbose). You can try other prompt styles by running the
-> `prompt-select-mode` command.
 
 The `install.sh` script behaves differently if any of the following strings are
 passed in:
@@ -97,11 +89,81 @@ passed in:
 - **`gui`**: also installs some light-weight GUI packges for Linux (including
   xorg-server, `awesome`, `rxvt-unicode`, `feh`, `scrot`, etc) or Mac (iTerm, vlc)
 - **`all`**: clean extras gui
+	- this will also create the `~/tools-py` directory, with a virtual
+      environment containing a number of python packages (like `asciinema`,
+      `awscli`, `flake8`, `twine`, `httpie`, `grip`, and more)
+    - you can run `tools-py-install-all` later if desired
+
+### Interactive prompts during installation
+
+#### Update completions
+
+After the selected system packages are installed, you will be prompted if you
+want to update completions for bash. Type `y` and hit enter.
+
+```
+Update completions for bash? [y/n] y
+```
+
+> This ensures that tab-completion works and will also fetch the bash or zsh
+> completion file for your version of `git` (and `docker` if installed).
+>
+> You can call `get-completions` again if you ever install newer versions of
+> `git` or `docker` in the future.
+
+#### Select your prompt style
+
+After that, you will be prompted to select your prompt style from five basic
+options. Type the desired number and hit enter.
+
+```
+Select prompt mode
+1) system-default   3) terse            5) minimal-plus
+2) verbose          4) minimal
+?# 5
+```
+
+> The **verbose** prompt includes the username, hostname, full path to the
+> current working directory, and a newline for better visual separation. The
+> **terse** prompt has the hostname and the name of the current working
+> directory with no newline. The **minimal** prompt only has a single character,
+> a newline, and no color. The **minimal-plus** prompt (my favorite) has a
+> single character, a newline, and the name of the current working directory.
+>
+> All custom prompts except 'minimal' have color and will show your current git
+> branch if you are in a git repo.
+>
+> If you are unsure, select option 2 (verbose). You can change your selection by
+> running the `prompt-select-mode` command later.
+>
+> You can also change the prompt style for your current terminal by using any of
+> the following: `prompt-system-default`, `prompt-verbose`, `prompt-terse`,
+> `prompt-minimal`, or `prompt-minimal-plus`.
+
+#### Clone and setup dotfiles
+
+Finally, if you don't have your own custom `.vimrc` or `.tmux.conf`, you will be
+prompted to clone and setup dotfiles. (Experienced users typically have their
+own preferences stored in these files).
+
+```
+No local config found for vim or tmux.
+Clone and setup dotfiles? [y/n] n
+```
+
+> The dotfiles repo will be cloned next to the base repo, and a number of
+> symbolic links will be created in your HOME directory, pointing to files in
+> the dotfiles repo (`.ctags`, `.editrc`, `.gitconfig`, `.inputrc`, `.ipython`,
+> `.psqlrc`, `.tmux.conf`, `.tmux`, `.vim`, `.vimrc`, `.vimrc`, `.xinitrc`, and
+> `.Xdefaults`).
+>
+> You can use `dotfiles-install` later on if desired. See:
+> <https://github.com/kenjyco/dotfiles>
 
 # Update
 
 ```
-% base-update
+base-update
 ```
 
 > That command will `cd` to wherever you initially cloned this base repository,
