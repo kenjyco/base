@@ -27,7 +27,8 @@ echo "$args_to_save" > "$HOME/.base_install_args"
 [[ -n "$(echo $PATH | grep -E '(WINDOWS|Program Files|System32)')" ]] && wsl=yes
 
 # Determine if its a cloud instance
-[[ -d /var/lib/cloud/instance ]] && unset gui
+#   - (For some reason, the "cloud instance" directory exists when using WSL)
+[[ -d /var/lib/cloud/instance && -z "$wsl" ]] && unset gui
 
 do_install() {
     if [[ -f /usr/bin/apt-get ]]; then
