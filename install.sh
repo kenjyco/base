@@ -44,8 +44,9 @@ do_install() {
             )
         fi
 
+        # apt-key is deprecated, so don't return with an error if this fails
         echo -e "\nRefreshing Ubuntu keys..."
-        sudo apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com || return 1
+        sudo apt-key adv --refresh-keys --keyserver keyserver.ubuntu.com
 
         echo -e "\nUpdating apt-get package listing"
         sudo apt-get update || return 1
