@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+path=
+[[ -d "$1" ]] && path="$1" && shift
+
+for repo in $(repos-list "$path" | tr '\n' '\0' | xargs -0); do
+    repo_display=$(echo $repo | clean-path-outputs)
+    cd "$repo"
+    branchname=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    echo -e "\n===============\n$repo_display ($branchname)"
+    [[ "$branchname" == "HEAD" ]] && continue
+    git ls-tree -r --name-only $branchname | awk -F'/' '
+    {
+        path = (NF == 1 ? "." : "")
+        for (i = 1; i < NF; i++) {
+            path = (path ? path "/" $i : $i)
+        }
+        dirs[path]++
+    }
+    END {
+        for (dir in dirs) {
+            print dirs[dir], dir
+        }
+    }' | sort -k1,1nr -k2
+    cd - &> /dev/null
+done
