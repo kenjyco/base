@@ -144,9 +144,10 @@ When you source `~/commands.sh` or `~/commands.fish` (directly or indirectly):
   installed on a Mac (over the default BSD versions)
 - shell completions will be enabled for your installed versions of `git` and
   `docker`
-- vi keybindings will be used for navigating/editing the command line
+- **vi keybindings will be used for navigating/editing the command line**
     - *i.e. hit <Esc> to enter "command mode" (to issue vi commands) and
       `i`/`I`/`a`/`A` to get back to "insert mode"*
+    - effective to reinforce/practice vi motions for early learners
 - any shell functions defined inside can be called
     - *Note: most functions/aliases are conditionally defined, meaning that
       no assumptions are made about what programs are available to your
