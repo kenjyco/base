@@ -108,6 +108,13 @@ if [[ -f "$HOME/.base_path" ]]; then
         cd "$oldpwd"
     }
 
+    example-usage--tr() {
+        oldpwd=$(pwd)
+        base
+        grepit '\btr\b' | grep -o "\btr [^|)]*" | sort | uniq -c | sort -nr
+        cd "$oldpwd"
+    }
+
     example-usage--cut() {
         oldpwd=$(pwd)
         base
