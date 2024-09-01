@@ -58,13 +58,13 @@ if [[ ! -s "$fname" ]]; then
     echo -e "$template" > "$fname" || exit 1
 
     # Open the file with vim (in insert mode, at the end of the file)
-    vim + -c 'startinsert' $fname
+    vim + -c 'startinsert' "$fname"
 else
     # Dump a timestamp into the existing file
     echo -e "\n$newdate\n\n" >> "$fname" || exit 1
 
     # Open the file with vim wherever the cursor was before
-    vim $fname
+    vim "$fname"
 fi
 
 content=$(cat "$fname")
