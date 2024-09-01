@@ -1884,6 +1884,48 @@ if type git &>/dev/null; then
         git submodule foreach --recursive git pull origin master
     }
 
+    lazy-add-commit() {
+        fname="$1"
+        if [[ -n "$fname" && -s "$fname" ]]; then
+            currently_staged=$(git diff --cached)
+            if [[ -n "$currently_staged" ]]; then
+                echo -e "\nThe staging area is not clean\n\n$currently_staged"
+                return 1
+            fi
+            git add "$fname"
+            git diff --cached
+            git commit -m "Add $fname"
+            git status
+        fi
+    }
+
+    lazy-commit-from-added-files() {
+        tracked_files=$(git status -s | grep -v '??')
+        added_files=$(echo -e "$tracked_files" | grep '^A ' | cut -c 4-)
+        other_staged=$(echo -e "$tracked_files" | grep '^[MDRC] ')
+        unmerged_problems=$(echo -e "$tracked_files" | grep '^[AMDRCU][AMDRCU]')
+
+        if [[ -n "$unmerged_problems" ]]; then
+            echo -e "unmerged_problems:\n$unmerged_problems"
+            return 1
+        fi
+        if [[ -z "$added_files" ]]; then
+            echo "There are no new files added to the staging area"
+            echo -e "\n\$ git status -s"
+            git status -s
+            return 1
+        fi
+        if [[ -n "$other_staged" ]]; then
+            echo -e "Unstaging these files...\n$other_staged"
+            echo -e "$other_staged" | cut -c 4- | tr '\n' '\0' | xargs -0 -n1 git restore --staged 2>/dev/null
+            echo -e "\n\$ git status -s"
+            git status -s
+        fi
+        added_files_one_line=$(echo -e "$added_files" | tr '\n' ' ')
+        git commit -m "Add file(s) $added_files_one_line"
+        git status
+    }
+
     alias glog="git log --find-renames --no-merges --pretty=format:'%C(yellow)%h %C(reset)%s %C(red)%ad %C(blue)%an%C(reset)'"
     alias glog2="glog --date local --name-status"
     alias glog3="git log --find-renames --stat --reverse -p"
