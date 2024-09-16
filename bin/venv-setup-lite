@@ -39,3 +39,4 @@ if [[ -f setup.py ]]; then
 elif [[ -f requirements.txt ]]; then
     pip_args+=("-r requirements.txt")
 fi
+$PIP install ${pip_args[@]}
