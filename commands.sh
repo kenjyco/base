@@ -628,6 +628,67 @@ rust-install() {
     fi
 }
 
+gvm-install() {
+    if [[ "$1" == "clean" && -d ~/.nvm ]]; then
+        echo -e "\nDeleting ~/.gvm"
+        rm -rf ~/.gvm 2>/dev/null
+    fi
+
+    if [[ ! -d ~/.gvm ]]; then
+        echo -e "\nInstalling gvm using the gvm-installer script on github..."
+        bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+        source "$HOME/.gvm/scripts/gvm"
+    fi
+
+    if ! type go &>/dev/null; then
+        if [[ $(uname) == "Darwin" ]]; then
+            brew install go
+        elif [[ -f /usr/bin/apt-get && -n "$(groups | grep -E '(sudo|root)')" ]]; then
+            sudo apt-get install -y golang-go
+        elif [[ -f /usr/bin/yum && -n "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
+            sudo yum install -y golang
+        fi
+    fi
+
+    go_minor_version=$(go version 2>/dev/null | perl -pe 's/^go version go\d\.(\d+)\..*/$1/')
+    if [[ -n "$go_minor_version" && "$go_minor_version" -lt 17 ]]; then
+        gvm install go1.17 || return 1
+        gvm use go1.17
+        export GOROOT_BOOTSTRAP=$GOROOT
+        gvm install go1.20
+        unset GOROOT_BOOTSTRAP
+    elif [[ -n "$go_minor_version" && "$go_minor_version" -lt 20 ]]; then
+        gvm install go1.20
+    fi
+}
+
+# Enable gvm (go version manager)
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm" 2>/dev/null
+
+if type go &>/dev/null; then
+    go-version() {
+        go version | perl -pe 's/^go version go(\S+) .*$/$1/'
+    }
+
+    go-minor-version() {
+        go version | perl -pe 's/^go version go\d\.(\d+)\..*/$1/'
+    }
+fi
+
+if type gvm &>/dev/null; then
+    gvm-list-installable() {
+        gvm listall | grep ' *go1\.[0-9.]*$'
+    }
+
+    gvm-list-installable-all() {
+        gvm listall
+    }
+
+    gvm-list-envs() {
+        ls  ~/.gvm/gos
+    }
+fi
+
 nvm-install() {
     if [[ "$1" == "clean" && -d ~/.nvm ]]; then
         echo -e "\nDeleting ~/.nvm and ~/.npm"
