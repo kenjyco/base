@@ -685,7 +685,17 @@ if type gvm &>/dev/null; then
     }
 
     gvm-list-envs() {
-        ls  ~/.gvm/gos
+        ls -1 ~/.gvm/gos
+    }
+
+    gvm-install-latest-go() {
+        latest_version=$(gvm-list-installable | tail -n 1 | grep -o 'go.*')
+        latest_installed=$(gvm-list-envs | tail -n 1)
+        gvm use $latest_installed
+        export GOROOT_BOOTSTRAP=$GOROOT
+        gvm install $latest_version || return 1
+        gvm use $latest_version --default
+        unset GOROOT_BOOTSTRAP
     }
 fi
 
