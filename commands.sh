@@ -634,11 +634,19 @@ gvm-install() {
         rm -rf ~/.gvm 2>/dev/null
     fi
 
+    if ! type bison &>/dev/null; then
+        if [[ -f /usr/bin/apt-get && -n "$(groups | grep -E '(sudo|root)')" ]]; then
+            sudo apt-get install -y bison
+        elif [[ -f /usr/bin/yum && -n "$(groups | grep -E '(sudo|root|wheel)')" ]]; then
+            sudo yum install -y bison
+        fi
+    fi
+
     if [[ ! -d ~/.gvm ]]; then
         echo -e "\nInstalling gvm using the gvm-installer script on github..."
         bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-        source "$HOME/.gvm/scripts/gvm"
     fi
+    source "$HOME/.gvm/scripts/gvm"
 
     if ! type go &>/dev/null; then
         if [[ $(uname) == "Darwin" ]]; then
