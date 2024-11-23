@@ -692,13 +692,13 @@ if type gvm &>/dev/null; then
         gvm listall
     }
 
-    gvm-list-envs() {
+    gvm-list-versions-installed() {
         ls -1 ~/.gvm/gos
     }
 
     gvm-install-latest-go() {
         latest_version=$(gvm-list-installable | tail -n 1 | grep -o 'go.*')
-        latest_installed=$(gvm-list-envs | tail -n 1)
+        latest_installed=$(gvm-list-versions-installed | tail -n 1)
         gvm use $latest_installed
         export GOROOT_BOOTSTRAP=$GOROOT
         gvm install $latest_version || return 1
@@ -785,8 +785,8 @@ if type pyenv &>/dev/null; then
         pyenv install --list
     }
 
-    pyenv-list-envs() {
-        ls -d ~/.pyenv/versions/*/envs/*
+    pyenv-list-versions-installed() {
+        ls -1 ~/.pyenv/versions
     }
 
     pyenv-list-python-version-files() {
