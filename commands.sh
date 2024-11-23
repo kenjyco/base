@@ -773,7 +773,7 @@ if type pyenv &>/dev/null; then
     fi
 
     pyenv-list-installable() {
-        pyenv install --list | grep '^  [2-4]'
+        pyenv install --list | grep '^  [2-4]\.[0-9.]*$'
     }
 
     pyenv-list-grep() {
@@ -791,6 +791,11 @@ if type pyenv &>/dev/null; then
 
     pyenv-list-python-version-files() {
         findit --type f --pattern ".python-version"
+    }
+
+    pyenv-install-latest-python() {
+        latest_version=$(pyenv-list-installable | tail -n 1 | grep -o '[3-4].*')
+        pyenv install $latest_version
     }
 fi
 
