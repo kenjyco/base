@@ -1351,6 +1351,18 @@ if type aws &>/dev/null; then
     }
 fi
 
+#################### brew ####################
+
+if type brew &>/dev/null; then
+    brew-describe-installed() {
+        brew list -1 | xargs brew desc 2>/dev/null
+    }
+
+    brew-reinstall-non-casks() {
+        brew list -1 --formula | xargs brew reinstall
+    }
+fi
+
 #################### cat ####################
 
 cat-with-titles() {
