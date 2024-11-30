@@ -870,6 +870,22 @@ tools-py-install-all() {
     "$HOME/tools-py/venv/bin/pip3" install ${package_names[@]}
 }
 
+if [[ -s "$HOME/tools-py/venv/bin/python" ]]; then
+    tools-py-python() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/python "$@"
+    }
+
+    if type pyenv &>/dev/null; then
+        pyenv-pip-versions() {
+            tools-py-python -c 'import bg_helper as bh; from pprint import pprint; pprint(bh.tools.pyenv_pip_versions())'
+        }
+
+        pyenv-package-versions() {
+            tools-py-python -c 'import bg_helper as bh; bh.tools.pyenv_pip_package_versions_available("'$1'", show=True)'
+        }
+    fi
+fi
+
 asciinema-install() {
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     "$HOME/tools-py/venv/bin/pip3" install asciinema
