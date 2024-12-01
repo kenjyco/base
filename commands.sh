@@ -1257,13 +1257,26 @@ kubectl-install() {
 }
 
 kind-install() {
-    type kind &>/dev/null && return
+    unset yn
+    if type kind &>/dev/null; then
+        kind_path=$(which kind)
+        echo -e "kind found at $kind_path\n"
+        kind --version
+        echo
+        if [[ -n "$BASH_VERSION" ]]; then
+            read -p "Replace this version? [y/n] " yn
+        elif [[ -n "$ZSH_VERSION" ]]; then
+            vared -p "Replace this version? [y/n] " -c yn
+        fi
+        [[ ! "$yn" =~ [yY].* ]] && return
+    fi
+
     oldpwd=$(pwd)
     cd /tmp
     if [[ $(uname) == "Darwin" ]]; then
-        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-darwin-amd64
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-darwin-amd64
     else
-        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
     fi
     chmod +x ./kind
     if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
