@@ -797,6 +797,39 @@ if type pyenv &>/dev/null; then
         latest_version=$(pyenv-list-installable | tail -n 1 | grep -o '[3-4].*')
         pyenv install $latest_version
     }
+
+    tools-py-create-venv-from-pyenv-version() {
+        unset choice yn
+        py_versions=($(ls -1d ~/.pyenv/versions/* | grep -v '^\.$'))
+        if [[ -n "$py_versions" ]]; then
+            if [[ ${#py_versions[@]} -eq 1 ]]; then
+                choice=$py_versions
+            else
+                select choice in "${py_versions[@]}"; do
+                    break
+                done
+            fi
+            [[ -z "$choice" ]] && return 1
+        else
+            echo "No python versions installed via pyenv yet!"
+            echo "Use 'pyenv-list-installable' to show available versions, then"
+            echo -e "\n    pyenv install 3.x.y"
+            return 1
+        fi
+
+        if [[ -d "$HOME/tools-py/venv" ]]; then
+            if [[ -n "$BASH_VERSION" ]]; then
+                read -p "Replace existing $HOME/tools-py-venv? [y/n] " yn
+            elif [[ -n "$ZSH_VERSION" ]]; then
+                vared -p "Replace existing $HOME/tools-py-venv? [y/n] " -c yn
+            fi
+            [[ ! "$yn" =~ [yY].* ]] && return
+            rm -rf "$HOME/tools-py/venv"
+        fi
+
+        echo "$ ${choice}/bin/python -m venv $HOME/tools-py/venv"
+        ${choice}/bin/python -m venv "$HOME/tools-py/venv"
+    }
 fi
 
 #################### Package management (non-sudo) ####################
