@@ -829,6 +829,7 @@ if type pyenv &>/dev/null; then
 
         echo "$ ${choice}/bin/python -m venv $HOME/tools-py/venv"
         ${choice}/bin/python -m venv "$HOME/tools-py/venv"
+        source $HOME/commands.sh
     }
 fi
 
