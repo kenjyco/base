@@ -916,6 +916,10 @@ if [[ -s "$HOME/tools-py/venv/bin/python" ]]; then
         pyenv-package-versions() {
             tools-py-python -c 'import bg_helper as bh; bh.tools.pyenv_pip_package_versions_available("'$1'", show=True)'
         }
+
+        pyenv-select-python-versions-to-install() {
+            tools-py-python -c 'import bg_helper as bh; bh.tools.pyenv_select_python_versions_to_install()'
+        }
     fi
 fi
 
