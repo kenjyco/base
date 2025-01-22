@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+#
+# Quickly create or update a markdown file with vim (see original `note` script)
+#   - insert new markdown timestamp header as the first header in an existing file
+#   - open the file in vim with the cursor placed in insert mode in the new section
+
+newdate="## $(date +'%Y-%m%d %a %r')"
+generated=
+
+if [[ -z "$1" ]]; then
+    fname_part="$(date +'%Y_%m%d--%a_hour_%H')"
+    newdate="## $(date +'%r')"
+    generated=yes
+elif [[ -d "$1" ]]; then
+    fname_part="$(date +'%Y_%m%d--%a_hour_%H')"
+    newdate="## $(date +'%r')"
+    generated=yes
+    cd "$1"
+elif [[ "$1" =~ .*\/.* ]]; then
+    dirpath=$(dirname "$1")
+    fname_part=$(basename "$1")
+    [[ ! -d "$dirpath" ]] && mkdir -p "$dirpath"
+    cd "$dirpath"
+else
+    fname_part="$1"
+fi
+
+if [[ $PWD != $HOME ]]; then
+    extra_title=$(basename "$PWD")
+else
+    extra_title="HOME"
+fi
+title="$(echo $fname_part | tr '_' '-') ($extra_title)"
+
+found=$(find . -maxdepth 1 -name "${fname_part}*" -print)
+if [[ -n "$found" && "$generated" = "yes" ]]; then
+    fname_part="${fname_part}-$(uuidgen | head -c6)"
+fi
+if [[ "$fname_part" =~ \.md$ ]]; then
+    fname="${fname_part}"
+else
+    fname="${fname_part}.md"
+fi
+
+template=
+if [[ ! -s "$fname" ]]; then
+    # Generate the file since it does not exist
+    template="${title}\n----------\n\n${newdate}\n\n"
+    echo -e "$template" > "$fname" || exit 1
+
+    # Open the file with vim (in insert mode, at the end of the file)
+    vim + -c 'startinsert' "$fname"
+else
+    # Find the line number of the first header
+    lineno=$(grep -n "^## " "$fname" | cut -d: -f1 | head -n 1)
+
+    # Insert the timestamp header where the first header is found
+    if [[ $(uname) == "Darwin" ]]; then
+        sed -i "" "${lineno}i\\
+$newdate\\
+\\
+\\
+
+" "$fname"
+    else
+        sed -i "${lineno}i\\
+$newdate\\
+\\
+\\
+
+" "$fname"
+    fi
+
+    # Find the line number of the newly added header
+    lineno=$(grep -n "^${newdate}" "$fname" | cut -d: -f1 | head -n 1)
+    start_line=$((lineno + 2))
+
+    # Open the file with vim (in insert mode, in the new section)
+    vim +"${start_line}" -c 'startinsert' "$fname"
+fi
+
+content=$(cat "$fname")
+if [[ -z "$content" ]]; then
+    rm "$fname"
+elif [[ "$content" == $(echo -e "$template") ]]; then
+    rm "$fname"
+else
+    num_tail_lines=30
+    if tput lines &>/dev/null; then
+        num_tail_lines=$(($(tput lines) -5))
+    fi
+    echo -e "$content" | tail -n $num_tail_lines
+    if [[ "$fname" =~ ^[0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9] ]]; then
+        echo -en "\n--------------------\nsave as\n> "
+        read newfile
+        if [[ -n "$newfile" ]]; then
+            [[ ! "$newfile" =~ \.md$ ]] && newfile="${newfile}.md"
+            mv -nv "$fname" "$newfile"
+        fi
+    fi
+fi
