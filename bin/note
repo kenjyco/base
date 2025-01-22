@@ -53,8 +53,8 @@ fi
 
 template=
 if [[ ! -s "$fname" ]]; then
-    # Genarate the file since it does not exist
-    template="${title}\n----------\n\n$newdate\n\n"
+    # Generate the file since it does not exist
+    template="${title}\n----------\n\n${newdate}\n\n"
     echo -e "$template" > "$fname" || exit 1
 
     # Open the file with vim (in insert mode, at the end of the file)
