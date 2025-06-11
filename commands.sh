@@ -717,7 +717,7 @@ nvm-install() {
     if [[ ! -d ~/.nvm ]]; then
         echo -e "\nInstalling nvm, latest 'long term support' version of node, and yarn..."
         unset NVM_DIR
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
@@ -1312,9 +1312,9 @@ kind-install() {
     oldpwd=$(pwd)
     cd /tmp
     if [[ $(uname) == "Darwin" ]]; then
-        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-darwin-amd64
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.29.0/kind-darwin-amd64
     else
-        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.29.0/kind-linux-amd64
     fi
     chmod +x ./kind
     if [[ -n "$(groups | grep -E '(sudo|root|admin|wheel)')" ]]; then
