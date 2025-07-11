@@ -899,7 +899,7 @@ tools-py-install-all() {
     [[ "$1" == "clean" ]] && rm -rf "$HOME/tools-py"
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     yt-download-install
-    package_names=(asciinema awscli flake8 twine httpie yt-helper jupyter grip rdbtools python-lzf)
+    package_names=(asciinema awscli flake8 twine httpie yt-helper ipython jupyter grip rdbtools python-lzf)
     _postgresql-install && package_names+=(sql-helper)
     "$HOME/tools-py/venv/bin/pip3" install ${package_names[@]}
 }

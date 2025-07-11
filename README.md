@@ -436,7 +436,7 @@ Streamlined installation and management of development tools with automatic envi
 
 ### Python Development Tools
 - [function] **`tools-py-install-all`** - Install comprehensive Python tool suite in isolated environment (`~/tools-py` directory)
-    - includes: asciinema, awscli, flake8, twine, httpie, jupyter, grip, rdbtools, sql-helper
+    - includes: asciinema, awscli, flake8, twine, httpie, ipython, jupyter, grip, rdbtools, sql-helper
 
 *Tools are installed in `~/tools-py/venv` and wrapper functions are created automatically*
 
