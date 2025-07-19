@@ -1012,6 +1012,30 @@ if [[ -s "$HOME/tools-py/venv/bin/sql-ipython" ]]; then
     }
 fi
 
+if [[ -s "$HOME/tools-py/venv/bin/rh-shell" ]]; then
+    rh-shell() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/rh-shell "$@"
+    }
+fi
+
+if [[ -s "$HOME/tools-py/venv/bin/rh-notes" ]]; then
+    rh-notes() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/rh-notes "$@"
+    }
+fi
+
+if [[ -s "$HOME/tools-py/venv/bin/rh-collection-reports" ]]; then
+    rh-collection-reports() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/rh-collection-reports "$@"
+    }
+fi
+
+if [[ -s "$HOME/tools-py/venv/bin/rh-clear-all-locks" ]]; then
+    rh-clear-all-locks() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/rh-clear-all-locks "$@"
+    }
+fi
+
 if [[ ! -s "$HOME/tools-py/venv/bin/kenjyco-dev-setup" ]]; then
     kenjyco-install-dev-setup() {
         [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
