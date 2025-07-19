@@ -899,6 +899,7 @@ tools-py-install-all() {
     [[ "$1" == "clean" ]] && rm -rf "$HOME/tools-py"
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     yt-download-install
+    mocplayer-install
     package_names=(asciinema awscli flake8 twine httpie yt-helper ipython jupyter grip rdbtools python-lzf)
     _postgresql-install && package_names+=(sql-helper)
     "$HOME/tools-py/venv/bin/pip3" install ${package_names[@]}
@@ -1171,6 +1172,27 @@ if [[ -s "$HOME/tools-py/venv/bin/yt-download" ]]; then
         cd "$HOME/tools-py/youtube-dl"
         git pull
         cd -
+    }
+fi
+
+mocplayer-install() {
+    [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
+    "$HOME/tools-py/venv/bin/pip3" install mocp-cli
+    [[ -d "$PACKAGE_REPOS_DIR/mocp-cli" ]] && "$HOME/tools-py/venv/bin/pip3" install -e "$PACKAGE_REPOS_DIR/mocp-cli"
+
+    if ! type mocp &>/dev/null; then
+        if type apt-get &>/dev/null; then
+            sudo apt-get install -y moc
+        elif type brew &>/dev/null; then
+            brew install moc
+        fi
+    fi
+    source $HOME/commands.sh
+}
+
+if [[ -s "$HOME/tools-py/venv/bin/mocplayer" ]]; then
+    mocplayer() {
+        PYTHONPATH=$HOME $HOME/tools-py/venv/bin/mocplayer "$@"
     }
 fi
 
