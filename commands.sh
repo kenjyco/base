@@ -1129,6 +1129,7 @@ fi
 yt-download-install() {
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     "$HOME/tools-py/venv/bin/pip3" install yt-helper
+    [[ -d "$PACKAGE_REPOS_DIR/yt-helper" ]] && "$HOME/tools-py/venv/bin/pip3" install -e "$PACKAGE_REPOS_DIR/yt-helper"
     [[ ! -d "$HOME/tools-py/youtube-dl" ]] && git clone https://github.com/ytdl-org/youtube-dl "$HOME/tools-py/youtube-dl"
     "$HOME/tools-py/venv/bin/pip3" install -e "$HOME/tools-py/youtube-dl"
     source $HOME/commands.sh
@@ -1141,6 +1142,7 @@ if [[ -s "$HOME/tools-py/venv/bin/yt-download" ]]; then
 
     yt-download-upgrade() {
         "$HOME/tools-py/venv/bin/pip3" install yt-helper --upgrade --upgrade-strategy eager
+        [[ -d "$PACKAGE_REPOS_DIR/yt-helper" ]] && "$HOME/tools-py/venv/bin/pip3" install -e "$PACKAGE_REPOS_DIR/yt-helper"
         [[ ! -d "$HOME/tools-py/youtube-dl" ]] && git clone https://github.com/ytdl-org/youtube-dl "$HOME/tools-py/youtube-dl"
         cd "$HOME/tools-py/youtube-dl"
         git pull
