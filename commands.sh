@@ -900,7 +900,7 @@ tools-py-install-all() {
     [[ ! -d "$HOME/tools-py/venv" ]] && python3 -m venv "$HOME/tools-py/venv" && "$HOME/tools-py/venv/bin/pip3" install --upgrade pip wheel
     yt-download-install
     mocplayer-install
-    package_names=(asciinema awscli flake8 twine httpie yt-helper ipython jupyter grip rdbtools python-lzf)
+    package_names=(asciinema awscli flake8 twine httpie yt-helper ipython jupyter grip rdbtools python-lzf pytest)
     _postgresql-install && package_names+=(sql-helper)
     "$HOME/tools-py/venv/bin/pip3" install ${package_names[@]}
 }
@@ -1075,6 +1075,34 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
             package-repos() {
                 cd "$PACKAGE_REPOS_DIR"
             }
+
+            if [[ -s "$HOME/tools-py/venv/bin/pytest" ]]; then
+                kenjyco-pytest() {
+                    oldpwd=$(pwd)
+                    packages=(input-helper mongo-helper redis-helper settings-helper sql-helper)
+                    for package in "${packages[@]}"; do
+                        package_dir="$PACKAGE_REPOS_DIR/$package"
+                        [[ ! -d "$package_dir" ]] && continue
+                        echo -e "\n\n%%%%%%%%%%%%%%%\n  $(echo $package | tr '[a-z]' '[A-Z]')\n%%%%%%%%%%%%%%%"
+                        cd "$package_dir"
+                        "$HOME/tools-py/venv/bin/pytest" -vs -rsfe
+                    done
+                    cd "$oldpwd"
+                }
+
+                kenjyco-pytest-pdb() {
+                    oldpwd=$(pwd)
+                    packages=(input-helper mongo-helper redis-helper settings-helper sql-helper)
+                    for package in "${packages[@]}"; do
+                        package_dir="$PACKAGE_REPOS_DIR/$package"
+                        [[ ! -d "$package_dir" ]] && continue
+                        echo -e "\n\n%%%%%%%%%%%%%%%\n  $(echo $package | tr '[a-z]' '[A-Z]')\n%%%%%%%%%%%%%%%"
+                        cd "$package_dir"
+                        "$HOME/tools-py/venv/bin/pytest" -vsx -rsfe --showlocals --pdb
+                    done
+                    cd "$oldpwd"
+                }
+            fi
 
             kenjyco-usage-across-packages() {
                 oldpwd=$(pwd)
