@@ -2266,7 +2266,7 @@ grep-history-comments() {
 
 grepit() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=opensource --exclude-dir=venv "$@" \.
+    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=opensource --exclude-dir=venv --exclude-dir=venv\* "$@" \.
 }
 
 grepit-tabs() {
