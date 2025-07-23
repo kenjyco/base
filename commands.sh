@@ -1079,7 +1079,7 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
             if [[ -s "$HOME/tools-py/venv/bin/pytest" ]]; then
                 kenjyco-pytest() {
                     oldpwd=$(pwd)
-                    packages=(input-helper mongo-helper redis-helper settings-helper sql-helper)
+                    packages=(input-helper dt-helper mongo-helper redis-helper settings-helper sql-helper)
                     for package in "${packages[@]}"; do
                         package_dir="$PACKAGE_REPOS_DIR/$package"
                         [[ ! -d "$package_dir" ]] && continue
@@ -1092,7 +1092,7 @@ if [[ -s "$HOME/tools-py/venv/bin/kenjyco-ipython" ]]; then
 
                 kenjyco-pytest-pdb() {
                     oldpwd=$(pwd)
-                    packages=(input-helper mongo-helper redis-helper settings-helper sql-helper)
+                    packages=(input-helper dt-helper mongo-helper redis-helper settings-helper sql-helper)
                     for package in "${packages[@]}"; do
                         package_dir="$PACKAGE_REPOS_DIR/$package"
                         [[ ! -d "$package_dir" ]] && continue
