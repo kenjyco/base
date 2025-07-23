@@ -13,5 +13,5 @@ done
 if [[ "$test_path" != "/" ]]; then
     echo $test_path
 else
-    find "$path" -maxdepth 8 -type d -name '.git' -print0 2>/dev/null | sort -z | xargs -0 -I {} dirname {}
+    find "$path" \( -name 'venv' -o -name 'venv*' \) -type d -prune -o -maxdepth 8 -type d -name '.git' -print0 2>/dev/null | sort -z | xargs -0 -I {} dirname {}
 fi
