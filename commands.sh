@@ -833,6 +833,24 @@ if type pyenv &>/dev/null; then
     }
 fi
 
+uv-install() {
+    unset yn
+    if type uv &>/dev/null; then
+        uv_path=$(which uv)
+        echo -e "uv found at $uv_path\n"
+        uv --version
+        echo
+        if [[ -n "$BASH_VERSION" ]]; then
+            read -p "Replace this version? [y/n] " yn
+        elif [[ -n "$ZSH_VERSION" ]]; then
+            vared -p "Replace this version? [y/n] " -c yn
+        fi
+        [[ ! "$yn" =~ [yY].* ]] && return
+    fi
+
+    curl -LsSf https://astral.sh/uv/0.8.13/install.sh | sh
+}
+
 #################### Package management (non-sudo) ####################
 
 if type apt-cache &>/dev/null; then
