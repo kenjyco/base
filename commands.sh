@@ -1448,7 +1448,8 @@ kind-install() {
 }
 
 terraform-install() {
-    versions=(0.15.0 0.14.10 0.13.6 0.12.30 0.11.14)
+    # versions=(1.14.7 0.15.0 0.14.10 0.13.6 0.12.30 0.11.14)
+    versions=(1.14.7)
     oldpwd=$(pwd)
     mkdir -p "$HOME/bin"
     cd /tmp
