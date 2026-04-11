@@ -855,6 +855,24 @@ uv-install() {
     curl -LsSf https://astral.sh/uv/0.8.13/install.sh | sh
 }
 
+bun-install() {
+    unset yn
+    if type bun &>/dev/null; then
+        bun_path=$(which bun)
+        echo -e "bun found at $bun_path\n"
+        bun --version
+        echo
+        if [[ -n "$BASH_VERSION" ]]; then
+            read -p "Replace this version? [y/n] " yn
+        elif [[ -n "$ZSH_VERSION" ]]; then
+            vared -p "Replace this version? [y/n] " -c yn
+        fi
+        [[ ! "$yn" =~ [yY].* ]] && return
+    fi
+
+    curl -fsSL https://bun.com/install | bash
+}
+
 #################### Package management (non-sudo) ####################
 
 if type apt-cache &>/dev/null; then
