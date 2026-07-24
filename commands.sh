@@ -721,7 +721,7 @@ nvm-install() {
     if [[ ! -d ~/.nvm ]]; then
         echo -e "\nInstalling nvm, latest 'long term support' version of node, and yarn..."
         unset NVM_DIR
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
