@@ -1552,7 +1552,7 @@ if type brew &>/dev/null; then
     }
 fi
 
-#################### cat ####################
+#################### cat / head ####################
 
 cat-with-titles() {
     num_cols=$(($(tput cols) - 1))
@@ -1581,6 +1581,37 @@ cat-with-titles-html() {
         draw-delimiter-line--html $num_cols "-" 2
         echo -e "<!-- [$fname] -->\n"
         cat "$fname"
+    done
+}
+
+head-with-titles () {
+    local num_lines=120
+    local num_cols
+    local fname
+
+    if (( $# > 0 )) && [[ "$1" == <-> ]]; then
+        num_lines="$1"
+        shift
+    fi
+
+    if (( $# == 0 )); then
+        echo "usage: head-with-titles [number] file [file ...]" >&2
+        return 2
+    fi
+
+    num_cols=$(($(tput cols 2>/dev/null || echo 80) - 1))
+
+    for fname in "$@"
+    do
+        echo -e "\n\n"
+        draw-delimiter-line "$num_cols"
+        echo -e "== [$fname] ==\n"
+
+        if [[ -f "$fname" ]]; then
+            head -n "$num_lines" -- "$fname"
+        else
+            echo "head-with-titles: not a regular file: $fname" >&2
+        fi
     done
 }
 
