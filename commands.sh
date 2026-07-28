@@ -3076,6 +3076,10 @@ if type tree &>/dev/null; then
     td() {
         tree -Fd $@
     }
+
+    ta() {
+        t -a -I '.git' $@
+    }
 fi
 
 #################### urxvt ####################
