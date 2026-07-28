@@ -162,7 +162,7 @@ do_install() {
 
         if [[ -n "$extras" ]]; then
             echo -e "\nInstalling/upgrading other useful CLI packages ..."
-            _brew_install_or_upgrade coreutils findutils grep wget watch vim zsh-syntax-highlighting fish htop glances pstree jq openssh colordiff tree ncdu ranger fzf pv nnn w3m nmap mtr tldr sqlite3 imagemagick pandoc lynx ctags
+            _brew_install_or_upgrade coreutils findutils grep wget watch vim zsh-syntax-highlighting fish htop glances pstree jq openssh colordiff tree ncdu ranger fzf pv nnn w3m nmap mtr tldr sqlite3 imagemagick pandoc weasyprint lynx ctags
             _brew_install_or_upgrade gtypist typespeed
         fi
 
