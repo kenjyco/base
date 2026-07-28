@@ -521,6 +521,7 @@ Enhanced file listing and content display tools with timestamps and formatting o
 - [function] **`cat-with-titles`** - Display files with delimited section headers
 - [function] **`cat-with-titles-pound`** - Display files with pound sign headers
 - [function] **`cat-with-titles-html`** - Display files with HTML comment headers
+- [function] **`head-with-titles`** - Display parts of files with delimited section headers
 
 ### Directory Navigation Trees
 *Available only if tree command exists*
