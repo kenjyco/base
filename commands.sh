@@ -1988,7 +1988,7 @@ fi
 
 #################### findit ####################
 
-_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*"
+_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*, .venv, .venv*, _build, deps, raw_pages"
 
 findit-default-excludes() {
     findit "$@" --exclude_dirs "$_default_exclude_dirs"
@@ -2338,7 +2338,7 @@ grep-history-comments() {
 
 grepit() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=opensource --exclude-dir=venv --exclude-dir=venv\* "$@" \.
+    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude=package-lock.json --exclude=uv.lock --exclude=mix.lock --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=_build --exclude-dir=deps --exclude-dir=opensource --exclude-dir=raw_pages --exclude-dir=venv --exclude-dir=venv\* --exclude-dir=.venv --exclude-dir=.venv\* "$@" \.
 }
 
 grepit-tabs() {
@@ -2381,12 +2381,12 @@ grepit-todo() {
 
 grepit-py() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --include=\*.py --exclude-dir=venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache "$@" \.
+    grep -HnI --color -R --include=\*.py --exclude-dir=venv --exclude-dir=.venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache "$@" \.
 }
 
 grepit-py-no-tests() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --include=\*.py --exclude-dir=venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=test\* "$@" \.
+    grep -HnI --color -R --include=\*.py --exclude-dir=venv --exclude-dir=.venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=test\* "$@" \.
 }
 
 grepit-py-imports() {
@@ -2399,12 +2399,12 @@ grepit-py-imports-no-tests() {
 
 grepit-md() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --include=\*.md --exclude-dir=venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache "$@" \.
+    grep -HnI --color -R --include=\*.md --exclude-dir=venv --exclude-dir=.venv --exclude-dir=env --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=_build --exclude-dir=deps "$@" \.
 }
 
 grepit-md-include-venv-and-node_modules() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --include=\*.md --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache "$@" \.
+    grep -HnI --color -R --include=\*.md --exclude-dir=dist --exclude-dir=build --exclude-dir=.cache --exclude-dir=.eggs --exclude-dir=\*.egg-info --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=_build --exclude-dir=deps "$@" \.
 }
 
 grepit-no-docs() {
