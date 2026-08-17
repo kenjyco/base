@@ -40,12 +40,23 @@ cd ~/repos/base
 source ./install.sh extras
 ```
 
+For the shell environment only, using programs already present on the machine:
+
+```
+source ./install.sh minimal
+```
+
 > Note: If you are in an interactive **fish shell**, do not source `install.sh`,
 > but invoke either `bash ./install.sh` OR `zsh ./install.sh`
 
 The `install.sh` script behaves differently if any of the following strings are
 passed in:
 
+- **`minimal`**: creates the repo links, loads the shell functions, updates
+  startup files, and uses any existing prompt selection without installing
+  packages through a package manager or offering completion/dotfiles setup that
+  may install or download anything; use this argument on its own (it takes
+  precedence if combined with another option)
 - **`clean`**: ensures the git/docker completion files match installed versions
   (if packages were updated)
 - **`extras`**: also installs non-essential, but light-weight CLI packages like
@@ -57,6 +68,10 @@ passed in:
       environment containing a number of python packages (like `asciinema`,
       `awscli`, `flake8`, `twine`, `httpie`, `grip`, and more)
     - you can run `tools-py-install-all` later if desired
+
+With no arguments, the existing default package setup is used. `extras` keeps
+that default setup and adds the optional CLI packages listed above. `minimal`
+is the package-manager-free lightweight setup.
 
 ### Interactive prompts during installation
 
@@ -127,8 +142,9 @@ Clone and setup dotfiles? [y/n] n
 # About
 
 When you source the `install.sh` script, your package manager will install
-or update some packages, three symbolic links will be created in your
-`$HOME` directory, and `~/commands.sh` will be "auto-sourced" at the end
+or update some packages unless `minimal` is selected, three symbolic links will
+be created in your `$HOME` directory, and `~/commands.sh` will be "auto-sourced"
+at the end
 (i.e. if using bash/zsh, the "shell functions" defined in `~/commands.sh` will
 be "loaded" into your shell whenever you start a session, allowing you to call
 any of those funcitons by name while using the terminal).

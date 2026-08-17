@@ -612,7 +612,7 @@ if [[ -n "$BASH_VERSION" ]]; then
         read -p "Update completions for bash? [y/n] " yn
         [[ "$yn" =~ [yY].* ]] && get-completions
     fi
-    source "$bash_completion_file"
+    [[ -z "$BASE_INSTALL_MINIMAL_MODE" || -f "$bash_completion_file" ]] && source "$bash_completion_file"
 elif [[ -n "$ZSH_VERSION" ]]; then
     if [[ ! -f "$custom_fpath/git-completion.zsh" && -n "$BASE_INSTALL_INTERACTIVE_MODE" ]]; then
         vared -p "Update completions for zsh? [y/n] " -c yn

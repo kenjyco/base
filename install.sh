@@ -1,4 +1,5 @@
-# Source this script with optional args: "clean" "extras" "gui" "all"
+# Source this script with optional args: "minimal" "clean" "extras" "gui" "all"
+#    - minimal skips package installation and should be used on its own
 #    - all means "clean extras gui"
 
 # Create symbolic link to commands.sh and bin/
@@ -8,18 +9,24 @@
 [[ -d ./bin ]] && ln -s "$(pwd)/bin" "$HOME/bin-base"
 [[ "$(basename $PWD)" == "base" ]] && echo "$PWD" > "$HOME/.base_path"
 
-# Set clean, extras, and gui vars
-unset clean extras gui all
+# Set minimal, clean, extras, and gui vars
+unset minimal clean extras gui all
+[[ "$1" == "minimal" || "$2" == "minimal" || "$3" == "minimal" ]] && minimal=yes
 [[ "$1" == "clean" || "$2" == "clean" || "$3" == "clean" ]] && clean=clean
 [[ "$1" == "extras" || "$2" == "extras" || "$3" == "extras" ]] && extras=yes
 [[ "$1" == "gui" || "$2" == "gui" || "$3" == "gui" ]] && gui=yes
 [[ "$1" == "all" || "$2" == "all" || "$3" == "all" ]] && clean=clean && extras=yes && gui=yes && all=yes
+[[ -n "$minimal" ]] && unset clean extras gui all
 
 # Save the selections, but don't lazily use "$@"
 args_to_save=
-[[ -n "$extras" ]] && args_to_save="extras"
-if [[ -n "$gui" ]]; then
-    [[ -z "$args_to_save" ]] && args_to_save="gui" || args_to_save="$args_to_save gui"
+if [[ -n "$minimal" ]]; then
+    args_to_save="minimal"
+else
+    [[ -n "$extras" ]] && args_to_save="extras"
+    if [[ -n "$gui" ]]; then
+        [[ -z "$args_to_save" ]] && args_to_save="gui" || args_to_save="$args_to_save gui"
+    fi
 fi
 echo "$args_to_save" > "$HOME/.base_install_args"
 
@@ -195,8 +202,12 @@ do_install() {
     fi
 }
 
-do_install || return 1
-echo -e "\nThe call to 'do_install' was successful...\n"
+if [[ -n "$minimal" ]]; then
+    echo -e "\nSkipping package installation in minimal mode...\n"
+else
+    do_install || return 1
+    echo -e "\nThe call to 'do_install' was successful...\n"
+fi
 parent_pid=$(ps -o ppid= $$)
 if ps | grep "^$parent_pid" | grep 'fish$'; then
     # Parent PID is fish shell
@@ -207,7 +218,12 @@ if ps | grep "^$parent_pid" | grep 'fish$'; then
 else
     # The install.sh was sourced by bash or zsh
     if [[ -s "$HOME/commands.sh" ]]; then
-        BASE_INSTALL_INTERACTIVE_MODE=yes source "$HOME/commands.sh"
+        if [[ -n "$minimal" ]]; then
+            BASE_INSTALL_MINIMAL_MODE=yes source "$HOME/commands.sh"
+            unset BASE_INSTALL_MINIMAL_MODE
+        else
+            BASE_INSTALL_INTERACTIVE_MODE=yes source "$HOME/commands.sh"
+        fi
     else
         return
     fi
@@ -238,7 +254,7 @@ if type fish &>/dev/null; then
     fi
 fi
 
-if type vim &>/dev/null || type tmux &>/dev/null; then
+if [[ -z "$minimal" ]] && (type vim &>/dev/null || type tmux &>/dev/null); then
     if [[ ! -s "$HOME/.vimrc" && ! -s "$HOME/.tmux.conf" && -f "$HOME/.base_path" ]]; then
         echo -e "\nNo local config found for vim or tmux."
         unset yn
