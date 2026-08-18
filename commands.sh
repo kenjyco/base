@@ -622,6 +622,78 @@ elif [[ -n "$ZSH_VERSION" ]]; then
     compinit -i
 fi
 
+#################### Optional AI CLI installers ####################
+
+_ai-cli-install() {
+    local cli_name="$1"
+    local installer_url="$2"
+    local installer_shell="$3"
+    local installer_file installer_status platform
+    shift 3
+
+    platform=$(uname)
+    if [[ "$platform" != "Darwin" && "$platform" != "Linux" ]]; then
+        echo -e "\n$cli_name installation is only supported here on macOS or Linux."
+        echo "Use the vendor's native Windows installer outside WSL."
+        return 1
+    fi
+    if ! type curl &>/dev/null; then
+        echo -e "\nCannot install $cli_name: curl is required."
+        return 1
+    fi
+    if ! type "$installer_shell" &>/dev/null; then
+        echo -e "\nCannot install $cli_name: $installer_shell is required."
+        return 1
+    fi
+    if ! type mktemp &>/dev/null; then
+        echo -e "\nCannot install $cli_name: mktemp is required."
+        return 1
+    fi
+
+    installer_file=$(mktemp "${TMPDIR:-/tmp}/base-ai-cli-install.XXXXXX") || return 1
+    echo -e "\nInstalling/updating $cli_name using the official installer:"
+    echo "$installer_url"
+    curl -fsSL "$installer_url" -o "$installer_file" || {
+        rm -f "$installer_file"
+        return 1
+    }
+    "$installer_shell" "$installer_file" "$@"
+    installer_status=$?
+    rm -f "$installer_file"
+    return $installer_status
+}
+
+pi-install() {
+    if type pi &>/dev/null; then
+        echo -e "\nUpdating Pi coding agent using its official self-update command..."
+        pi update --self
+    else
+        _ai-cli-install "Pi coding agent" "https://pi.dev/install.sh" sh
+    fi
+}
+
+codex-install() {
+    if type codex &>/dev/null; then
+        echo -e "\nUpdating OpenAI Codex CLI using its official update command..."
+        codex update
+    else
+        CODEX_NON_INTERACTIVE=1 _ai-cli-install "OpenAI Codex CLI" "https://chatgpt.com/codex/install.sh" sh
+    fi
+}
+
+claude-install() {
+    if type claude &>/dev/null; then
+        echo -e "\nUpdating Anthropic Claude Code using its official update command..."
+        claude update
+    else
+        _ai-cli-install "Anthropic Claude Code" "https://claude.ai/install.sh" bash
+    fi
+}
+
+agy-install() {
+    _ai-cli-install "Google Antigravity CLI" "https://antigravity.google/cli/install.sh" bash --skip-aliases
+}
+
 #################### Environment managers ####################
 
 rust-install() {

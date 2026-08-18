@@ -439,6 +439,16 @@ Powerful tools for searching and analyzing code across projects with intelligent
 
 Streamlined installation and management of development tools with automatic environment setup. Most installation functions create isolated environments and automatically make tools available after installation by re-sourcing commands.sh.
 
+### Optional AI CLI Installers
+These helpers are explicitly invoked and are not run by `minimal`, the default
+installer, `extras`, or shell startup. Each uses the vendor's official installer
+or update mechanism for macOS/Linux; WSL follows the Linux path.
+
+- [function] **`pi-install`** - Install/update Pi coding agent (`pi`)
+- [function] **`codex-install`** - Install/update OpenAI Codex CLI (`codex`)
+- [function] **`claude-install`** - Install/update Anthropic Claude Code (`claude`)
+- [function] **`agy-install`** - Install/update Google Antigravity CLI (`agy`)
+
 ### Core Installation Tools
 - [function] **`get-completions`** - Download bash/zsh completions for git and docker
 
