@@ -2058,7 +2058,7 @@ fi
 
 #################### findit ####################
 
-_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*, .venv, .venv*, _build, deps, raw_pages"
+_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*, .venv, .venv*, _build, deps, raw_pages, .hex, .nimble, .pub-cache, .local, .rbenv, go, .codex, .claude, .gemini"
 
 findit-default-excludes() {
     findit "$@" --exclude_dirs "$_default_exclude_dirs"
@@ -2123,6 +2123,10 @@ findit-audio() {
 
 findit-vids() {
     findit-default-excludes "$@" --type f --exts "mp4, flv, mkv, ogv, mov, webm, avi"
+}
+
+findit-zips() {
+    findit-default-excludes "$@" --type f --exts "zip, tar, gz"
 }
 
 if type feh &>/dev/null; then
