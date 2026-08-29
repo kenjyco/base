@@ -1628,6 +1628,7 @@ fi
 
 cat-with-titles() {
     num_cols=$(($(tput cols) - 1))
+    (( $# == 0 )) && echo "usage: cat-with-titles file1 [file2 ...]" >&2 && return 1
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
         draw-delimiter-line $num_cols
@@ -1638,6 +1639,7 @@ cat-with-titles() {
 
 cat-with-titles-pound() {
     num_cols=$(($(tput cols) - 1))
+    (( $# == 0 )) && echo "usage: cat-with-titles-pound file1 [file2 ...]" >&2 && return 1
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
         draw-delimiter-line--pound $num_cols 2
@@ -1648,6 +1650,7 @@ cat-with-titles-pound() {
 
 cat-with-titles-html() {
     num_cols=$(($(tput cols) - 1))
+    (( $# == 0 )) && echo "usage: cat-with-titles-html file1 [file2 ...]" >&2 && return 1
     for fname in $(ls -1 $@); do
         echo -e "\n\n"
         draw-delimiter-line--html $num_cols "-" 2
@@ -1656,34 +1659,16 @@ cat-with-titles-html() {
     done
 }
 
-head-with-titles () {
-    local num_lines=120
-    local num_cols
-    local fname
-
-    if (( $# > 0 )) && [[ "$1" == <-> ]]; then
-        num_lines="$1"
-        shift
-    fi
-
-    if (( $# == 0 )); then
-        echo "usage: head-with-titles [number] file [file ...]" >&2
-        return 2
-    fi
-
-    num_cols=$(($(tput cols 2>/dev/null || echo 80) - 1))
-
-    for fname in "$@"
-    do
+head-with-titles() {
+    num_lines=30
+    [[ "$1" =~ ^[0-9]+$ ]] && num_lines="$1" && shift
+    (( $# == 0 )) && echo "usage: head-with-titles [number] file1 [file2 ...]" >&2 && return 1
+    num_cols=$(($(tput cols) - 1))
+    for fname in $(ls -1 $@); do
         echo -e "\n\n"
-        draw-delimiter-line "$num_cols"
+        draw-delimiter-line $num_cols
         echo -e "== [$fname] ==\n"
-
-        if [[ -f "$fname" ]]; then
-            head -n "$num_lines" -- "$fname"
-        else
-            echo "head-with-titles: not a regular file: $fname" >&2
-        fi
+        head -n "$num_lines" "$fname"
     done
 }
 
