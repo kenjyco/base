@@ -1624,7 +1624,7 @@ if type brew &>/dev/null; then
     }
 fi
 
-#################### cat / head ####################
+#################### cat / head / unzip -l ####################
 
 cat-with-titles() {
     num_cols=$(($(tput cols) - 1))
@@ -1671,6 +1671,19 @@ head-with-titles() {
         head -n "$num_lines" "$fname"
     done
 }
+
+if type unzip &>/dev/null; then
+    zip-content-summaries() {
+        num_cols=$(($(tput cols) - 1))
+        (( $# == 0 )) && echo "usage: zip-content-summaries file1 [file2 ...]" >&2 && return 1
+        for fname in $(ls -1 $@); do
+            echo -e "\n\n"
+            draw-delimiter-line $num_cols
+            echo -e "== [$fname] ==\n"
+            unzip -l "$fname"
+        done
+    }
+fi
 
 #################### compgen ####################
 
