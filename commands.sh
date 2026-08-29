@@ -1683,6 +1683,97 @@ if type unzip &>/dev/null; then
             unzip -l "$fname"
         done
     }
+
+    zip-exclusive-assets() {
+        (( $# < 2 )) && echo "usage: zip-exclusive-assets <mega.zip> <sub.zip1> [sub.zip2 ...]" >&2 && return 1
+
+        local mega="$1"
+        shift
+
+        [[ ! -f "$mega" ]] && echo "error: mega zip '$mega' not found" >&2 && return 1
+
+        awk '
+        function ends_with(str, suffix) {
+            l_str = length(str)
+            l_suf = length(suffix)
+            if (l_suf > l_str) return 0
+            if (substr(str, l_str - l_suf + 1) == suffix) {
+                if (l_str == l_suf || substr(str, l_str - l_suf, 1) == "/") return 1
+            }
+            return 0
+        }
+
+        # First stream: collect all filepaths across all smaller zip files
+        NR == FNR {
+            sub_paths[$0] = 1
+            next
+        }
+
+        # Second stream: evaluate mega zip files
+        {
+            mega_path = $0
+            matched = 0
+            for (p in sub_paths) {
+                if (ends_with(mega_path, p)) {
+                    matched = 1
+                    break
+                }
+            }
+            if (!matched) {
+                print mega_path
+            }
+        }' <(for z in "$@"; do [[ -f "$z" ]] && unzip -Z1 "$z" 2>/dev/null; done | grep -v '/$') \
+           <(unzip -Z1 "$mega" 2>/dev/null | grep -v '/$')
+    }
+fi
+
+if type unzip &>/dev/null && type fzf &>/dev/null; then
+    zip-extract-selected() {
+        local mode="slug" # default: flattened with '--'
+
+        while [[ "$1" =~ ^- ]]; do
+            case "$1" in
+                -t|--tree) mode="tree"; shift ;;
+                -j|--junk) mode="junk"; shift ;;
+                --) shift; break ;;
+                *) echo "unknown option: $1" >&2; return 1 ;;
+            esac
+        done
+
+        (( $# < 1 )) && echo "usage: zip-extract-selected [-t|--tree] [-j|--junk] <archive.zip> [pattern]" >&2 && return 1
+
+        local zip="$1"
+        local pattern="${2:-}"
+
+        [[ ! -f "$zip" ]] && echo "error: zip file '$zip' not found" >&2 && return 1
+
+        local selected
+        if [[ -n "$pattern" ]]; then
+            selected="$(unzip -Z1 "$zip" 2>/dev/null | grep -v '/$' | grep -E "$pattern" | fzf -m --prompt="Extract (Tab to select) > ")"
+        else
+            selected="$(unzip -Z1 "$zip" 2>/dev/null | grep -v '/$' | fzf -m --prompt="Extract (Tab to select) > ")"
+        fi
+
+        [[ -z "$selected" ]] && return 0
+
+        local file dst
+        printf '%s\n' "$selected" | while IFS= read -r file; do
+            [[ -z "$file" ]] && continue
+            case "$mode" in
+                tree)
+                    unzip -o "$zip" "$file"
+                    ;;
+                junk)
+                    unzip -o -j "$zip" "$file"
+                    ;;
+                slug)
+                    dst="${file//\//--}"
+                    unzip -p "$zip" "$file" > "$dst"
+                    echo "extracted: $dst"
+                    ;;
+            esac
+        done
+    }
 fi
 
 #################### compgen ####################
