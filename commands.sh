@@ -1674,11 +1674,19 @@ head-with-titles() {
 
 if type unzip &>/dev/null; then
     zip-content-summaries() {
-        num_cols=$(($(tput cols) - 1))
         (( $# == 0 )) && echo "usage: zip-content-summaries file1 [file2 ...]" >&2 && return 1
-        for fname in $(ls -1 $@); do
+
+        local num_cols fname
+        num_cols=$(($(tput cols 2>/dev/null || echo 80) - 1))
+
+        for fname in "$@"; do
+            if [[ ! -f "$fname" ]]; then
+                echo "warning: '$fname' is not a valid file" >&2
+                continue
+            fi
+
             echo -e "\n\n"
-            draw-delimiter-line $num_cols
+            draw-delimiter-line "$num_cols"
             echo -e "== [$fname] ==\n"
             unzip -l "$fname"
         done
