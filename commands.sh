@@ -2157,7 +2157,7 @@ fi
 
 #################### findit ####################
 
-_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*, .venv, .venv*, _build, deps, raw_pages, .hex, .nimble, .pub-cache, .local, .rbenv, go, .codex, .claude, .gemini"
+_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, opensource, venv, venv*, .venv, .venv*, _build, deps, raw_pages, .hex, .nimble, .pub-cache, .local, .rbenv, go, .cargo, .codex, .claude, .gemini"
 
 findit-default-excludes() {
     findit "$@" --exclude_dirs "$_default_exclude_dirs"
@@ -2511,7 +2511,7 @@ grep-history-comments() {
 
 grepit() {
     [[ -z "$@" ]] && return 1
-    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude=package-lock.json --exclude=uv.lock --exclude=mix.lock --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=_build --exclude-dir=deps --exclude-dir=opensource --exclude-dir=raw_pages --exclude-dir=venv --exclude-dir=venv\* --exclude-dir=.venv --exclude-dir=.venv\* "$@" \.
+    grep -HnI --color -R --exclude=\*.{pyc,swp,min.js,svg,png,jpg,jpeg,ttf,pdf,doc,xlsx,otf,mp3} --exclude=tags --exclude=conversations\*.json --exclude=package-lock.json --exclude=uv.lock --exclude=mix.lock --exclude-dir=\*.egg --exclude-dir=\*.egg-info --exclude-dir=.Private --exclude-dir=.Trash --exclude-dir=.cache --exclude-dir=.cinnamon --exclude-dir=.config --exclude-dir=.eggs --exclude-dir=.git --exclude-dir=.mypy_cache --exclude-dir=.npm --exclude-dir=.nvm --exclude-dir=.pyenv --exclude-dir=.pytest_cache --exclude-dir=.thumbnails --exclude-dir=EGG-INFO --exclude-dir=Library --exclude-dir=__pycache__ --exclude-dir=build --exclude-dir=dist --exclude-dir=env --exclude-dir=node_modules --exclude-dir=_build --exclude-dir=deps --exclude-dir=opensource --exclude-dir=raw_pages --exclude-dir=venv --exclude-dir=venv\* --exclude-dir=.venv --exclude-dir=.venv\* --exclude-dir=.hex --exclude-dir=.nimble --exclude-dir=.pub-cache --exclude-dir=.local --exclude-dir=.rbenv --exclude-dir=go --exclude-dir=.cargo --exclude-dir=.codex --exclude-dir=.claude --exclude-dir=.gemini "$@" \.
 }
 
 grepit-tabs() {
