@@ -1674,9 +1674,28 @@ head-with-titles() {
 
 if type unzip &>/dev/null; then
     zip-content-summaries() {
-        (( $# == 0 )) && echo "usage: zip-content-summaries file1 [file2 ...]" >&2 && return 1
+        local pattern=""
 
-        local num_cols fname
+        while [[ "$1" =~ ^- ]]; do
+            case "$1" in
+                -g|--grep|-p|--pattern)
+                    pattern="$2"
+                    shift 2
+                    ;;
+                --)
+                    shift
+                    break
+                    ;;
+                *)
+                    echo "unknown option: $1" >&2
+                    return 1
+                    ;;
+            esac
+        done
+
+        (( $# == 0 )) && echo "usage: zip-content-summaries [-g|--grep <pattern>] file1 [file2 ...]" >&2 && return 1
+
+        local num_cols fname matches
         num_cols=$(($(tput cols 2>/dev/null || echo 80) - 1))
 
         for fname in "$@"; do
@@ -1685,10 +1704,20 @@ if type unzip &>/dev/null; then
                 continue
             fi
 
-            echo -e "\n\n"
-            draw-delimiter-line "$num_cols"
-            echo -e "== [$fname] ==\n"
-            unzip -l "$fname"
+            if [[ -n "$pattern" ]]; then
+                matches="$(unzip -l "$fname" 2>/dev/null | grep -i -E "$pattern")"
+                if [[ -n "$matches" ]]; then
+                    echo -e "\n\n"
+                    draw-delimiter-line "$num_cols"
+                    echo -e "== [$fname] ==\n"
+                    printf '%s\n' "$matches"
+                fi
+            else
+                echo -e "\n\n"
+                draw-delimiter-line "$num_cols"
+                echo -e "== [$fname] ==\n"
+                unzip -l "$fname"
+            fi
         done
     }
 
