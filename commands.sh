@@ -2327,6 +2327,10 @@ delete-mac-garbage() {
     show-mac-garbage --pipe "rm -rfv"
 }
 
+findit-vps() {
+    findit / --type -f --exclude_dirs ".git, node-compile-cache, .plugin_install_dir, run, journal, cache, lib, lib.usr-is-merged, bin.usr-is-merged, sbin.usr-is-merged, usr, cdrom, sys, proc, dev, boot" "$@" 2>/dev/null
+}
+
 #################### fontsize ####################
 
 fontsize() {
