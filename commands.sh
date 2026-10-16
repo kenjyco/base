@@ -1848,6 +1848,58 @@ if type unzip &>/dev/null && type fzf &>/dev/null; then
             esac
         done
     }
+
+    # Unpacks all zips found recursively under workspace root (Git root or $PWD)
+    zip-unzip-all() {
+        local root target_base count=0
+        root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+        target_base="$root/ALL-ZIP-FILES-UNZIPPED"
+
+        mkdir -p "$target_base"
+
+        while IFS= read -r -d '' zip_file; do
+            local base_name dest
+            base_name="$(basename "$zip_file")"
+            dest="$target_base/$base_name"
+
+            printf "Unpacking: %s -> %s/\n" "$base_name" "$base_name"
+            mkdir -p "$dest"
+            unzip -q -o "$zip_file" -d "$dest"
+            ((count++))
+        done < <(find "$root" -type d -name "*-UNZIPPED" -prune -o -type f -iname "*.zip" -print0)
+
+        echo "Finished: $count archive(s) extracted into $target_base"
+    }
+
+    # Unpacks passed paths/globs directly into $PWD/SOME-ZIP-FILES-UNZIPPED
+    zip-unzip-some() {
+        if [ "$#" -eq 0 ]; then
+            echo "Usage: zip-unzip-some <file1.zip> [file2.zip ...]" >&2
+            return 1
+        fi
+
+        # Always anchors to the current working directory where the command was executed
+        local target_base="$PWD/SOME-ZIP-FILES-UNZIPPED" count=0
+        mkdir -p "$target_base"
+
+        for zip_file in "$@"; do
+            if [ ! -f "$zip_file" ]; then
+                echo "Skipping (not found): $zip_file" >&2
+                continue
+            fi
+
+            local base_name dest
+            base_name="$(basename "$zip_file")"
+            dest="$target_base/$base_name"
+
+            printf "Unpacking: %s -> %s/\n" "$zip_file" "$base_name"
+            mkdir -p "$dest"
+            unzip -q -o "$zip_file" -d "$dest"
+            ((count++))
+        done
+
+        echo "Finished: $count archive(s) extracted into $target_base"
+    }
 fi
 
 #################### compgen ####################
