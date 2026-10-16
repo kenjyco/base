@@ -705,7 +705,7 @@ rust-install() {
 }
 
 gvm-install() {
-    if [[ "$1" == "clean" && -d ~/.nvm ]]; then
+    if [[ "$1" == "clean" && -d ~/.gvm ]]; then
         echo -e "\nDeleting ~/.gvm"
         rm -rf ~/.gvm 2>/dev/null
     fi
