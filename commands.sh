@@ -791,19 +791,19 @@ nvm-install() {
     fi
 
     if [[ ! -d ~/.nvm ]]; then
-        echo -e "\nInstalling nvm, latest 'long term support' version of node, and yarn..."
+        echo -e "\nInstalling nvm, latest 'long term support' version of node, yarn, and typescript..."
         unset NVM_DIR
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
-        nvm install --lts
-        npm install -g yarn
+        nvm install -b --lts --latest-npm || return
+        npm install -g yarn typescript
     fi
 }
 
 # Enable nvm (node version manager)
-if [[ -d $HOME/.nvm && -z "$NVM_DIR" ]]; then
+if [[ -s "$HOME/.nvm/nvm.sh" ]] && ! typeset -f nvm >/dev/null; then
     export NVM_DIR="$HOME/.nvm"
     source "$NVM_DIR/nvm.sh"
     source "$NVM_DIR/bash_completion"
