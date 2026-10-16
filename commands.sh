@@ -694,6 +694,43 @@ agy-install() {
     _ai-cli-install "Google Antigravity CLI" "https://antigravity.google/cli/install.sh" bash
 }
 
+jev-install() {
+    if ! command -v npx >/dev/null 2>&1; then
+        echo -e "\nCannot install the TypeSafe skill: npx is required." >&2
+        echo "Run nvm-install to install Node.js and npm, then try again." >&2
+        return 1
+    fi
+
+    if [[ -z "${TYPESAFE_API_KEY:-}" ]]; then
+        echo -e "\nTYPESAFE_API_KEY is not set."
+        echo "Get an API key at https://console.typesafe.ai/keys"
+        echo "Then export TYPESAFE_API_KEY in your private shell configuration."
+        echo "The skill can be installed now; the key is needed to call Jev."
+    fi
+
+    echo -e "\nInstalling the TypeSafe skill for Jev..."
+    npx skills add typesafe-ai/skills --skill typesafe-ai -g "$@"
+}
+
+jev-install-claude() {
+    if ! command -v claude >/dev/null 2>&1; then
+        echo -e "\nCannot install the TypeSafe plugin: Claude Code is required." >&2
+        echo "Run claude-install first, then try again." >&2
+        return 1
+    fi
+
+    if [[ -z "${TYPESAFE_API_KEY:-}" ]]; then
+        echo -e "\nTYPESAFE_API_KEY is not set."
+        echo "Get an API key at https://console.typesafe.ai/keys"
+        echo "Then export TYPESAFE_API_KEY in your private shell configuration."
+        echo "The plugin can be installed now; the key is needed to call Jev."
+    fi
+
+    echo -e "\nInstalling the TypeSafe plugin for Claude Code..."
+    claude plugin marketplace add typesafe-ai/skills || return
+    claude plugin install typesafe@typesafe-ai
+}
+
 #################### Environment managers ####################
 
 rust-install() {
