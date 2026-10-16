@@ -691,7 +691,7 @@ claude-install() {
 }
 
 agy-install() {
-    _ai-cli-install "Google Antigravity CLI" "https://antigravity.google/cli/install.sh" bash --skip-aliases
+    _ai-cli-install "Google Antigravity CLI" "https://antigravity.google/cli/install.sh" bash
 }
 
 #################### Environment managers ####################
