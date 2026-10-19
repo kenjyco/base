@@ -550,6 +550,31 @@ Enhanced file listing and content display tools with timestamps and formatting o
 - [function] **`head-with-titles`** - Display beginnings of files with delimited section headers
 - [function] **`tail-with-titles`** - Display ends of files with delimited section headers
 
+### ZIP Archive Inspection
+*Available only if unzip command exists*
+
+- [function] **`zip-content-summaries [options...] <files...>`** - List archive contents with headers
+  - `files`: ZIP paths or shell globs
+  - `--grep <pattern>`: Filter listing lines by case-insensitive regex (alias: `-g`)
+  - `--pattern <pattern>`: Same as `--grep` (alias: `-p`)
+  - `--`: End option parsing
+- [function] **`zip-exclusive-assets <mega.zip> <sub.zip...>`** - List paths unique to a larger archive
+  - `mega.zip`: Larger archive to inspect
+  - `sub.zip...`: Archives to compare against by path suffix, not file contents
+
+### ZIP Archive Extraction
+*Available only if unzip and fzf commands exist*
+
+- [function] **`zip-extract-selected [options...] <archive.zip> [pattern]`** - Select files with fzf and extract
+  - `archive.zip`: Source archive; default extraction replaces `/` in paths with `--`
+  - `pattern`: Optional case-sensitive regex to filter paths
+  - `--tree`: Preserve directory structure (alias: `-t`)
+  - `--junk`: Keep filenames only (alias: `-j`)
+  - `--`: End option parsing
+- [function] **`zip-unzip-all`** - Recursively extract ZIPs under current directory or git root to ALL-ZIP-FILES-UNZIPPED
+- [function] **`zip-unzip-some <files...>`** - Extract specified ZIP archives to SOME-ZIP-FILES-UNZIPPED
+  - `files`: ZIP paths or shell globs
+
 ### Directory Navigation Trees
 *Available only if tree command exists*
 
