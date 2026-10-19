@@ -449,6 +449,15 @@ or update mechanism for macOS/Linux; WSL follows the Linux path.
 - [function] **`claude-install`** - Install/update Anthropic Claude Code (`claude`)
 - [function] **`agy-install`** - Install/update Google Antigravity CLI (`agy`)
 
+### Optional AI Skill and Plugin Installers
+
+- [function] **`jev-install [options...]`** - Install the global TypeSafe skill for Jev (requires npx)
+  - `options`: Additional arguments passed to `npx skills add`
+- [function] **`jev-install-claude`** - Add the TypeSafe marketplace and install its Claude Code plugin
+  - Requires Claude Code; run `claude-install` first if needed
+
+*Both require TYPESAFE_API_KEY to call Jev, but allow installation without it.*
+
 ### Core Installation Tools
 - [function] **`get-completions`** - Download bash/zsh completions for git and docker
 
