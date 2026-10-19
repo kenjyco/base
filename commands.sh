@@ -1661,7 +1661,7 @@ if type brew &>/dev/null; then
     }
 fi
 
-#################### cat / head / unzip -l ####################
+#################### cat / head / tail / unzip -l ####################
 
 cat-with-titles() {
     num_cols=$(($(tput cols) - 1))
@@ -1706,6 +1706,19 @@ head-with-titles() {
         draw-delimiter-line $num_cols
         echo -e "== [$fname] ==\n"
         head -n "$num_lines" "$fname"
+    done
+}
+
+tail-with-titles() {
+    num_lines=30
+    [[ "$1" =~ ^[0-9]+$ ]] && num_lines="$1" && shift
+    (( $# == 0 )) && echo "usage: tail-with-titles [number] file1 [file2 ...]" >&2 && return 1
+    num_cols=$(($(tput cols) - 1))
+    for fname in "$@"; do
+        echo -e "\n\n"
+        draw-delimiter-line $num_cols
+        echo -e "== [$fname] ==\n"
+        tail -n "$num_lines" "$fname"
     done
 }
 
