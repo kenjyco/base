@@ -2288,7 +2288,7 @@ fi
 
 #################### findit ####################
 
-_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .ruff_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, gems, opensource, venv, venv*, .venv, .venv*, _build, .build, deps, lib, target, raw_pages, .hex, .nimble, .pub-cache, .local, .rbenv, go, .cargo, .codex, .claude, .gemini"
+_default_exclude_dirs="*.egg, *.egg-info, .Private, .Trash, .cache, .cinnamon, .config, .eggs, .git, .mypy_cache, .npm, .nvm, .pyenv, .pytest_cache, .ruff_cache, .thumbnails, EGG-INFO, Library, __pycache__, backup-*, build, dist, env, node_modules, gems, opensource, venv, venv*, .venv, .venv*, _build, .build, deps, target, raw_pages, .hex, .nimble, .pub-cache, .local, .rbenv, go, .cargo, .codex, .claude, .gemini"
 
 findit-default-excludes() {
     findit "$@" --exclude_dirs "$_default_exclude_dirs"
