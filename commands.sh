@@ -277,6 +277,15 @@ if echo | grep -P '' &>/dev/null; then
     grep_perl=yes
 fi
 
+# User-managed executables (standalone tmux, Neovim, uv).
+# Exact PATH-element check; safe to source repeatedly in bash or zsh.
+if [[ -d "$HOME/.local/bin" ]]; then
+    case ":$PATH:" in
+        *":$HOME/.local/bin:"*) ;;
+        *) export PATH="$HOME/.local/bin:$PATH" ;;
+    esac
+fi
+
 if [[ -d /opt/homebrew/bin ]]; then
     if [[ -z "$(echo $PATH | grep /opt/homebrew/bin)" ]]; then
         export PATH="/opt/homebrew/bin:$PATH"
@@ -947,22 +956,51 @@ if type pyenv &>/dev/null; then
 fi
 
 uv-install() {
-    unset yn
-    if type uv &>/dev/null; then
-        uv_path=$(which uv)
-        echo -e "uv found at $uv_path\n"
+    local yn uv_path installer result
+
+    if type uv &> /dev/null; then
+        uv_path=$(command -v uv)
+        echo "uv found at $uv_path"
         uv --version
         echo
+
         if [[ -n "$BASH_VERSION" ]]; then
-            read -p "Replace this version? [y/n] " yn
+            read -r -p "Replace this version? [y/n] " yn
         elif [[ -n "$ZSH_VERSION" ]]; then
             vared -p "Replace this version? [y/n] " -c yn
         fi
-        [[ ! "$yn" =~ [yY].* ]] && return
+
+        case "$yn" in
+            [yY]*) ;;
+            *) return 0 ;;
+        esac
     fi
 
-    curl -LsSf https://astral.sh/uv/0.8.13/install.sh | sh
+    mkdir -p "$HOME/.local/bin" || return 1
+
+    installer="$(mktemp "${TMPDIR:-/tmp}/uv-install.XXXXXX")" || return 1
+
+    if ! curl -LsSf https://astral.sh/uv/install.sh -o "$installer"; then
+        echo "Failed to download uv installer" >&2
+        rm -f "$installer"
+        return 1
+    fi
+
+    UV_INSTALL_DIR="$HOME/.local/bin" \
+    UV_NO_MODIFY_PATH=1 \
+        sh "$installer"
+    result=$?
+
+    rm -f "$installer"
+
+    if [[ "$result" -ne 0 ]]; then
+        echo "uv installation failed" >&2
+        return "$result"
+    fi
+
+    "$HOME/.local/bin/uv" --version
 }
+
 
 bun-install() {
     unset yn
