@@ -1020,6 +1020,103 @@ bun-install() {
     curl -fsSL https://bun.com/install | bash
 }
 
+#################### nvim and tmux installers for minimal non-homebrew macs ####################
+
+if [[ $(uname) == "Darwin" ]]; then
+    nvim-install() {
+        local yn arch name tmp dest
+
+        if type nvim &>/dev/null; then
+            echo "nvim found at $(command -v nvim)"
+            nvim --version | head -1
+            echo
+
+            if [[ -n "$BASH_VERSION" ]]; then
+                read -r -p "Replace this version? [y/n] " yn
+            elif [[ -n "$ZSH_VERSION" ]]; then
+                vared -p "Replace this version? [y/n] " -c yn
+            fi
+            [[ ! "$yn" =~ [yY].* ]] && return
+        fi
+
+        arch=$(uname -m)
+        name="nvim-macos-$arch"
+        dest="$HOME/.local/opt/$name"
+        tmp=$(mktemp -d) || return 1
+
+        echo "Installing latest Neovim for $arch..."
+        if ! curl -fLsS "https://github.com/neovim/neovim/releases/latest/download/$name.tar.gz" -o "$tmp/nvim.tar.gz" ||
+           ! tar -xzf "$tmp/nvim.tar.gz" -C "$tmp"; then
+            rm -rf "$tmp"
+            return 1
+        fi
+
+        if [[ ! -x "$tmp/$name/bin/nvim" ]]; then
+            echo "Downloaded Neovim binary not found" >&2
+            rm -rf "$tmp"
+            return 1
+        fi
+
+        mkdir -p "$HOME/.local/opt" "$HOME/.local/bin"
+        if [[ -e "$HOME/.local/bin/nvim" && ! -L "$HOME/.local/bin/nvim" ]]; then
+            echo "Refusing to replace existing non-symlink nvim" >&2
+            rm -rf "$tmp"
+            return 1
+        fi
+
+        [[ -d "$dest" ]] && rm -rf "$dest"
+        mv "$tmp/$name" "$dest" || return 1
+        ln -sfn "$dest/bin/nvim" "$HOME/.local/bin/nvim"
+        rm -rf "$tmp"
+
+        "$HOME/.local/bin/nvim" --version | head -1
+    }
+
+    tmux-install() {
+        local yn arch release version archive tmp
+
+        if type tmux &>/dev/null; then
+            echo "tmux found at $(command -v tmux)"
+            tmux -V
+            echo
+
+            if [[ -n "$BASH_VERSION" ]]; then
+                read -r -p "Replace this version? [y/n] " yn
+            elif [[ -n "$ZSH_VERSION" ]]; then
+                vared -p "Replace this version? [y/n] " -c yn
+            fi
+            [[ ! "$yn" =~ [yY].* ]] && return
+        fi
+
+        arch=$(uname -m)
+        release=$(curl -fLsS -o /dev/null -w '%{url_effective}' \
+            https://github.com/tmux/tmux-builds/releases/latest) || return 1
+        version="${release##*/}"
+        [[ "$version" == v* ]] || return 1
+
+        archive="tmux-${version#v}-macos-$arch.tar.gz"
+        tmp=$(mktemp -d) || return 1
+
+        echo "Installing tmux ${version#v} for $arch..."
+        if ! curl -fLsS \
+            "https://github.com/tmux/tmux-builds/releases/download/$version/$archive" \
+            -o "$tmp/$archive" ||
+           ! tar -xzf "$tmp/$archive" -C "$tmp"; then
+            rm -rf "$tmp"
+            return 1
+        fi
+
+        mkdir -p "$HOME/.local/bin"
+        if ! install -m 755 "$tmp/tmux" "$HOME/.local/bin/tmux"; then
+            rm -rf "$tmp"
+            return 1
+        fi
+
+        rm -rf "$tmp"
+        "$HOME/.local/bin/tmux" -V
+    }
+fi
+
 #################### Package management (non-sudo) ####################
 
 if type apt-cache &>/dev/null; then
