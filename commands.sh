@@ -631,6 +631,18 @@ elif [[ -n "$ZSH_VERSION" ]]; then
     compinit -i
 fi
 
+#################### macOS sleep control ####################
+
+if [[ $(uname) == "Darwin" ]]; then
+    sleep-disable() {
+        sudo pmset -a disablesleep 1
+    }
+
+    sleep-enable() {
+        sudo pmset -a disablesleep 0
+    }
+fi
+
 #################### Optional AI CLI installers ####################
 
 _ai-cli-install() {
