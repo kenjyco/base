@@ -851,7 +851,7 @@ nvm-install() {
     if [[ ! -d ~/.nvm ]]; then
         echo -e "\nInstalling nvm, latest 'long term support' version of node, yarn, and typescript..."
         unset NVM_DIR
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | PROFILE=/dev/null bash
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
@@ -863,8 +863,29 @@ nvm-install() {
 # Enable nvm (node version manager)
 if [[ -s "$HOME/.nvm/nvm.sh" ]] && ! typeset -f nvm >/dev/null; then
     export NVM_DIR="$HOME/.nvm"
-    source "$NVM_DIR/nvm.sh"
+
+    _base_nvm_count=0
+    for _base_nvm_node in "$NVM_DIR"/versions/node/v*/bin/node; do
+        [[ -x "$_base_nvm_node" ]] || continue
+        _base_nvm_bin="${_base_nvm_node%/node}"
+        (( _base_nvm_count += 1 ))
+        (( _base_nvm_count > 1 )) && break
+    done
+
+    if (( _base_nvm_count == 1 )); then
+        source "$NVM_DIR/nvm.sh" --no-use
+        case ":$PATH:" in
+            *":$_base_nvm_bin:"*) ;;
+            *) export PATH="$_base_nvm_bin:$PATH" ;;
+        esac
+        export NVM_BIN="$_base_nvm_bin"
+        export NVM_INC="${_base_nvm_bin%/bin}/include/node"
+    else
+        source "$NVM_DIR/nvm.sh"
+    fi
+
     source "$NVM_DIR/bash_completion"
+    unset _base_nvm_count _base_nvm_node _base_nvm_bin
 fi
 
 pyenv-install() {
