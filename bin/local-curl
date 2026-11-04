@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import http.client
+import sys
+from urllib.parse import urlsplit
+
+MAX_BYTES = 8 * 1024 * 1024
+
+if len(sys.argv) != 2:
+    sys.exit("Usage: local-curl http://127.0.0.1:PORT/path")
+
+try:
+    url = urlsplit(sys.argv[1])
+    port = url.port
+except ValueError as exc:
+    sys.exit(f"local-curl: invalid URL: {exc}")
+
+if not (
+    url.scheme == "http"
+    and url.hostname == "127.0.0.1"
+    and port is not None
+    and 1 <= port <= 65535
+    and url.username is None
+    and url.password is None
+    and not url.fragment
+):
+    sys.exit("local-curl: only http://127.0.0.1:PORT is allowed")
+
+path = url.path or "/"
+if url.query:
+    path += "?" + url.query
+
+conn = http.client.HTTPConnection("127.0.0.1", port, timeout=15)
+
+try:
+    conn.request("GET", path)
+    response = conn.getresponse()
+    body = response.read(MAX_BYTES + 1)
+
+    if len(body) > MAX_BYTES:
+        sys.exit("local-curl: response exceeds 8 MiB")
+
+    sys.stdout.buffer.write(body)
+
+    if response.status >= 400:
+        print(f"local-curl: HTTP {response.status}", file=sys.stderr)
+        sys.exit(22)
+
+except (OSError, http.client.HTTPException) as exc:
+    sys.exit(f"local-curl: {exc}")
+finally:
+    conn.close()
