@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 _colordiff=cat
-which colordiff &>/dev/null
-[[ $? -eq 0 ]] && _colordiff=colordiff
+if [[ -t 1 ]] && command -v colordiff >/dev/null 2>&1; then
+    _colordiff=colordiff
+fi
 path=
 [[ -d "$1" ]] && path="$1" && shift
 
